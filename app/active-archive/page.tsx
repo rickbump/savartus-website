@@ -1,5 +1,5 @@
 import { DualWrite } from "@/components/active-archive/DualWrite";
-
+import { LifecycleState } from "@/components/active-archive/LifecycleState";
 export default function ActiveArchivePage() {
   return (
     <main>
@@ -52,6 +52,7 @@ export default function ActiveArchivePage() {
         </div>
       </section>
       <DualWrite />
+      <LifecycleState />
     </main>
   );
 }
