@@ -1,58 +1,57 @@
 import { DualWrite } from "@/components/active-archive/DualWrite";
 import { LifecycleState } from "@/components/active-archive/LifecycleState";
+import { Economics } from "@/components/active-archive/Economics";
+import { CloudComparison } from "@/components/active-archive/CloudComparison";
+import { ServiceCTA } from "@/components/active-archive/ServiceCTA";
+import { ClosingCTA } from "@/components/active-archive/ClosingCTA";
+
 export default function ActiveArchivePage() {
   return (
     <main>
-      <section
-        style={{
-          minHeight: "70vh",
-          display: "grid",
-          placeItems: "center",
-          textAlign: "center",
-          padding: "80px 24px",
-        }}
-      >
-        <div style={{ maxWidth: "900px" }}>
-          <p
-            style={{
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              fontWeight: 700,
-              color: "#123a63",
-            }}
-          >
-            Active Archive
-          </p>
+      <section className="aa-hero">
+        <div className="site-container aa-hero-inner">
+          <p className="aa-eyebrow">ACTIVE ARCHIVE</p>
 
-          <h1
-            style={{
-              fontSize: "clamp(3rem, 7vw, 6rem)",
-              lineHeight: 0.95,
-              letterSpacing: "-0.05em",
-              margin: "20px 0",
-            }}
-          >
+          <h1>
             Active today.
             <br />
             Preserved from day one.
           </h1>
 
-          <p
-            style={{
-              fontSize: "1.3rem",
-              color: "#43505e",
-              maxWidth: "760px",
-              margin: "0 auto",
-            }}
-          >
+          <p className="aa-hero-copy">
             Savartus combines high-performance SSD or HDD storage with optical
             object storage to provide immediate access and long-term
             preservation from the moment information arrives.
           </p>
+
+          <div className="aa-hero-actions">
+            <a href="#architecture" className="button button-primary">
+              Explore the Architecture
+            </a>
+
+            <a
+              href="/active-archive/service"
+              className="button button-secondary"
+            >
+              Active Archive as a Service
+            </a>
+          </div>
         </div>
       </section>
-      <DualWrite />
+
+      <div id="architecture">
+        <DualWrite />
+      </div>
+
       <LifecycleState />
+
+      <Economics />
+
+      <CloudComparison />
+
+      <ServiceCTA />
+
+      <ClosingCTA />
     </main>
   );
 }
