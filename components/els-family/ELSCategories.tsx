@@ -52,7 +52,7 @@ export function ELSCategories() {
                 {elsProducts
                   .filter((product) => product.category === category.id)
                   .map((product) => (
-                    <Link href={product.href} key={product.name}>
+                    <Link href={`/products/${product.slug}`} key={product.name}>
                       <strong>{product.name}</strong>
                       <span>→</span>
                     </Link>

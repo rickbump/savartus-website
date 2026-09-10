@@ -1,5 +1,12 @@
 import Link from "next/link";
 import { elsProducts } from "@/data/els-products";
+import type { ELSProduct } from "@/data/els-products";
+
+function getSpec(product: ELSProduct, label: string) {
+  return product.specs.find(
+    (spec) => spec.label.toLowerCase() === label.toLowerCase()
+  )?.value ?? "—";
+}
 
 export function ELSComparison() {
   return (
@@ -33,7 +40,7 @@ export function ELSComparison() {
 
           {elsProducts.map((product) => (
             <Link
-              href={product.href}
+              href={`/products/${product.slug}`}
               className="els-comparison-row"
               key={product.name}
             >
@@ -41,11 +48,11 @@ export function ELSComparison() {
                 <strong>{product.name}</strong>
               </div>
 
-              <div>{product.categoryLabel}</div>
-              <div>{product.capacity ?? "—"}</div>
-              <div>{product.media ?? "—"}</div>
-              <div>{product.drives ?? "—"}</div>
-              <div>{product.formFactor ?? "—"}</div>
+              <div>{product.category}</div>
+              <div>{getSpec(product, "Capacity")}</div>
+              <div>{getSpec(product, "Storage Media")}</div>
+              <div>{getSpec(product, "Drives")}</div>
+              <div>{getSpec(product, "Form Factor")}</div>
             </Link>
           ))}
         </div>

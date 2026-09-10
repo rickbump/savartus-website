@@ -67,16 +67,16 @@ export function ProductFamilies() {
                     >
                       <div>
                         <p className="products-card-label">
-                          {product.categoryLabel}
+                          {product.category}
                         </p>
 
                         <h3>{product.name}</h3>
 
-                        <p>{product.positioning}</p>
+                        <p>{product.description}</p>
                       </div>
 
                       <Link
-                        href={product.href}
+                        href={`/products/${product.slug}`}
                         className="products-card-link"
                       >
                         Explore {product.name} →
