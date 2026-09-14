@@ -1,20 +1,21 @@
-export function DualWrite() {
+export function ActiveArchiveArchitecture() {
   return (
     <section className="aa-section aa-dual-write">
       <div className="site-container">
         <div className="aa-section-header">
-          <p className="aa-eyebrow">PRESERVE IMMEDIATELY</p>
+         <p className="aa-eyebrow">ACTIVE ARCHIVE ARCHITECTURE</p>
 
           <h2>
-            One ingest.
+            Performance and preservation
             <br />
-            Two storage paths.
+            working together.
           </h2>
 
           <p className="aa-lead">
-            When information enters Savartus Active Archive, it is written
-            simultaneously to high-performance SSD or HDD storage and to
-            optical object storage.
+            Information is stored across both performance and preservation tiers.
+            Information remains available on high-performance storage while Savartus
+            automatically preserves it on optical storage. How long information remains
+            on the performance tier is policy-driven and configurable.
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-import { DualWrite } from "@/components/active-archive/DualWrite";
+import { ActiveArchiveArchitecture } from "@/components/active-archive/ActiveArchiveArchitecture";
 import { LifecycleState } from "@/components/active-archive/LifecycleState";
 import { Economics } from "@/components/active-archive/Economics";
 import { CloudComparison } from "@/components/active-archive/CloudComparison";
@@ -40,7 +40,7 @@ export default function ActiveArchivePage() {
       </section>
 
       <div id="architecture">
-        <DualWrite />
+        <ActiveArchiveArchitecture />
       </div>
 
       <LifecycleState />
