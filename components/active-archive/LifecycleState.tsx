@@ -17,7 +17,7 @@ const states = [
     label: "ONLINE OPTICAL",
     title: "Accessible optical storage",
     description:
-      "The hot copy is no longer required. The information remains preserved, online, discoverable, and retrievable from optical object storage.",
+      "As usages decline and the hot copy is no longer required, the information remains preserved, online, discoverable, and retrievable from optical object storage.",
   },
   {
     id: "deep" as LifecycleStateName,
