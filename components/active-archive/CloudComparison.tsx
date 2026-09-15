@@ -55,7 +55,7 @@ export function CloudComparison() {
           <div className="cloud-row cloud-savartus-row">
             <div className="cloud-provider">Savartus</div>
             <div>SSD / HDD + Optical</div>
-            <div>Online Optical</div>
+            <div>Nearline Optical</div>
             <div>Offline Optical</div>
             <div>
               <strong>At ingest</strong>

@@ -95,7 +95,7 @@ export function HotStorageTTL() {
                 <div className="ttl-arrow">→</div>
 
                 <div className="ttl-storage-card optical persistent">
-                  <span className="ttl-card-label">ONLINE OPTICAL</span>
+                  <span className="ttl-card-label">NEARLINE OPTICAL</span>
                   <h3>Still accessible</h3>
                   <p>Preserved and retrievable</p>
                 </div>

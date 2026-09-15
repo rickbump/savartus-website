@@ -12,10 +12,9 @@ export function ObjectInterface() {
           </h2>
 
           <p className="opt-lead">
-            Savartus exposes optical storage through an object-storage
-            architecture, allowing applications and users to interact with
-            preserved information through familiar interfaces rather than
-            treating optical media as an isolated storage silo.
+            Savartus exposes optical storage through an industry-standard object storage architecture, 
+            allowing applications and users to access preserved information through S3-compatible interfaces 
+            rather than treating optical media as an isolated storage silo.
           </p>
         </div>
 

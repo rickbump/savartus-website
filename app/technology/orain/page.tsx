@@ -12,7 +12,7 @@ export default function OrainPage() {
         <div className="site-container">
           <div className="orain-hero-grid">
             <div>
-              <p className="orain-eyebrow">SAVARTUS STORAGE OS</p>
+              <p className="orain-eyebrow">SAVARTUS STORAGE MANAGEMENTOS</p>
 
               <h1>
                 One view.
@@ -46,7 +46,7 @@ export default function OrainPage() {
               <div className="orain-core">
                 <span>SAVARTUS</span>
                 <strong>oRain</strong>
-                <small>STORAGE OS</small>
+                <small>STORAGE MANAGEMENT OS</small>
               </div>
 
               <div className="orain-hero-functions">

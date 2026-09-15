@@ -15,7 +15,7 @@ const benefits = [
       "Storage placement can respond to the requirements of the information and workload.",
   },
   {
-    title: "Online optical access",
+    title: "Nearline optical access",
     description:
       "Leaving the performance tier does not necessarily mean leaving online storage.",
   },

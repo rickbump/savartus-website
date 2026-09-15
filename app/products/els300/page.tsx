@@ -63,10 +63,10 @@ const tiers = [
     variant: "performance" as const,
   },
   {
-    label: "ONLINE PRESERVATION",
+    label: "NEARLINE PRESERVATION",
     title: "ELS300 Optical",
     description:
-      "Integrated robotics and write-once optical media provide durable online preservation and retrieval.",
+      "Integrated robotics and write-once optical media provide durable nearline preservation and retrieval.",
     variant: "optical" as const,
   },
 ];

@@ -2,7 +2,7 @@ export function WhyOptical() {
   const points = [
     {
       title: "Built for retention",
-      text: "Optical media is designed for long-term information preservation rather than continuous mechanical operation.",
+      text: "Optical media is designed for long-term information preservation and can be read repeatedly without the media wear associated with tape.",
     },
     {
       title: "Immutable by design",

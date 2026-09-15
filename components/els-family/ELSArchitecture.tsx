@@ -13,7 +13,7 @@ export function ELSArchitecture() {
 
           <p className="els-lead">
             ELS systems provide the optical foundation of Savartus Active
-            Archive. Performance storage, online optical preservation, and
+            Archive. Performance storage, nearline optical preservation, and
             offline optical retention remain part of one oRain-managed
             environment.
           </p>
@@ -42,7 +42,7 @@ export function ELSArchitecture() {
             </article>
 
             <article className="els-tier-online">
-              <p className="els-card-label">ONLINE OPTICAL</p>
+              <p className="els-card-label">NEARLINE OPTICAL</p>
               <h3>ELS Systems</h3>
               <p>
                 Automated write-once optical preservation with online

@@ -28,7 +28,7 @@ export default function ProductsPage() {
             <a href="#hardware" className="products-pillar">
               <span>STORE</span>
               <strong>Enterprise Library Systems</strong>
-              <p>Online and offline optical object storage.</p>
+              <p>Online, nearline and offline optical object storage.</p>
             </a>
 
             <a href="#software" className="products-pillar">

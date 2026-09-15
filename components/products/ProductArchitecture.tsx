@@ -53,7 +53,7 @@ export function ProductArchitecture() {
             </div>
 
             <div className="products-tier-online">
-              <span>ONLINE PRESERVATION</span>
+              <span>NEARLINE PRESERVATION</span>
               <strong>ELS Optical Libraries</strong>
             </div>
 
@@ -66,7 +66,7 @@ export function ProductArchitecture() {
 
         <div className="products-architecture-message">
           <strong>
-            One managed view across performance, online optical, and offline
+            One managed view across performance, nearline optical, and offline
             optical storage.
           </strong>
         </div>

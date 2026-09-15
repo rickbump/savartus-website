@@ -18,10 +18,10 @@ export default function ELSFamilyPage() {
           </h1>
 
           <p className="els-hero-copy">
-            The Savartus ELS family spans standalone systems, scalable
-            rack-mounted optical libraries, and physically isolated off-line
-            preservation — all designed to operate within a managed
-            information architecture.
+            The Savartus ELS family spans standalone systems, scalable 
+            rack-mounted optical libraries, and physically isolated 
+            offline preservation—all managed through the oRain Storage 
+            OS and a unified storage architecture.
           </p>
 
           <div className="els-hero-actions">

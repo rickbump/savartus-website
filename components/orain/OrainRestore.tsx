@@ -8,7 +8,7 @@ export function OrainRestore() {
           <h2>
             Request the information.
             <br />
-            oRain finds the path.
+            oRain knows where it is - and gets it.
           </h2>
         </div>
 
@@ -24,7 +24,7 @@ export function OrainRestore() {
             <h3>Locate</h3>
             <p>
               oRain determines whether the information resides in
-              performance, online optical or offline optical storage.
+              performance, nearline optical or offline optical storage.
             </p>
           </article>
 
@@ -32,7 +32,7 @@ export function OrainRestore() {
             <span>03</span>
             <h3>Restore</h3>
             <p>
-              Online optical information is restored through the library.
+              Nearline optical information is restored through the library.
               Offline media is first returned to an online library.
             </p>
           </article>

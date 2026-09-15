@@ -57,9 +57,12 @@ export function ScaleAndResilience() {
             <p className="opt-card-label">ENERGY</p>
             <h3>Preservation without continuously powered media.</h3>
             <p>
-              Optical media does not require power to retain written
-              information, reducing the infrastructure required to maintain
-              inactive data.
+              Savartus object storage systems are designed to scale 
+              across multiple systems and storage media technologies. 
+              As libraries, drives, and media are added, the software 
+              layer provides transparent bucket growth and continued 
+              read/write access. Logical and physical data separation 
+              can be configured at the bucket level.
             </p>
           </article>
 

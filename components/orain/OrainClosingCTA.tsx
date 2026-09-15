@@ -15,7 +15,7 @@ export function OrainClosingCTA() {
         </h2>
 
         <p>
-          SSD. HDD. Online optical. Offline optical.
+          SSD. HDD. Nearline optical. Offline optical.
           <br />
           oRain knows where the information is and how it can be accessed.
         </p>

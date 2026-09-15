@@ -44,8 +44,7 @@ export function FMSWorkflow() {
             <span>03</span>
             <h3>Register</h3>
             <p>
-              FMS records identifiers, references, metadata and searchable
-              attributes for the managed information.
+              Applications and users query the FMS information layer for search, management, and workflow activities.
             </p>
           </article>
 

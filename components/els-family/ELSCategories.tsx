@@ -7,21 +7,21 @@ const categories = [
     label: "STAND ALONE",
     title: "Compact deployment",
     description:
-      "Self-contained Savartus systems for compact optical storage and integrated Active Archive.",
+      "Self-contained Savartus systems for compact optical storage and integrated Active Archive, with an enterprise oRain object storage front end and interoperability with all other ELS systems.",
   },
   {
     id: "rack",
     label: "RACK MOUNT",
     title: "Enterprise scale",
     description:
-      "Online optical systems that scale from compact rack deployments to multi-petabyte library environments.",
+      "Online/nearline optical storage systems that scale across multiple ELS systems, drives, and media while oRain provides a unified object storage and management layer.",
   },
   {
     id: "offline",
     label: "OFF-LINE",
     title: "Deep preservation",
     description:
-      "Physically isolated media libraries for information that no longer requires continuous online access.",
+      "Physically isolated optical storage for long-term preservation, with media, objects, and their physical locations remaining known and managed by oRain.",
   },
 ];
 

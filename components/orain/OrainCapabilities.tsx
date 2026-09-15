@@ -3,13 +3,13 @@ const capabilities = [
     number: "01",
     title: "Location Awareness",
     description:
-      "Maintains awareness of where information resides across performance, online optical and offline optical storage.",
+      "Maintains awareness of where information resides across performance, nearline optical and offline optical storage.",
   },
   {
     number: "02",
     title: "Write Strategy",
     description:
-      "Applies configured storage policies to determine when information moves from the performance tier to optical storage.",
+      "Applies configurable storage policies to buckets. Defines how long data remains on the performance tier while concurrently preserved on the archive tier, physical data separation requirements, creation of additional preservation copies, and the location of those copies.",
   },
   {
     number: "03",

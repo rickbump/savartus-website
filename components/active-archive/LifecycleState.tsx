@@ -14,7 +14,7 @@ const states = [
   },
   {
     id: "archive" as LifecycleStateName,
-    label: "ONLINE OPTICAL",
+    label: "NEARLINE OPTICAL",
     title: "Accessible optical storage",
     description:
       "As usages decline and the hot copy is no longer required, the information remains preserved, online, discoverable, and retrievable from optical object storage.",
@@ -24,7 +24,7 @@ const states = [
     label: "OFFLINE OPTICAL",
     title: "Physically isolated preservation",
     description:
-      "Information can reside in offline optical storage for long-term retention, physical isolation, and cyber-resilient preservation.",
+      "Information can reside in offline optical storage for long-term retention, physical isolation, and cyber-resilient preservation. The physical location of offline optical media is tracked in real time by the Savartus management environment.",
   },
 ];
 
@@ -89,13 +89,13 @@ export function LifecycleState() {
               <div className="lifecycle-plus">+</div>
 
               <div
-                className={`lifecycle-storage-card lifecycle-online ${
+                className={`lifecycle-storage-card lifecycle-nearline ${
                   state === "active" || state === "archive"
                     ? "enabled"
                     : "disabled"
                 }`}
               >
-                <span className="lifecycle-card-label">ONLINE OPTICAL</span>
+                <span className="lifecycle-card-label">NEARLINE OPTICAL</span>
                 <strong>Object Storage</strong>
                 <span>Accessible + preserved</span>
               </div>

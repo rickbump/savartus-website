@@ -12,22 +12,24 @@ export function OnlineOffline() {
           </h2>
 
           <p className="opt-lead">
-            Optical storage can remain connected through robotic libraries for
-            direct retrieval or move into physically isolated storage when
-            long-term retention and cyber isolation become more important than
-            immediate access.
+            Optical storage can remain online through automated optical libraries 
+            for direct retrieval, while additional copies can be maintained in 
+            physically isolated optical storage for long-term retention and 
+            cyber-resilient preservation. Offline media remains tracked and managed 
+            by the Savartus environment while remaining physically isolated from 
+            the network.
           </p>
         </div>
 
         <div className="opt-access-grid">
           <article className="opt-access-card opt-access-online">
             <p className="opt-card-label">ONLINE OPTICAL</p>
-            <h3>Accessible preservation</h3>
+            <h3>Preservation without compromise</h3>
 
             <p>
-              Media remains mounted within robotic library infrastructure.
-              Objects remain indexed, discoverable, and retrievable through the
-              Savartus storage environment.
+              Storage policies can maintain accessible optical copies, 
+              physically isolated copies, or both—configured according to 
+              the requirements of each bucket.
             </p>
 
             <div className="opt-access-properties">
@@ -40,12 +42,13 @@ export function OnlineOffline() {
 
           <article className="opt-access-card opt-access-offline">
             <p className="opt-card-label">OFFLINE OPTICAL</p>
-            <h3>Physical isolation</h3>
+            <h3>Physical separation when it matters</h3>
 
             <p>
-              Media can be removed from the online library while remaining
-              indexed and managed, providing physical separation from the
-              production environment.
+              Savartus can maintain physical media separation between 
+              customers or between designated data buckets, providing 
+              a level of physical data isolation that software-defined 
+              storage alone cannot provide.
             </p>
 
             <div className="opt-access-properties">

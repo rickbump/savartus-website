@@ -4,7 +4,7 @@ export function OpticalCharacteristics() {
       label: "IMMUTABILITY",
       title: "Write once. Preserve as written.",
       description:
-        "WORM optical media provides a physical mechanism for preserving committed information without in-place modification.",
+        "Once information is committed to WORM optical media, it cannot be modified in place, providing a physical layer of protection against alteration or tampering.",
     },
     {
       label: "LONGEVITY",

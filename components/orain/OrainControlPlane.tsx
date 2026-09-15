@@ -12,7 +12,7 @@ export function OrainControlPlane() {
           </h2>
 
           <p>
-            Performance storage, online optical libraries and physically
+            Performance storage, nearline optical libraries and physically
             offline optical media can operate as parts of one managed
             storage architecture.
           </p>

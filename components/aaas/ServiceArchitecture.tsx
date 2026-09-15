@@ -39,7 +39,7 @@ export function ServiceArchitecture() {
 
             <article className="aaas-optical-card">
               <p className="aaas-card-label">PRESERVATION COPY</p>
-              <h3>Online Optical</h3>
+              <h3>Nearline Optical</h3>
               <p>
                 Write-once optical preservation begins while the information is
                 still active.

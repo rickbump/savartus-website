@@ -7,7 +7,7 @@ const groups = [
     label: "STAND ALONE SYSTEMS",
     title: "Compact systems",
     description:
-      "Standalone Savartus systems for environments that need optical storage or integrated Active Archive in a self-contained platform.",
+      "Standalone Savartus systems for environments that need optical storage or integrated Active Archive in a self-contained platform, with an enterprise-class front end.",
   },
   {
     id: "rack",

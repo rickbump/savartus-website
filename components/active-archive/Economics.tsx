@@ -38,11 +38,15 @@ export function Economics() {
 
           <article className="economics-card economics-online">
             <div className="economics-number">02</div>
-            <p className="economics-label">ONLINE OPTICAL</p>
+            <p className="economics-label">NEARLINE OPTICAL</p>
             <h3>Accessible + Preserved</h3>
             <p>
               The hot copy can be removed while the optical object remains
               online, managed, discoverable, and retrievable.
+
+              When nearline access is no longer required, 
+              information can move to physically isolated optical 
+              storage for long-term preservation.
             </p>
 
             <div className="economics-cost">

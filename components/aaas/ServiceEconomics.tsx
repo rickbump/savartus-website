@@ -43,7 +43,7 @@ export function ServiceEconomics() {
           <article className="aaas-economic-card aaas-economic-online">
             <div className="aaas-economic-top">
               <span>02</span>
-              <p className="aaas-card-label">ONLINE OPTICAL</p>
+              <p className="aaas-card-label">NEARLINE OPTICAL</p>
             </div>
 
             <h3>Preserved + Accessible</h3>

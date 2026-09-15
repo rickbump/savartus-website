@@ -54,7 +54,7 @@ export function ServicesProducts() {
 
             <div>
               <span>02</span>
-              <strong>Online Optical</strong>
+              <strong>Nearline Optical</strong>
               <p>Accessible + Preserved</p>
             </div>
 
