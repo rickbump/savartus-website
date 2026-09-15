@@ -116,18 +116,9 @@ export const elsProducts: ELSProduct[] = [
       { label: "Maximum Media", value: "100" },
       { label: "Drives", value: "Up to 4" },
       { label: "Form Factor", value: "Stand-Alone Tower" },
-      {
-        label: "Storage Interface",
-        value: "S3-compatible through oRain",
-      },
-      {
-        label: "Management",
-        value: "Savartus oRain Storage Management",
-      },
-      {
-        label: "Active Archive",
-        value: "Supported with SSD/HDD cache or performance storage",
-      },
+      { label: "Storage Interface", value: "S3-compatible through oRain",},
+      { label: "Management", value: "Savartus oRain Storage Management",},
+      { label: "Active Archive", value: "Supported with SSD/HDD cache or performance storage",},
     ],
 
     technicalSpecs: {
@@ -213,18 +204,9 @@ export const elsProducts: ELSProduct[] = [
       { label: "Maximum Media", value: "150" },
       { label: "Drives", value: "Up to 4" },
       { label: "Form Factor", value: "Stand-Alone Tower" },
-      {
-        label: "Performance Storage",
-        value: "Integrated SSD/HDD storage",
-      },
-      {
-        label: "Storage Interface",
-        value: "S3-compatible through oRain",
-      },
-      {
-        label: "Management",
-        value: "Savartus oRain Storage Management",
-      },
+      { label: "Performance Storage", value: "Integrated SSD/HDD storage"},
+      { label: "Storage Interface", value: "S3-compatible through oRain"},
+      { label: "Management", value: "Savartus oRain Storage Management"},
       { label: "File System", value: "XFS" },
       { label: "Optical RAID", value: "11+1" },
       { label: "Interfaces", value: "Gigabit LAN / SAS / S3" },
