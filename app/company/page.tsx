@@ -15,23 +15,34 @@ const leadership = [
     descriptor: "The Data Wonk",
     image: "/images/company/rick-bump.jpg",
     bio: [
-      "Rick is a technologist and business executive who has spent his career at the intersection of data, software, technology, and business operations.",
-      "At Savartus, he leads the company's Data Lifecycle Management strategy and has architected the software platform and Enterprise Data Lifecycle™ framework behind it.",
-      "His focus is a deceptively simple question: What should happen to information as its requirements change?",
-      "Rick's background spans enterprise software, data management, AI and analytics, SaaS, hardware, product development, sales, operations, and large-scale business transformation. That combination shapes Savartus's approach to treating information lifecycle as a business and governance problem—not simply a storage problem.",
+        "Rick is a technologist and business executive who has spent his career at the intersection of data, software, technology, and business operations.",
+        "At Savartus, he leads the company's Data Lifecycle Management strategy, architected the core DLM software platform, and authored the Enterprise Data Lifecycle™ Specification—a comprehensive architecture for governing information according to what it is, what it means, and what it requires.",
+        "His focus is a deceptively simple question: What should happen to information as its requirements change?",
+        "Rick's background spans enterprise software, data management, AI and analytics, SaaS, hardware, product development, sales, operations, and large-scale business transformation. That combination shapes Savartus's approach to treating information lifecycle as a business and governance problem—not simply a storage problem.",
     ],
-  },
+    link: {
+        label: "Explore the Enterprise Data Lifecycle™ Specification",
+        href: "/resources/dlm-specification",
+        external: false,
+    },
+    },
   {
     name: "Christopher Rence",
     role: "Co-Founder",
     descriptor: "The Security Wonk",
     image: "/images/company/christopher-rence.jpg",
     bio: [
-      "Chris has spent decades thinking about what can go wrong with enterprise technology—and how organizations can design systems so that it doesn't.",
-      "His background spans cybersecurity, data protection, compliance, cloud infrastructure, enterprise IT, and executive technology leadership.",
-      "His work has addressed ransomware, cyber risk, security governance, compliance, and protection of information across complex enterprise environments.",
-      "At Savartus, Chris brings the security and resilience perspective to the information lifecycle: protecting information not only from loss, but from unauthorized access, alteration, compromise, and operational disruption.",
+        "Chris has spent decades thinking about what can go wrong with enterprise technology—and how organizations can design systems so that it doesn't.",
+        "His background spans cybersecurity, data protection, compliance, cloud infrastructure, enterprise IT, and executive technology leadership.",
+        "His work has addressed ransomware, cyber risk, security governance, compliance, and protection of information across complex enterprise environments.",
+        "Chris is also the author of World War D: The Intersection of Cyber and Biological Pandemics, which explores the convergence of cybersecurity, systemic risk, and large-scale disruption.",
+        "At Savartus, Chris brings the security and resilience perspective to the information lifecycle: protecting information not only from loss, but from unauthorized access, alteration, compromise, and operational disruption.",
     ],
+    link: {
+        label: "Explore World War D",
+        href: "https://www.amazon.com/dp/B0B14JLJDR?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        external: true,
+    },
   },
   {
     name: "Horst Schellong",
@@ -281,9 +292,27 @@ export default function CompanyPage() {
 
                   <div className="about-leader-bio">
                     {person.bio.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
+                        <p key={paragraph}>{paragraph}</p>
                     ))}
-                  </div>
+
+                    {"link" in person && person.link && (
+                        <div className="about-leader-link">
+                        {person.link.external ? (
+                            <a
+                            href={person.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            {person.link.label} →
+                            </a>
+                        ) : (
+                            <Link href={person.link.href}>
+                            {person.link.label} →
+                            </Link>
+                        )}
+                        </div>
+                    )}
+                    </div>
                 </div>
               </article>
             ))}
