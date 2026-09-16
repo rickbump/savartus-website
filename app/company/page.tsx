@@ -1,11 +1,102 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About Savartus",
+  description:
+    "Learn about Savartus, our history, leadership, locations, and the experience behind our approach to data lifecycle management, storage, security, and preservation.",
+};
+
+const leadership = [
+  {
+    name: "Rick Bump",
+    role: "Co-Founder & CEO",
+    descriptor: "The Data Wonk",
+    image: "/images/company/rick-bump.jpg",
+    bio: [
+      "Rick is a technologist and business executive who has spent his career at the intersection of data, software, technology, and business operations.",
+      "At Savartus, he leads the company's Data Lifecycle Management strategy and has architected the software platform and Enterprise Data Lifecycle™ framework behind it.",
+      "His focus is a deceptively simple question: What should happen to information as its requirements change?",
+      "Rick's background spans enterprise software, data management, AI and analytics, SaaS, hardware, product development, sales, operations, and large-scale business transformation. That combination shapes Savartus's approach to treating information lifecycle as a business and governance problem—not simply a storage problem.",
+    ],
+  },
+  {
+    name: "Christopher Rence",
+    role: "Co-Founder",
+    descriptor: "The Security Wonk",
+    image: "/images/company/christopher-rence.jpg",
+    bio: [
+      "Chris has spent decades thinking about what can go wrong with enterprise technology—and how organizations can design systems so that it doesn't.",
+      "His background spans cybersecurity, data protection, compliance, cloud infrastructure, enterprise IT, and executive technology leadership.",
+      "His work has addressed ransomware, cyber risk, security governance, compliance, and protection of information across complex enterprise environments.",
+      "At Savartus, Chris brings the security and resilience perspective to the information lifecycle: protecting information not only from loss, but from unauthorized access, alteration, compromise, and operational disruption.",
+    ],
+  },
+  {
+    name: "Horst Schellong",
+    role: "Technical Director",
+    descriptor: "The Storage Technologist",
+    image: "/images/company/horst-schellong.jpg",
+    bio: [
+      "Horst brings decades of experience in enterprise storage, with particularly deep expertise in optical systems, removable media, robotics, storage libraries, object storage, and long-term information preservation.",
+      "His career has included development and commercialization of large-scale storage and archive technologies across multiple generations of media and infrastructure.",
+      "At Savartus, Horst helps translate preservation requirements into practical storage architecture—connecting media, libraries, object storage, management software, and enterprise workflows.",
+    ],
+  },
+  {
+    name: "Simon Goettl",
+    role: "Director of Marketing",
+    descriptor: "The Market Translator",
+    image: "/images/company/simon-goettl.jpg",
+    bio: [
+      "Simon specializes in turning complex technology into stories customers can understand and use.",
+      "His background spans product marketing, positioning, messaging, data and technology products, sales enablement, and go-to-market strategy across both agency and enterprise environments.",
+      "At Savartus, Simon connects the technology to the problem it solves—translating data lifecycle, storage, security, and preservation architecture into clear customer and business value.",
+    ],
+  },
+];
+
+const disciplines = [
+  {
+    label: "DATA",
+    title: "Understand the information.",
+    copy:
+      "Understand identity, context, relationships, value, risk, requirements, and lifecycle—not simply age or storage location.",
+  },
+  {
+    label: "SECURITY",
+    title: "Protect what matters.",
+    copy:
+      "Protect information against loss, alteration, unauthorized access, compromise, and disruption across its lifecycle.",
+  },
+  {
+    label: "STORAGE",
+    title: "Use the right storage state.",
+    copy:
+      "Match information to infrastructure appropriate to its performance, availability, protection, isolation, and preservation requirements.",
+  },
+  {
+    label: "SOFTWARE",
+    title: "Connect policy to execution.",
+    copy:
+      "Use software, metadata, APIs, automation, and storage management to connect governed intent with enterprise technology.",
+  },
+  {
+    label: "PRESERVATION",
+    title: "Keep trustworthy information trustworthy.",
+    copy:
+      "Preserve important information beyond the lifespan of individual applications, systems, and storage technologies.",
+  },
+];
 
 export default function CompanyPage() {
   return (
     <main>
-      <section className="company-hero">
-        <div className="site-container company-hero-inner">
-          <p className="company-eyebrow">SAVARTUS</p>
+      {/* HERO */}
+      <section className="about-hero">
+        <div className="site-container about-hero-inner">
+          <p className="about-eyebrow">ABOUT SAVARTUS</p>
 
           <h1>
             Technology changes.
@@ -13,215 +104,312 @@ export default function CompanyPage() {
             Information persists.
           </h1>
 
-          <p className="company-hero-copy">
-            Savartus helps organizations manage, store, and preserve
-            information across its lifecycle through Data Lifecycle Management,
-            Active Archive, optical object storage, and enterprise storage
-            management.
+          <p className="about-hero-copy">
+            Savartus was created around a simple idea: information often
+            outlives the technologies used to create, manage, protect, and
+            store it.
           </p>
 
-          <div className="company-hero-actions">
+          <p className="about-hero-copy about-hero-copy-secondary">
+            We bring together expertise in data, security, storage, software,
+            optical technology, and enterprise operations to help organizations
+            manage, store, and preserve information for as long as it matters.
+          </p>
+
+          <div className="about-hero-actions">
             <Link href="/contact" className="button button-primary">
               Talk to Savartus
+            </Link>
+
+            <Link href="/products" className="button button-secondary">
+              Explore Our Technology
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="company-section company-about">
+      {/* HISTORY */}
+      <section className="about-section about-history">
         <div className="site-container">
-          <div className="company-section-header">
-            <p className="company-eyebrow">WHO WE ARE</p>
+          <div className="about-section-header">
+            <p className="about-eyebrow">OUR STORY</p>
 
             <h2>
-              Built around the
+              A new company built on
               <br />
-              information lifecycle.
+              decades of experience.
+            </h2>
+          </div>
+
+          <div className="about-history-layout">
+            <div className="about-history-lead">
+              <p>
+                Savartus was founded in 2024, but the experience behind it
+                reaches back decades.
+              </p>
+
+              <p>
+                Our team has worked across enterprise software, data
+                management, cybersecurity, optical storage, robotics, cloud
+                infrastructure, business transformation, and long-term
+                information preservation.
+              </p>
+            </div>
+
+            <div className="about-history-copy">
+              <p>
+                Part of that heritage comes from Rimage, a pioneer in automated
+                digital media systems whose engineering combined robotics,
+                software, and optical technology.
+              </p>
+
+              <p>
+                Savartus carries that experience forward while addressing a
+                broader enterprise problem: how organizations understand,
+                govern, store, protect, and preserve information throughout its
+                lifecycle.
+              </p>
+
+              <p>
+                Today, Savartus brings together Data Lifecycle Management,
+                Active Archive, optical object storage, enterprise storage
+                management, and services into an architecture designed around
+                the information itself.
+              </p>
+            </div>
+          </div>
+
+          <div className="about-history-statement">
+            <span>THEN</span>
+            <strong>Digital media. Robotics. Software. Optical.</strong>
+
+            <div className="about-history-arrow">→</div>
+
+            <span>NOW</span>
+            <strong>
+              Information lifecycle. Active Archive. Object storage.
+              Preservation.
+            </strong>
+          </div>
+        </div>
+      </section>
+
+      {/* DISCIPLINES */}
+      <section className="about-section about-disciplines">
+        <div className="site-container">
+          <div className="about-section-header">
+            <p className="about-eyebrow">WHAT WE BRING TOGETHER</p>
+
+            <h2>
+              Different disciplines.
+              <br />
+              One information problem.
             </h2>
 
-            <p className="company-lead">
-              Savartus was created around a simple idea: information should be
-              managed according to what it is, what it means, and what it
-              requires—not simply how old it is or where it happens to be
-              stored.
+            <p className="about-lead">
+              Managing information over decades requires more than storage.
+              Savartus brings together disciplines that are too often treated
+              separately.
             </p>
           </div>
 
-          <div className="company-pillar-grid">
-            <article className="company-pillar">
-              <span>MANAGE</span>
-              <h3>Understand the information.</h3>
-              <p>
-                Data Lifecycle Management, metadata, policy, search, governance,
-                and workflow help organizations understand information in
-                context.
-              </p>
-            </article>
+          <div className="about-discipline-grid">
+            {disciplines.map((discipline, index) => (
+              <article className="about-discipline-card" key={discipline.label}>
+                <div className="about-discipline-number">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
 
-            <article className="company-pillar">
-              <span>STORE</span>
-              <h3>Use the right storage state.</h3>
-              <p>
-                Performance storage, nearline optical object storage, and
-                scalable ELS infrastructure provide the storage foundation.
-              </p>
-            </article>
+                <span>{discipline.label}</span>
 
-            <article className="company-pillar">
-              <span>PRESERVE</span>
-              <h3>Protect what needs to persist.</h3>
-              <p>
-                WORM optical media and physically isolated preservation provide
-                durable, cyber-resilient storage for long-term information.
-              </p>
-            </article>
+                <h3>{discipline.title}</h3>
+
+                <p>{discipline.copy}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="company-section company-beliefs">
+      {/* LEADERSHIP */}
+      <section className="about-section about-leadership">
         <div className="site-container">
-          <div className="company-section-header">
-            <p className="company-eyebrow">WHAT WE BELIEVE</p>
+          <div className="about-section-header">
+            <p className="about-eyebrow">LEADERSHIP</p>
 
             <h2>
-              Better information management
+              A team that sees information
               <br />
-              starts with better assumptions.
-            </h2>
-          </div>
-
-          <div className="company-belief-list">
-            <article>
-              <span>01</span>
-              <div>
-                <h3>Information lifecycle ≠ storage lifecycle.</h3>
-                <p>
-                  The business state of information should not be defined by
-                  the infrastructure that happens to hold it.
-                </p>
-              </div>
-            </article>
-
-            <article>
-              <span>02</span>
-              <div>
-                <h3>Information should move when its requirements change.</h3>
-                <p>
-                  Lifecycle decisions should reflect business value, risk,
-                  retention, availability, security, and preservation
-                  requirements—not just age.
-                </p>
-              </div>
-            </article>
-
-            <article>
-              <span>03</span>
-              <div>
-                <h3>Technology changes. Information persists.</h3>
-                <p>
-                  Applications, platforms, and media evolve. The information,
-                  context, relationships, provenance, and governance must
-                  survive those changes.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="company-section company-architecture">
-        <div className="site-container">
-          <div className="company-section-header">
-            <p className="company-eyebrow">ONE ARCHITECTURE</p>
-
-            <h2>
-              Information intelligence
-              <br />
-              through storage execution.
+              from different angles.
             </h2>
 
-            <p className="company-lead">
-              Savartus separates information intelligence from storage
-              execution while keeping both within one coordinated environment.
+            <p className="about-lead">
+              Data, security, storage, software, operations, and market
+              understanding come together in the Savartus leadership team.
             </p>
           </div>
 
-          <div className="company-architecture-stack">
-            <div className="company-architecture-card">
-              <span>INFORMATION GOVERNANCE</span>
-              <strong>Enterprise Data Lifecycle™</strong>
+          <div className="about-leadership-list">
+            {leadership.map((person, index) => (
+              <article
+                className="about-leader"
+                key={person.name}
+              >
+                <div className="about-leader-image-wrap">
+                  <Image
+                    src={person.image}
+                    alt={`${person.name}, ${person.role} at Savartus`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 380px"
+                    className="about-leader-image"
+                    priority={index < 2}
+                  />
+                </div>
+
+                <div className="about-leader-content">
+                  <p className="about-leader-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+
+                  <p className="about-leader-role">{person.role}</p>
+
+                  <h3>{person.name}</h3>
+
+                  <p className="about-leader-descriptor">
+                    {person.descriptor}
+                  </p>
+
+                  <div className="about-leader-bio">
+                    {person.bio.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LOCATIONS */}
+      <section className="about-section about-locations">
+        <div className="site-container">
+          <div className="about-section-header">
+            <p className="about-eyebrow">WHERE WE WORK</p>
+
+            <h2>
+              People, technology,
+              <br />
+              and infrastructure.
+            </h2>
+
+            <p className="about-lead">
+              Savartus operates across business, technology, and infrastructure
+              locations in Minnesota, Florida, and Wisconsin.
+            </p>
+          </div>
+
+          <div className="about-location-image-wrap">
+            <Image
+              src="/images/company/savartus-locations-map.png"
+              alt="Savartus locations in Minnesota, Wisconsin, and Florida"
+              width={1792}
+              height={896}
+              className="about-location-image"
+            />
+          </div>
+
+          <div className="about-location-grid">
+            <article>
+              <span>MINNESOTA</span>
+              <h3>Business & Operations</h3>
               <p>
-                Defines lifecycle state, policy, governance requirements, and
-                transition logic.
+                Company leadership, customer engagement, partnerships, and
+                business operations.
               </p>
+            </article>
+
+            <article>
+              <span>FLORIDA</span>
+              <h3>Technology & Operations</h3>
+              <p>
+                Software development, product development, customer solutions,
+                systems integration, and company operations.
+              </p>
+            </article>
+
+            <article>
+              <span>WISCONSIN</span>
+              <h3>Data Center</h3>
+              <p>
+                Savartus infrastructure supporting hosted services,
+                development, testing, and customer environments.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* POINT OF VIEW */}
+      <section className="about-section about-why">
+        <div className="site-container">
+          <div className="about-why-grid">
+            <div>
+              <p className="about-eyebrow">WHY SAVARTUS</p>
+
+              <h2>
+                We&apos;re building for information that needs to outlive the
+                technology around it.
+              </h2>
             </div>
 
-            <div className="company-architecture-down">↓</div>
+            <div className="about-why-copy">
+              <p>Technology platforms change.</p>
+              <p>Applications change.</p>
+              <p>Storage technologies change.</p>
+              <p>Organizations change.</p>
 
-            <div className="company-architecture-card">
-              <span>INFORMATION LAYER</span>
-              <strong>FMS</strong>
+              <strong>Important information has to survive all of them.</strong>
+
               <p>
-                Applications and users query the FMS information layer for
-                search, management and workflow activity.
+                That is why Savartus approaches data management from the
+                information outward—understand it, govern it, store it
+                appropriately, protect it, and preserve what matters.
               </p>
-            </div>
-
-            <div className="company-architecture-down">↓</div>
-
-            <div className="company-architecture-card company-architecture-orain">
-              <span>STORAGE MANAGEMENT</span>
-              <strong>oRain</strong>
-              <p>
-                oRain knows where every object is stored and retrieves it on
-                request using its unique identifier or object key.
-              </p>
-            </div>
-
-            <div className="company-architecture-down">↓</div>
-
-            <div className="company-architecture-storage">
-              <div>
-                <span>PERFORMANCE</span>
-                <strong>SSD / HDD</strong>
-              </div>
-
-              <div>
-                <span>NEARLINE PRESERVATION</span>
-                <strong>ELS Optical</strong>
-              </div>
-
-              <div>
-                <span>OFFLINE PRESERVATION</span>
-                <strong>Physically Isolated Optical</strong>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="company-closing">
-        <div className="site-container company-closing-inner">
-          <p className="company-eyebrow company-eyebrow-light">
+      {/* CLOSING */}
+      <section className="about-closing">
+        <div className="site-container about-closing-inner">
+          <p className="about-eyebrow about-eyebrow-light">
             MANAGE. STORE. PRESERVE.
           </p>
 
           <h2>
-            Manage the information.
+            Information deserves
             <br />
-            Store it appropriately.
-            <br />
-            Preserve what matters.
+            a longer view.
           </h2>
 
-          <div className="company-closing-actions">
+          <p>
+            Whether the challenge is governance, performance, resilience,
+            preservation, or long-term access, Savartus starts with the
+            information and works outward.
+          </p>
+
+          <div className="about-closing-actions">
             <Link href="/contact" className="button button-light">
               Talk to Savartus
             </Link>
 
-            <Link href="/products" className="button button-outline-light">
-              Explore Products
+            <Link
+              href="/data-lifecycle-management"
+              className="button button-outline-light"
+            >
+              Explore Data Lifecycle Management
             </Link>
           </div>
         </div>
