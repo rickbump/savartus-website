@@ -8,28 +8,24 @@ type LinkProblem = {
   status: number | string;
 };
 
-const expectedMissingRoutes = new Set([
-  "/insights",
-  "/resources",
-  "/company",
-  "/contact",
-  "/active-archive/service",
-  "/technology/orain",
-  "/products/file-management",
-  "/resources/dlm-specification",
+const expectedMissingRoutes = new Set<string>();
 
-  "/products/els100",
-  "/products/els150",
-  "/products/els300",
-  "/products/els500",
-  "/products/els1000",
-  "/products/els3600",
-  "/products/els4000",
-  "/products/els8000",
-  "/products/els10k",
-  "/products/els8000-ol",
-  "/products/els10k-ol",
+const documentExtensions = new Set([
+  ".doc",
+  ".docx",
+  ".pdf",
+  ".ppt",
+  ".pptx",
+  ".xls",
+  ".xlsx",
+  ".zip",
 ]);
+
+function isDocumentPath(path: string) {
+  return [...documentExtensions].some((extension) =>
+    path.toLowerCase().endsWith(extension)
+  );
+}
 
 test("crawl Savartus website and find broken internal links", async ({
   page,
@@ -140,6 +136,10 @@ test("crawl Savartus website and find broken internal links", async ({
       const target =
         url.pathname +
         (url.search ? url.search : "");
+
+      if (isDocumentPath(url.pathname)) {
+        continue;
+      }
 
       if (!queued.has(target) && !visited.has(target)) {
         queued.add(target);

@@ -57,7 +57,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="resources-section">
+      <section id="active-archive" className="resources-section">
         <div className="site-container">
           <div className="resources-section-header">
             <p className="resources-eyebrow">ACTIVE ARCHIVE</p>
@@ -92,21 +92,21 @@ export default function ResourcesPage() {
             </Link>
 
             <Link
-              href="/optical-object-storage"
+              href="/preservation"
               className="resources-card"
             >
-              <span>TECHNOLOGY</span>
-              <h3>Optical Object Storage</h3>
+              <span>SOLUTION</span>
+              <h3>Preservation</h3>
               <p>
-                Understand S3-compatible optical object storage and
-                nearline/offline preservation.
+                Preserve information on nearline optical storage with optional
+                physically isolated offline optical retention.
               </p>
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="resources-section resources-els">
+      <section id="els" className="resources-section resources-els">
         <div className="site-container">
           <div className="resources-section-header">
             <p className="resources-eyebrow">ENTERPRISE LIBRARY SYSTEMS</p>
@@ -155,7 +155,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="resources-section">
+      <section id="software" className="resources-section">
         <div className="site-container">
           <div className="resources-section-header">
             <p className="resources-eyebrow">SOFTWARE & MANAGEMENT</p>

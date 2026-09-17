@@ -7,17 +7,17 @@ type LifecycleStateName = "active" | "archive" | "deep";
 const states = [
   {
     id: "active" as LifecycleStateName,
-    label: "HOT ACCESS",
-    title: "High-performance access",
+    label: "ACTIVE USE",
+    title: "Performance copy retained",
     description:
-      "Information is available from SSD or HDD while a preserved optical copy exists simultaneously.",
+      "Information remains on SSD or HDD while usage and performance requirements justify it. The nearline optical preservation copy exists independently.",
   },
   {
     id: "archive" as LifecycleStateName,
-    label: "NEARLINE OPTICAL",
-    title: "Accessible optical storage",
+    label: "PERFORMANCE COPY REMOVED",
+    title: "Nearline preservation remains",
     description:
-      "As usages decline and the hot copy is no longer required, the information remains preserved, online, discoverable, and retrievable from optical object storage.",
+      "When the performance copy is no longer required, it is removed according to bucket policy. The information remains preserved, discoverable, and retrievable from nearline optical storage.",
   },
   {
     id: "deep" as LifecycleStateName,
@@ -81,9 +81,9 @@ export function LifecycleState() {
                   state === "active" ? "enabled" : "disabled"
                 }`}
               >
-                <span className="lifecycle-card-label">HOT STORAGE</span>
+                <span className="lifecycle-card-label">PERFORMANCE</span>
                 <strong>SSD / HDD</strong>
-                <span>Immediate access</span>
+                <span>Retained while needed</span>
               </div>
 
               <div className="lifecycle-plus">+</div>
@@ -96,7 +96,7 @@ export function LifecycleState() {
                 }`}
               >
                 <span className="lifecycle-card-label">NEARLINE OPTICAL</span>
-                <strong>Object Storage</strong>
+                <strong>Preservation</strong>
                 <span>Accessible + preserved</span>
               </div>
 

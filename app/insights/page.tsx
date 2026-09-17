@@ -57,7 +57,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <section className="insights-section">
+      <section id="latest" className="insights-section">
         <div className="site-container">
           <div className="insights-section-header">
             <p className="insights-eyebrow">LATEST THINKING</p>

@@ -38,7 +38,7 @@ export function ServiceCTA() {
           <div className="service-economics">
             <div className="service-tier service-tier-hot">
               <div>
-                <span>HOT ACCESS</span>
+                <span>ACTIVE USE</span>
                 <strong>SSD / HDD + Optical</strong>
               </div>
 
@@ -49,8 +49,8 @@ export function ServiceCTA() {
 
             <div className="service-tier service-tier-online">
               <div>
-                <span>ONLINE OPTICAL</span>
-                <strong>Accessible Archive</strong>
+                <span>NEARLINE OPTICAL</span>
+                <strong>Preservation Remains</strong>
               </div>
 
               <div className="service-price">$$</div>
@@ -60,7 +60,7 @@ export function ServiceCTA() {
 
             <div className="service-tier service-tier-offline">
               <div>
-                <span>OFFLINE OPTICAL</span>
+                <span>OPTIONAL OFFLINE OPTICAL</span>
                 <strong>Long-Term Retention</strong>
               </div>
 

@@ -63,51 +63,6 @@ const edsvDimensions = [
   },
 ];
 
-const governanceSteps = [
-  {
-    number: "01",
-    label: "UNDERSTAND",
-    title: "Understand the information",
-    description:
-      "Establish identity, metadata, relationships, provenance, business context, and governance-relevant state.",
-  },
-  {
-    number: "02",
-    label: "EVALUATE",
-    title: "Apply enterprise policy",
-    description:
-      "Determine which retention, protection, security, compliance, preservation, business, and other governance requirements apply.",
-  },
-  {
-    number: "03",
-    label: "DECIDE",
-    title: "Determine what should happen",
-    description:
-      "Produce an explainable Governance Decision based on current governed state and applicable policy.",
-  },
-  {
-    number: "04",
-    label: "ACT",
-    title: "Authorize and carry out the action",
-    description:
-      "Establish authority and authorization, then carry out the permitted or required action through the appropriate enterprise technology.",
-  },
-  {
-    number: "05",
-    label: "VERIFY",
-    title: "Confirm what actually happened",
-    description:
-      "Establish the outcome, verify that requirements were satisfied, and preserve the evidence needed to substantiate the result.",
-  },
-  {
-    number: "06",
-    label: "REEVALUATE",
-    title: "Govern from the new context",
-    description:
-      "Outcomes, events, changing requirements, new relationships, and other material changes update enterprise context and may trigger another evaluation.",
-  },
-];
-
 const lifecycleStages = [
   {
     number: "01",
@@ -162,40 +117,6 @@ const lifecycleStages = [
   },
 ];
 
-const lifecycleStateExamples = [
-  "Created",
-  "Active",
-  "Collaborative",
-  "Managed",
-  "Protected",
-  "Archived",
-  "Preservation",
-  "Disposition Eligible",
-];
-
-const storageExamples = [
-  {
-    label: "HIGH-PERFORMANCE",
-    value: "SSD / HDD / Object",
-  },
-  {
-    label: "ONLINE",
-    value: "Disk / Object / Optical",
-  },
-  {
-    label: "PRESERVATION",
-    value: "Optical / Object / Preservation technologies",
-  },
-  {
-    label: "OFFLINE / ISOLATED",
-    value: "Removable / Air-gapped / Deep preservation",
-  },
-  {
-    label: "OTHER",
-    value: "Cloud / NAS / Tape / Application-managed storage",
-  },
-];
-
 export default function DataLifecycleManagementPage() {
   return (
     <main>
@@ -208,23 +129,24 @@ export default function DataLifecycleManagementPage() {
           <p className="dlm2-eyebrow">DATA LIFECYCLE MANAGEMENT</p>
 
           <h1>
-            Your data has more
+            Govern information
             <br />
-            than a birthday.
+            according to what it requires.
           </h1>
 
           <p className="dlm2-hero-copy">
             Savartus Data Lifecycle Management evaluates and governs
             information based on what it is, what it means, what obligations
             apply to it, what it is worth, and what the organization needs from
-            it — not simply how long it has existed.
+            it. DLM is not a storage tier and does not require Savartus optical
+            storage.
           </p>
 
           <div className="dlm2-age-statement">
             <span>90 DAYS</span>
 
             <strong>
-              A file turning 90 days old isn&apos;t a business event.
+              Age is one signal. It is not the governance model.
             </strong>
           </div>
 
@@ -347,7 +269,9 @@ export default function DataLifecycleManagementPage() {
                 Governance is a continuous cycle. Savartus evaluates enterprise
                 context against policy, determines what should happen, preserves the
                 distinction between decision and authorization, verifies the outcome,
-                and governs again from the resulting context.
+                and governs again from the resulting context across cloud, NAS,
+                object storage, applications, databases, SSD/HDD, optical, tape,
+                and other repositories.
             </p>
             </div>
 
@@ -546,15 +470,16 @@ export default function DataLifecycleManagementPage() {
           </p>
 
           <h2>
-            Govern the information.
+            DLM decides.
             <br />
-            Not just the infrastructure.
+            Storage strategies execute.
           </h2>
 
           <p>
-            Understand what information is, what it means, what it requires,
-            and what should happen next — then verify the result and govern
-            from the new context.
+            Understand what information is, what it means, and what it
+            requires. Then coordinate the appropriate action across enterprise
+            systems, including Active Archive or Preservation when those are
+            the right storage strategies.
           </p>
 
           <div className="dlm2-closing-actions">

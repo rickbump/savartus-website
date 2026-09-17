@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Savartus",
   },
   description:
-    "Savartus provides Data Lifecycle Management, Active Archive, optical object storage, and enterprise storage technologies for managing, storing, and preserving information.",
+    "Savartus provides Active Archive, Preservation, and Data Lifecycle Management solutions for managing, storing, and preserving information.",
 };
 
 const GOOGLE_ANALYTICS_ID = "G-5ZF3GGF439";
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <Header />
 

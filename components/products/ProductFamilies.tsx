@@ -7,21 +7,21 @@ const groups = [
     label: "STAND ALONE SYSTEMS",
     title: "Compact systems",
     description:
-      "Standalone Savartus systems for environments that need optical storage or integrated Active Archive in a self-contained platform, with an enterprise-class front end.",
+      "Standalone Savartus systems for environments that need nearline optical preservation or integrated Active Archive in a self-contained platform.",
   },
   {
     id: "rack",
     label: "RACK MOUNT SYSTEMS",
     title: "Scale from rack to petabytes",
     description:
-      "Rack-mounted and enterprise library systems designed to scale optical preservation capacity across an oRain-managed environment.",
+      "Rack-mounted and enterprise library systems designed to scale nearline optical preservation capacity across an oRain-managed environment.",
   },
   {
     id: "offline",
     label: "OFF-LINE SYSTEMS",
     title: "Physical isolation",
     description:
-      "Media-only preservation systems that keep optical media physically offline while oRain retains knowledge of what is stored and where it resides.",
+      "Media-only preservation systems that keep optical media physically isolated while oRain retains knowledge of what is stored and where it resides.",
   },
 ];
 
@@ -30,18 +30,17 @@ export function ProductFamilies() {
     <section className="products-section products-hardware">
       <div className="site-container">
         <div className="products-section-header">
-          <p className="products-eyebrow">HARDWARE</p>
+          <p className="products-eyebrow">STORAGE SYSTEMS</p>
 
           <h2>
-            Enterprise optical systems
+            Enterprise Library Systems
             <br />
-            for every scale.
+            for nearline and offline preservation.
           </h2>
 
           <p className="products-lead">
-            Savartus hardware spans compact standalone systems, scalable
-            rack-mounted optical libraries, and physically isolated off-line
-            preservation systems.
+            Nearline and offline optical storage infrastructure from compact
+            standalone systems through petabyte-scale enterprise libraries.
           </p>
         </div>
 

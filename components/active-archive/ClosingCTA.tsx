@@ -28,10 +28,10 @@ export function ClosingCTA() {
             </Link>
 
             <Link
-              href="/optical-object-storage"
+              href="/preservation"
               className="button button-outline-light"
             >
-              Explore Optical Object Storage
+              Explore Preservation
             </Link>
           </div>
         </div>

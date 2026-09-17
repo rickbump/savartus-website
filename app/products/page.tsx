@@ -12,35 +12,33 @@ export default function ProductsPage() {
           <p className="products-eyebrow">SAVARTUS PRODUCTS</p>
 
           <h1>
-            Infrastructure for the
+            Technology for managing,
             <br />
-            information lifecycle.
+            storing, and preserving information.
           </h1>
 
           <p className="products-hero-copy">
-            Savartus combines enterprise optical storage, software
-            orchestration, data lifecycle management, and managed services to
-            help organizations manage, store, and preserve information
-            throughout its lifecycle.
+            Products are the technologies that deliver Savartus solutions:
+            storage systems, storage management, and information management.
           </p>
 
           <div className="products-pillar-grid">
             <a href="#hardware" className="products-pillar">
-              <span>STORE</span>
+              <span>STORAGE SYSTEMS</span>
               <strong>Enterprise Library Systems</strong>
-              <p>Online, nearline and offline optical object storage.</p>
+              <p>Nearline and offline optical storage infrastructure.</p>
             </a>
 
             <a href="#software" className="products-pillar">
-              <span>MANAGE</span>
-              <strong>Savartus Software</strong>
-              <p>Lifecycle intelligence and storage orchestration.</p>
+              <span>STORAGE MANAGEMENT</span>
+              <strong>oRain</strong>
+              <p>Management across performance and optical environments.</p>
             </a>
 
             <a href="#services" className="products-pillar">
-              <span>PRESERVE</span>
-              <strong>Managed Services</strong>
-              <p>Active Archive and preservation as a service.</p>
+              <span>INFORMATION MANAGEMENT</span>
+              <strong>FMS + DLM Platform</strong>
+              <p>Metadata, search, governance, policy, and workflow.</p>
             </a>
           </div>
         </div>

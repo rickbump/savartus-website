@@ -13,15 +13,16 @@ export default function ActiveArchivePage() {
           <p className="aa-eyebrow">ACTIVE ARCHIVE</p>
 
           <h1>
-            Active today.
+            Active when you need it.
             <br />
-            Preserved from day one.
+            Preserved from the start.
           </h1>
 
           <p className="aa-hero-copy">
-            Savartus combines high-performance SSD or HDD storage with optical
-            object storage to provide immediate access and long-term
-            preservation from the moment information arrives.
+            Active Archive combines performance storage with nearline optical
+            preservation. The performance copy remains while usage and
+            performance requirements justify it; the preserved optical copy
+            exists independently.
           </p>
 
           <div className="aa-hero-actions">

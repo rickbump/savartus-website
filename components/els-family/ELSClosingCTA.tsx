@@ -16,7 +16,7 @@ export function ELSClosingCTA() {
           </h2>
 
           <p>
-            From standalone systems to multi-petabyte online and off-line
+            From standalone systems to multi-petabyte nearline and offline
             preservation, the Savartus ELS family provides an optical
             foundation for long-lived enterprise information.
           </p>
@@ -27,10 +27,10 @@ export function ELSClosingCTA() {
             </Link>
 
             <Link
-              href="/optical-object-storage"
+              href="/preservation"
               className="button button-outline-light"
             >
-              Explore Optical Object Storage
+              Explore Preservation
             </Link>
           </div>
         </div>

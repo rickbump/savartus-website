@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ELSProductTechnicalDetails } from "@/components/products/ELSProductTechnicalDetails";
 import type { ELSProduct } from "@/data/els-products";
 
 type Props = {
@@ -7,6 +8,18 @@ type Props = {
 };
 
 export function ELSProductDetail({ product }: Props) {
+  const primarySpecs = [
+    ...product.specs,
+    {
+      label: "Dimensions",
+      value: `${product.technicalSpecs.dimensionsInches} / ${product.technicalSpecs.dimensionsCm}`,
+    },
+    {
+      label: "Weight",
+      value: `${product.technicalSpecs.weightLbs} / ${product.technicalSpecs.weightKg}`,
+    },
+  ];
+
   return (
     <main>
       <section className="product-detail-hero">
@@ -36,6 +49,14 @@ export function ELSProductDetail({ product }: Props) {
                 >
                   View ELS Family
                 </Link>
+
+                <a
+                  href={product.sellSheet.href}
+                  className="button button-secondary"
+                  download
+                >
+                  Sell Sheet
+                </a>
               </div>
             </div>
 
@@ -59,8 +80,16 @@ export function ELSProductDetail({ product }: Props) {
                     className="product-detail-metric"
                     key={metric.label}
                   >
-                    <span>{metric.label}</span>
-                    <strong>{metric.value}</strong>
+                    <span>
+                      {metric.label === "CAPACITY"
+                        ? "DISC CAPACITY"
+                        : metric.label}
+                    </span>
+                    <strong>
+                      {metric.label === "CAPACITY"
+                        ? product.mediaCapacity
+                        : metric.value}
+                    </strong>
                   </div>
                 ))}
               </div>
@@ -212,12 +241,36 @@ export function ELSProductDetail({ product }: Props) {
           </div>
 
           <div className="product-spec-table">
-            {product.specs.map((spec) => (
+            {primarySpecs.map((spec) => (
               <div className="product-spec-row" key={spec.label}>
                 <div>{spec.label}</div>
                 <div>{spec.value}</div>
               </div>
             ))}
+          </div>
+
+          <ELSProductTechnicalDetails
+            model={product.name}
+            technicalSpecs={product.technicalSpecs}
+          />
+
+          <div className="product-download-panel">
+            <div>
+              <p className="product-detail-eyebrow">SELL SHEET</p>
+              <h3>{product.name} product sell sheet.</h3>
+              <p>
+                Download the product sell sheet for hardware specifications,
+                capacity details, and system positioning.
+              </p>
+            </div>
+
+            <a
+              href={product.sellSheet.href}
+              className="button button-primary"
+              download
+            >
+              {product.sellSheet.label}
+            </a>
           </div>
         </div>
       </section>

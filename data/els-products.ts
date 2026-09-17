@@ -43,6 +43,11 @@ export type ELSProduct = {
 
   image?: string;
 
+  sellSheet: {
+    href: string;
+    label: string;
+  };
+
   metrics: {
     label: string;
     value: string;
@@ -89,6 +94,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 4",
     formFactor: "Stand-Alone Tower",
+    image: "/images/products/els150/els150.jpg",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS100_Sell_Sheet.pdf",
+      label: "Download ELS100 Sell Sheet",
+    },
 
     metrics: [
       { label: "CAPACITY", value: "16 TB" },
@@ -177,6 +187,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 4",
     formFactor: "Stand-Alone Tower",
+    image: "/images/products/els150/els150.jpg",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS150_Sell_Sheet.pdf",
+      label: "Download ELS150 Sell Sheet",
+    },
 
     metrics: [
       { label: "CAPACITY", value: "24 TB" },
@@ -268,6 +283,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "100 GB usable per disc",
     drives: "Up to 6",
     formFactor: "7U Rack Mount",
+    image: "/images/products/els300/els288.jpg",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS300_Sell_Sheet.pdf",
+      label: "Download ELS300 Sell Sheet",
+    },
 
     metrics: [
       { label: "CAPACITY", value: "24 TB" },
@@ -378,6 +398,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 6",
     formFactor: "7U Rack Mount",
+    image: "/images/products/els500/els500.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS500_Sell_Sheet.pdf",
+      label: "Download ELS500 Sell Sheet",
+    },
 
     scalable: true,
 
@@ -483,6 +508,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 12",
     formFactor: "10U Rack Mount",
+    image: "/images/products/els1000/els1000.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS1000_Sell_Sheet.pdf",
+      label: "Download ELS1000 Sell Sheet",
+    },
 
     scalable: true,
 
@@ -588,6 +618,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 24",
     formFactor: "20U Rack Mount",
+    image: "/images/products/els3600/els3600.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS3600_Sell_Sheet.pdf",
+      label: "Download ELS3600 Sell Sheet",
+    },
 
     scalable: true,
 
@@ -691,6 +726,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 12",
     formFactor: "20U Rack Mount",
+    image: "/images/products/els4000/els4000.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS4000_Sell_Sheet.pdf",
+      label: "Download ELS4000 Sell Sheet",
+    },
 
     scalable: true,
 
@@ -796,6 +836,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 40",
     formFactor: "45U Rack Mount",
+    image: "/images/products/els8000/els8000",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS8000_Sell_Sheet.pdf",
+      label: "Download ELS8000 Sell Sheet",
+    },
 
     scalable: true,
 
@@ -898,6 +943,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 40",
     formFactor: "50U Rack Mount",
+    image: "/images/products/els10k/els10k.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS10K_Sell_Sheet.pdf",
+      label: "Download ELS10K Sell Sheet",
+    },
 
     scalable: true,
 
@@ -1000,6 +1050,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "No drives",
     formFactor: "45U Rack Mount",
+    image: "/images/products/els8000/els8000",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS8000-OL_Sell_Sheet.pdf",
+      label: "Download ELS8000-OL Sell Sheet",
+    },
 
     offline: true,
 
@@ -1099,6 +1154,11 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "No drives",
     formFactor: "50U Rack Mount",
+    image: "/images/products/els10k-ol/els10k-ol.png",
+    sellSheet: {
+      href: "/downloads/data-sheets/Savartus_ELS10K-OL_Sell_Sheet.pdf",
+      label: "Download ELS10K-OL Sell Sheet",
+    },
 
     offline: true,
 

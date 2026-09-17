@@ -50,7 +50,7 @@ export function StateSeparation() {
 
               <div>
                 <span>ONLINE</span>
-                <strong>Optical Object Storage</strong>
+                <strong>Nearline Optical Preservation</strong>
               </div>
 
               <div>

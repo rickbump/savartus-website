@@ -5,65 +5,76 @@ export function ServicesProducts() {
     <section className="products-section products-services">
       <div className="site-container">
         <div className="products-section-header">
-          <p className="products-eyebrow">AS A SERVICE</p>
+          <p className="products-eyebrow">LOOKING FOR A COMPLETE SOLUTION?</p>
 
           <h2>
-            Savartus architecture.
+            Start with the outcome.
             <br />
-            Without owning the infrastructure.
+            Then choose deployment.
           </h2>
 
           <p className="products-lead">
-            Savartus can deliver the same Active Archive and preservation
-            architecture as a managed service, allowing organizations to align
-            storage economics with information access requirements.
+            Products deliver the technology. Solutions define the customer
+            outcome: keep information active and preserved, preserve it without
+            an unnecessary performance copy, or govern it across enterprise
+            repositories.
           </p>
         </div>
 
         <div className="products-service-panel">
           <div className="products-service-copy">
             <p className="products-card-label">
-              ACTIVE ARCHIVE AS A SERVICE
+              SOLUTIONS
             </p>
 
-            <h3>Performance when you need it. Preservation throughout.</h3>
+            <h3>DLM decides. Storage solutions execute.</h3>
 
             <p>
-              Information enters a performance tier and optical preservation
-              simultaneously. As the high-performance copy is no longer
-              required, storage placement and monthly economics can change
-              while the preserved information remains available.
+              Data Lifecycle Management evaluates information requirements and
+              authorizes action. Active Archive and Preservation provide
+              storage execution options when optical preservation is the right
+              strategy.
             </p>
 
-            <Link
-              href="/active-archive/service"
-              className="button button-primary"
-            >
-              Explore Active Archive as a Service
-            </Link>
+            <div className="products-closing-actions">
+              <Link href="/active-archive" className="button button-primary">
+                Active Archive
+              </Link>
+
+              <Link href="/preservation" className="button button-secondary">
+                Preservation
+              </Link>
+
+              <Link
+                href="/data-lifecycle-management"
+                className="button button-secondary"
+              >
+                Data Lifecycle Management
+              </Link>
+            </div>
           </div>
 
           <div className="products-service-flow">
             <div>
               <span>01</span>
-              <strong>Hot Access</strong>
-              <p>SSD / HDD + Optical</p>
+              <strong>Active Archive</strong>
+              <p>Performance + nearline optical</p>
             </div>
 
             <div className="products-service-arrow">→</div>
 
             <div>
               <span>02</span>
-              <strong>Nearline Optical</strong>
-              <p>Accessible + Preserved</p>
+              <strong>Preservation</strong>
+              <p>Cache + nearline/offline optical</p>
             </div>
 
             <div className="products-service-arrow">→</div>
 
             <div>
               <span>03</span>
-              <strong>Offline Optical</strong>
-              <p>Physical Isolation</p>
+              <strong>DLM</strong>
+              <p>Governance across any repository</p>
             </div>
           </div>
         </div>

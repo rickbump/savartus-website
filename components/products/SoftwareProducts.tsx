@@ -2,15 +2,15 @@ import Link from "next/link";
 
 const software = [
   {
-    label: "STORAGE OS",
-    name: "oRain",
+    label: "STORAGE MANAGEMENT",
+    name: "oRain Storage Management",
     description:
       "The storage management and orchestration layer that maintains awareness of objects, media, storage location, and system location across Savartus environments.",
     href: "/technology/orain",
   },
   {
-    label: "DATA LIFECYCLE MANAGEMENT",
-    name: "Savartus DLM",
+    label: "INFORMATION MANAGEMENT",
+    name: "Data Lifecycle Management Platform",
     description:
       "Policy-driven information governance that evaluates enterprise information independently of the technologies used to store it.",
     href: "/data-lifecycle-management",
@@ -32,16 +32,15 @@ export function SoftwareProducts() {
           <p className="products-eyebrow">SOFTWARE</p>
 
           <h2>
-            Know what you have.
+            Storage management and
             <br />
-            Know where it is.
+            information management.
           </h2>
 
           <p className="products-lead">
-            Savartus software separates information management, lifecycle
-            intelligence, and storage orchestration from the underlying
-            hardware so the environment can evolve without losing control of
-            the information.
+            oRain manages storage execution. FMS and the Savartus DLM Platform
+            provide metadata, search, governance, policy, information context,
+            workflow, and lifecycle management.
           </p>
         </div>
 

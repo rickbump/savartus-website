@@ -30,10 +30,10 @@ export default function ELSFamilyPage() {
             </a>
 
             <a
-              href="/optical-object-storage"
+              href="/preservation"
               className="button button-secondary"
             >
-              Explore the Technology
+              Explore Preservation
             </a>
           </div>
         </div>

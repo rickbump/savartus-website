@@ -140,7 +140,7 @@ export default function CompanyPage() {
       </section>
 
       {/* HISTORY */}
-      <section className="about-section about-history">
+      <section id="history" className="about-section about-history">
         <div className="site-container">
           <div className="about-section-header">
             <p className="about-eyebrow">OUR STORY</p>
@@ -243,7 +243,7 @@ export default function CompanyPage() {
       </section>
 
       {/* LEADERSHIP */}
-      <section className="about-section about-leadership">
+      <section id="leadership" className="about-section about-leadership">
         <div className="site-container">
           <div className="about-section-header">
             <p className="about-eyebrow">LEADERSHIP</p>
@@ -321,7 +321,7 @@ export default function CompanyPage() {
       </section>
 
       {/* LOCATIONS */}
-      <section className="about-section about-locations">
+      <section id="locations" className="about-section about-locations">
         <div className="site-container">
           <div className="about-section-header">
             <p className="about-eyebrow">WHERE WE WORK</p>

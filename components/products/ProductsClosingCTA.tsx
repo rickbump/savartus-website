@@ -16,19 +16,17 @@ export function ProductsClosingCTA() {
           </h2>
 
           <p>
-            From compact Active Archive systems to petabyte-scale online and
-            offline preservation, Savartus combines hardware, software, and
-            services into an architecture that can grow with the information it
-            manages.
+            Choose Active Archive, Preservation, or Data Lifecycle Management,
+            then deploy on-premises, as a service, or in a hybrid model.
           </p>
 
           <div className="products-closing-actions">
-            <Link href="/products/els" className="button button-light">
-              Explore ELS Systems
+            <Link href="/active-archive" className="button button-light">
+              Active Archive
             </Link>
 
-            <Link href="/contact" className="button button-outline-light">
-              Talk to Savartus
+            <Link href="/preservation" className="button button-outline-light">
+              Preservation
             </Link>
           </div>
         </div>

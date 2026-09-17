@@ -12,8 +12,8 @@ export function Footer() {
 
         <div className="footer-links">
           <Link href="/active-archive">Active Archive</Link>
+          <Link href="/preservation">Preservation</Link>
           <Link href="/data-lifecycle-management">Data Lifecycle Management</Link>
-          <Link href="/optical-object-storage">Optical Object Storage</Link>
           <Link href="/products">Products</Link>
           <Link href="/resources">Resources</Link>
         </div>
