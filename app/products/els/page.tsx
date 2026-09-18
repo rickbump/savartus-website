@@ -25,7 +25,7 @@ export default function ELSFamilyPage() {
           </p>
 
           <div className="els-hero-actions">
-            <a href="#compare" className="button button-primary">
+            <a href="#compact-deployment" className="button button-primary">
               Compare ELS Systems
             </a>
 

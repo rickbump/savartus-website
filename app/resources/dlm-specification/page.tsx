@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest";
 
 const lifecycleStages = [
   "Created",
@@ -57,12 +58,49 @@ export default function DLMSpecificationPage() {
               Explore the Framework
             </a>
 
-            <Link
-              href="/data-lifecycle-management"
+            <a
+              href="/downloads/specification/Specification Overview.pdf"
               className="button button-secondary"
+              download
             >
-              Data Lifecycle Management
-            </Link>
+              Download Overview
+            </a>
+
+            <FullDocumentRequest source="DLM specification page hero" />
+          </div>
+        </div>
+      </section>
+
+      <section className="dlmspec-section dlmspec-downloads">
+        <div className="site-container">
+          <div className="dlmspec-download-panel">
+            <div>
+              <p className="dlmspec-eyebrow">DOCUMENTS</p>
+
+              <h2>
+                Start with the overview.
+                <br />
+                Request the full specification.
+              </h2>
+
+              <p>
+                The overview document is available directly. The full
+                Enterprise Data Lifecycle™ Specification is distributed by
+                request so Savartus can send the appropriate download link.
+              </p>
+            </div>
+
+            <div className="dlmspec-download-actions">
+              <a
+                href="/downloads/specification/Specification Overview.pdf"
+                className="button button-primary"
+                download
+              >
+                Download Overview
+              </a>
+
+              <FullDocumentRequest source="DLM specification document panel" />
+            </div>
           </div>
         </div>
       </section>
@@ -286,6 +324,14 @@ export default function DLMSpecificationPage() {
             <Link href="/contact" className="button button-light">
               Talk to Savartus
             </Link>
+
+            <a
+              href="/downloads/specification/Specification Overview.pdf"
+              className="button button-outline-light"
+              download
+            >
+              Download Overview
+            </a>
           </div>
         </div>
       </section>

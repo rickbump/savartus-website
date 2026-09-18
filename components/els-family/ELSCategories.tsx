@@ -1,27 +1,26 @@
 import Link from "next/link";
-import { elsProducts } from "@/data/els-products";
 
 const categories = [
   {
-    id: "standalone",
+    href: "#compact-deployment",
     label: "STAND ALONE",
     title: "Compact deployment",
     description:
-      "Self-contained Savartus systems for compact optical storage and integrated Active Archive, with an enterprise oRain object storage front end and interoperability with all other ELS systems.",
+      "Compare compact optical storage, integrated Active Archive, and small-footprint nearline preservation systems.",
   },
   {
-    id: "rack",
+    href: "#enterprise-scale",
     label: "RACK MOUNT",
     title: "Enterprise scale",
     description:
-      "Online/nearline optical storage systems that scale across multiple ELS systems, drives, and media while oRain provides a unified object storage and management layer.",
+      "Compare scalable nearline optical systems for enterprise preservation capacity.",
   },
   {
-    id: "offline",
+    href: "#deep-preservation",
     label: "OFF-LINE",
     title: "Deep preservation",
     description:
-      "Physically isolated optical storage for long-term preservation, with media, objects, and their physical locations remaining known and managed by oRain.",
+      "Compare physically isolated optical systems for deep preservation.",
   },
 ];
 
@@ -41,24 +40,19 @@ export function ELSCategories() {
 
         <div className="els-category-list">
           {categories.map((category) => (
-            <div className="els-category" key={category.id}>
+            <Link
+              className="els-category"
+              href={category.href}
+              key={category.href}
+            >
               <div className="els-category-copy">
                 <p className="els-card-label">{category.label}</p>
                 <h3>{category.title}</h3>
                 <p>{category.description}</p>
               </div>
 
-              <div className="els-category-products">
-                {elsProducts
-                  .filter((product) => product.category === category.id)
-                  .map((product) => (
-                    <Link href={`/products/${product.slug}`} key={product.name}>
-                      <strong>{product.name}</strong>
-                      <span>→</span>
-                    </Link>
-                  ))}
-              </div>
-            </div>
+              <span className="els-category-link">Compare systems →</span>
+            </Link>
           ))}
         </div>
       </div>

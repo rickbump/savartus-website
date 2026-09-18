@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest";
 
 export const metadata: Metadata = {
   title: "About Savartus",
@@ -21,9 +22,10 @@ const leadership = [
         "Rick's background spans enterprise software, data management, AI and analytics, SaaS, hardware, product development, sales, operations, and large-scale business transformation. That combination shapes Savartus's approach to treating information lifecycle as a business and governance problem—not simply a storage problem.",
     ],
     link: {
-        label: "Explore the Enterprise Data Lifecycle™ Specification",
-        href: "/resources/dlm-specification",
+        label: "Download the Enterprise Data Lifecycle™ overview",
+        href: "/downloads/specification/Specification Overview.pdf",
         external: false,
+        download: true,
     },
     },
   {
@@ -306,11 +308,21 @@ export default function CompanyPage() {
                             {person.link.label} →
                             </a>
                         ) : (
-                            <Link href={person.link.href}>
+                            <Link
+                            href={person.link.href}
+                            download={"download" in person.link && person.link.download}
+                            >
                             {person.link.label} →
                             </Link>
                         )}
                         </div>
+                    )}
+
+                    {person.name === "Rick Bump" && (
+                      <FullDocumentRequest
+                        source="Rick Bump company bio"
+                        compact
+                      />
                     )}
                     </div>
                 </div>
