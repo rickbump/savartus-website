@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+import { getPublishedInsights } from "@/content/insights/articles";
+
 const SITE_URL = "https://www.savartus.com";
 
 const routeConfig = [
@@ -38,9 +40,24 @@ const routeConfig = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routeConfig.map(({ path, priority }) => ({
-    url: `${SITE_URL}${path === "/" ? "" : path}`,
-    changeFrequency: "monthly",
-    priority,
-  }));
+  const staticRoutes: MetadataRoute.Sitemap = routeConfig.map(
+    ({ path, priority }) => ({
+      url: `${SITE_URL}${path === "/" ? "" : path}`,
+      changeFrequency: "monthly",
+      priority,
+    })
+  );
+
+  const insightRoutes: MetadataRoute.Sitemap = getPublishedInsights().map(
+    (article) => ({
+      url: `${SITE_URL}/insights/${article.slug}`,
+      lastModified: new Date(
+        article.updatedDate ?? article.publishedDate
+      ),
+      changeFrequency: "monthly",
+      priority: article.featured ? 0.8 : 0.7,
+    })
+  );
+
+  return [...staticRoutes, ...insightRoutes];
 }
