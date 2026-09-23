@@ -43,3 +43,6 @@ next-env.d.ts
 # Playwright generated files
 playwright-report/
 test-results/
+
+# local security documentation
+Security Inventory.docx
