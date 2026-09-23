@@ -1,9 +1,37 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
 import { FMSInformationModel } from "@/components/fms/FMSInformationModel";
 import { FMSWorkflow } from "@/components/fms/FMSWorkflow";
 import { FMSRelationship } from "@/components/fms/FMSRelationship";
 import { FMSCapabilities } from "@/components/fms/FMSCapabilities";
 import { FMSClosingCTA } from "@/components/fms/FMSClosingCTA";
+
+export const metadata: Metadata = {
+  title: "File Management System",
+
+  description:
+    "Savartus FMS creates a managed information layer across enterprise storage, maintaining metadata, identifiers, relationships, searchable attributes, and workflow context for files and objects.",
+
+  alternates: {
+    canonical: "/products/file-management",
+  },
+
+  openGraph: {
+    title: "File Management System | Savartus",
+    description:
+      "Create a searchable, managed information layer across enterprise storage with metadata, identifiers, relationships, and workflow context.",
+    url: "/products/file-management",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "File Management System | Savartus",
+    description:
+      "Create a searchable, managed information layer across enterprise storage with metadata, identifiers, relationships, and workflow context.",
+  },
+};
 
 export default function FileManagementPage() {
   return (

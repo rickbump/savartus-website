@@ -1,5 +1,33 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
 import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest";
+
+export const metadata: Metadata = {
+  title: "Enterprise Data Lifecycle™ Specification",
+
+  description:
+    "Explore the Enterprise Data Lifecycle™ Specification, a technology-independent information governance architecture for lifecycle state, policy, governed decisions, authorization, verification, and continuous reevaluation.",
+
+  alternates: {
+    canonical: "/resources/dlm-specification",
+  },
+
+  openGraph: {
+    title: "Enterprise Data Lifecycle™ Specification | Savartus",
+    description:
+      "A technology-independent information governance architecture for understanding enterprise information state, policy, lifecycle transitions, and governed decisions.",
+    url: "/resources/dlm-specification",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Enterprise Data Lifecycle™ Specification | Savartus",
+    description:
+      "A technology-independent information governance architecture for understanding enterprise information state, policy, lifecycle transitions, and governed decisions.",
+  },
+};
 
 const lifecycleStages = [
   "Created",
@@ -39,7 +67,7 @@ export default function DLMSpecificationPage() {
           <p className="dlmspec-eyebrow">ENTERPRISE DATA LIFECYCLE™</p>
 
           <h1>
-            A framework for managing
+            An architecture for governing
             <br />
             information according to
             <br />
@@ -48,14 +76,14 @@ export default function DLMSpecificationPage() {
 
           <p className="dlmspec-hero-copy">
             Enterprise Data Lifecycle™ defines a technology-independent
-            framework for understanding information state, governance
-            requirements, policy, and lifecycle transitions across the
-            enterprise.
+            architecture for understanding information state, governance
+            requirements, policy, governed decisions, lifecycle transitions,
+            verification, and continuous reevaluation across the enterprise.
           </p>
 
           <div className="dlmspec-actions">
-            <a href="#framework" className="button button-primary">
-              Explore the Framework
+            <a href="#architecture" className="button button-primary">
+              Explore the Architecture
             </a>
 
             <a
@@ -106,7 +134,7 @@ export default function DLMSpecificationPage() {
       </section>
 
       <section
-        id="framework"
+        id="architecture"
         className="dlmspec-section dlmspec-premise"
       >
         <div className="site-container">
@@ -123,7 +151,7 @@ export default function DLMSpecificationPage() {
               Traditional lifecycle models often infer information state from
               infrastructure characteristics such as age, access frequency, or
               storage tier. Enterprise Data Lifecycle™ separates the business
-              state of information from its operational storage state.
+              and governance state of information from its operational state.
             </p>
           </div>
 
@@ -173,8 +201,8 @@ export default function DLMSpecificationPage() {
           </div>
 
           <p className="dlmspec-lifecycle-note">
-            Lifecycle stages describe the business state of information—not
-            where that information is physically stored.
+            Lifecycle stages describe the business and governance state of
+            information—not where that information is physically stored.
           </p>
         </div>
       </section>
@@ -192,7 +220,7 @@ export default function DLMSpecificationPage() {
 
             <p className="dlmspec-lead">
               The Enterprise Data State Vector captures the dimensions required
-              to evaluate information in context.
+              to evaluate information in governed context.
             </p>
           </div>
 
@@ -210,18 +238,19 @@ export default function DLMSpecificationPage() {
       <section className="dlmspec-section dlmspec-policy">
         <div className="site-container">
           <div className="dlmspec-section-header">
-            <p className="dlmspec-eyebrow">POLICY-DRIVEN TRANSITIONS</p>
+            <p className="dlmspec-eyebrow">POLICY-DRIVEN GOVERNANCE</p>
 
             <h2>
-              Information moves when
+              Information changes state when
               <br />
               its requirements change.
             </h2>
 
             <p className="dlmspec-lead">
-              Lifecycle transitions are determined by policy and continuously
-              reevaluated as information context, obligations, value, risk, and
-              operational requirements change.
+              Lifecycle transitions and governance decisions are determined by
+              policy and continuously reevaluated as information context,
+              obligations, value, risk, relationships, and operational
+              requirements change.
             </p>
           </div>
 
@@ -239,7 +268,8 @@ export default function DLMSpecificationPage() {
               <span>02</span>
               <h3>Continuous</h3>
               <p>
-                Information state can be reevaluated as requirements change.
+                Governed state can be reevaluated as requirements and context
+                change.
               </p>
             </article>
 
@@ -247,7 +277,8 @@ export default function DLMSpecificationPage() {
               <span>03</span>
               <h3>Explainable</h3>
               <p>
-                Every lifecycle decision should have a clear policy basis.
+                Governance decisions should have a clear policy and context
+                basis.
               </p>
             </article>
 
@@ -255,8 +286,8 @@ export default function DLMSpecificationPage() {
               <span>04</span>
               <h3>Auditable</h3>
               <p>
-                Lifecycle transitions and decision context can be recorded and
-                reviewed.
+                Decisions, authorized actions, outcomes, verification, and
+                evidence can be recorded and reviewed.
               </p>
             </article>
           </div>
@@ -269,7 +300,7 @@ export default function DLMSpecificationPage() {
             <p className="dlmspec-eyebrow">WHAT EDL IS — AND IS NOT</p>
 
             <h2>
-              A governance framework,
+              An information-governance architecture,
               <br />
               not a storage schedule.
             </h2>
@@ -280,11 +311,11 @@ export default function DLMSpecificationPage() {
               <span>EDL IS</span>
 
               <ul>
-                <li>An information lifecycle framework</li>
+                <li>An enterprise information-governance architecture</li>
                 <li>Technology independent</li>
                 <li>Policy driven</li>
-                <li>Metadata aware</li>
-                <li>Business-state focused</li>
+                <li>Context and metadata aware</li>
+                <li>Business and governed-state focused</li>
               </ul>
             </article>
 
@@ -295,7 +326,7 @@ export default function DLMSpecificationPage() {
                 <li>A storage-tiering algorithm</li>
                 <li>An age-based archive schedule</li>
                 <li>A vendor-specific storage model</li>
-                <li>A replacement for business governance</li>
+                <li>A replacement for enterprise governance</li>
                 <li>A synonym for data movement</li>
               </ul>
             </article>
@@ -317,7 +348,7 @@ export default function DLMSpecificationPage() {
 
           <p>
             Contact Savartus to discuss the Enterprise Data Lifecycle™
-            framework, reference architecture, and specification.
+            architecture, reference architecture, and specification.
           </p>
 
           <div className="dlmspec-actions">

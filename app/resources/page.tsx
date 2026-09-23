@@ -1,4 +1,31 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Resources",
+
+  description:
+    "Explore Savartus technical resources, product information, Enterprise Data Lifecycle documentation, Active Archive architecture, preservation, and Enterprise Library Systems.",
+
+  alternates: {
+    canonical: "/resources",
+  },
+
+  openGraph: {
+    title: "Resources | Savartus",
+    description:
+      "Technical resources for Data Lifecycle Management, Active Archive, preservation, optical storage, and Savartus Enterprise Library Systems.",
+    url: "/resources",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Resources | Savartus",
+    description:
+      "Technical resources for Data Lifecycle Management, Active Archive, preservation, optical storage, and Savartus Enterprise Library Systems.",
+  },
+};
 
 export default function ResourcesPage() {
   return (
@@ -33,9 +60,9 @@ export default function ResourcesPage() {
             </h2>
 
             <p className="resources-lead">
-              A technology-independent framework for understanding information
-              state, governance requirements, policy, and lifecycle transitions
-              across the enterprise.
+              A technology-independent architecture for understanding
+              information state, governance requirements, policy, and lifecycle
+              transitions across the enterprise.
             </p>
           </div>
 
@@ -48,7 +75,7 @@ export default function ResourcesPage() {
               <h3>Enterprise Data Lifecycle™</h3>
               <p>
                 Explore the lifecycle model, Enterprise Data State Vector,
-                policy architecture, and decision framework.
+                policy architecture, and governance decision model.
               </p>
             </div>
 

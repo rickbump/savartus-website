@@ -1,9 +1,36 @@
+import type { Metadata } from "next";
+
 import { ActiveArchiveArchitecture } from "@/components/active-archive/ActiveArchiveArchitecture";
 import { LifecycleState } from "@/components/active-archive/LifecycleState";
 import { Economics } from "@/components/active-archive/Economics";
 import { CloudComparison } from "@/components/active-archive/CloudComparison";
 import { ServiceCTA } from "@/components/active-archive/ServiceCTA";
 import { ClosingCTA } from "@/components/active-archive/ClosingCTA";
+
+export const metadata: Metadata = {
+  title: "Active Archive",
+  description:
+    "Savartus Active Archive combines high-performance storage with nearline optical preservation so information remains active while needed and preserved for the long term.",
+
+  alternates: {
+    canonical: "/active-archive",
+  },
+
+  openGraph: {
+    title: "Active Archive | Savartus",
+    description:
+      "Keep information active while preserving it for the long term with performance storage and nearline optical preservation.",
+    url: "/active-archive",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Active Archive | Savartus",
+    description:
+      "Keep information active while preserving it for the long term with performance storage and nearline optical preservation.",
+  },
+};
 
 export default function ActiveArchivePage() {
   return (

@@ -1,5 +1,32 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Data Lifecycle Management",
+
+  description:
+    "Savartus Data Lifecycle Management helps organizations govern enterprise information according to identity, context, policy, value, risk, retention, protection, and lifecycle requirements.",
+
+  alternates: {
+    canonical: "/data-lifecycle-management",
+  },
+
+  openGraph: {
+    title: "Data Lifecycle Management | Savartus",
+    description:
+      "Govern enterprise information according to what it is, what it means, and what it requires with policy-driven Data Lifecycle Management.",
+    url: "/data-lifecycle-management",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Data Lifecycle Management | Savartus",
+    description:
+      "Govern enterprise information according to what it is, what it means, and what it requires with policy-driven Data Lifecycle Management.",
+  },
+};
 
 const edsvDimensions = [
   {

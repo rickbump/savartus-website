@@ -5,8 +5,28 @@ import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest"
 
 export const metadata: Metadata = {
   title: "About Savartus",
+
   description:
-    "Learn about Savartus, our history, leadership, locations, and the experience behind our approach to data lifecycle management, storage, security, and preservation.",
+    "Learn about Savartus, our leadership, history, and expertise in Data Lifecycle Management, Active Archive, enterprise storage, security, and long-term information preservation.",
+
+  alternates: {
+    canonical: "/company",
+  },
+
+  openGraph: {
+    title: "About Savartus | Savartus",
+    description:
+      "Meet the people and experience behind Savartus and our approach to data lifecycle management, storage, security, Active Archive, and information preservation.",
+    url: "/company",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "About Savartus | Savartus",
+    description:
+      "Meet the people and experience behind Savartus and our approach to data lifecycle management, storage, security, Active Archive, and information preservation.",
+  },
 };
 
 const leadership = [

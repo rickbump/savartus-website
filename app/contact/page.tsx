@@ -2,9 +2,29 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Savartus",
+
   description:
-    "Contact Savartus to discuss Active Archive, Enterprise Library Systems, Data Lifecycle Management, managed services, and partnerships.",
+    "Contact Savartus to discuss Data Lifecycle Management, Active Archive, information preservation, enterprise optical storage, managed services, and partnerships.",
+
+  alternates: {
+    canonical: "/contact",
+  },
+
+  openGraph: {
+    title: "Contact Savartus | Savartus",
+    description:
+      "Talk with Savartus about Data Lifecycle Management, Active Archive, information preservation, enterprise optical storage, and managed services.",
+    url: "/contact",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Savartus | Savartus",
+    description:
+      "Talk with Savartus about Data Lifecycle Management, Active Archive, information preservation, enterprise optical storage, and managed services.",
+  },
 };
 
 export default function ContactPage() {

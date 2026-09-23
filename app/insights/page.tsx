@@ -1,3 +1,31 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Insights",
+
+  description:
+    "Savartus insights on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI-era data strategy, and enterprise information governance.",
+
+  alternates: {
+    canonical: "/insights",
+  },
+
+  openGraph: {
+    title: "Insights | Savartus",
+    description:
+      "Perspectives on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI, and long-term enterprise data strategy.",
+    url: "/insights",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Insights | Savartus",
+    description:
+      "Perspectives on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI, and long-term enterprise data strategy.",
+  },
+};
+
 const insights = [
   {
     category: "DATA LIFECYCLE",
@@ -51,8 +79,9 @@ export default function InsightsPage() {
           </h1>
 
           <p className="insights-hero-copy">
-            Perspectives on information lifecycle, Active Archive, optical
-            storage, AI-era preservation, and long-term data strategy.
+            Perspectives on Data Lifecycle Management, Active Archive,
+            information preservation, optical storage, AI-era data strategy,
+            and long-term enterprise information governance.
           </p>
         </div>
       </section>

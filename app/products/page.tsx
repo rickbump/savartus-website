@@ -1,8 +1,36 @@
+import type { Metadata } from "next";
+
 import { ProductFamilies } from "@/components/products/ProductFamilies";
 import { SoftwareProducts } from "@/components/products/SoftwareProducts";
 import { ServicesProducts } from "@/components/products/ServicesProducts";
 import { ProductArchitecture } from "@/components/products/ProductArchitecture";
 import { ProductsClosingCTA } from "@/components/products/ProductsClosingCTA";
+
+export const metadata: Metadata = {
+  title: "Products",
+
+  description:
+    "Explore Savartus products for enterprise optical storage, storage management, file management, and Data Lifecycle Management, including Enterprise Library Systems, oRain, FMS, and the DLM Platform.",
+
+  alternates: {
+    canonical: "/products",
+  },
+
+  openGraph: {
+    title: "Products | Savartus",
+    description:
+      "Enterprise technologies for managing, storing, and preserving information, including optical storage systems, storage management, file management, and Data Lifecycle Management.",
+    url: "/products",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Products | Savartus",
+    description:
+      "Enterprise technologies for managing, storing, and preserving information, including optical storage systems, storage management, file management, and Data Lifecycle Management.",
+  },
+};
 
 export default function ProductsPage() {
   return (

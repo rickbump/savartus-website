@@ -1,9 +1,37 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
 import { OrainControlPlane } from "@/components/orain/OrainControlPlane";
 import { OrainCapabilities } from "@/components/orain/OrainCapabilities";
 import { OrainScale } from "@/components/orain/OrainScale";
 import { OrainRestore } from "@/components/orain/OrainRestore";
 import { OrainClosingCTA } from "@/components/orain/OrainClosingCTA";
+
+export const metadata: Metadata = {
+  title: "oRain Storage Management",
+
+  description:
+    "Savartus oRain provides storage management and orchestration across performance, nearline optical, and offline storage tiers, including object location, media tracking, movement, and retrieval.",
+
+  alternates: {
+    canonical: "/technology/orain",
+  },
+
+  openGraph: {
+    title: "oRain Storage Management | Savartus",
+    description:
+      "Manage and orchestrate information across performance, nearline optical, and offline storage with Savartus oRain.",
+    url: "/technology/orain",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "oRain Storage Management | Savartus",
+    description:
+      "Manage and orchestrate information across performance, nearline optical, and offline storage with Savartus oRain.",
+  },
+};
 
 export default function OrainPage() {
   return (
@@ -12,7 +40,7 @@ export default function OrainPage() {
         <div className="site-container">
           <div className="orain-hero-grid">
             <div>
-              <p className="orain-eyebrow">SAVARTUS STORAGE MANAGEMENTOS</p>
+              <p className="orain-eyebrow">SAVARTUS STORAGE MANAGEMENT</p>
 
               <h1>
                 One view.
@@ -46,7 +74,7 @@ export default function OrainPage() {
               <div className="orain-core">
                 <span>SAVARTUS</span>
                 <strong>oRain</strong>
-                <small>STORAGE MANAGEMENT OS</small>
+                <small>STORAGE MANAGEMENT</small>
               </div>
 
               <div className="orain-hero-functions">

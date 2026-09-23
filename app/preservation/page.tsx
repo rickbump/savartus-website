@@ -1,8 +1,35 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
 import { OnlineOffline } from "@/components/optical-object-storage/OnlineOffline";
 import { OpticalCharacteristics } from "@/components/optical-object-storage/OpticalCharacteristics";
 import { ScaleAndResilience } from "@/components/optical-object-storage/ScaleAndResilience";
 import { OpticalClosingCTA } from "@/components/optical-object-storage/OpticalClosingCTA";
+
+export const metadata: Metadata = {
+  title: "Data Preservation",
+  description:
+    "Savartus provides long-term information preservation using nearline and offline optical storage designed to keep enterprise data durable, retrievable, and protected.",
+
+  alternates: {
+    canonical: "/preservation",
+  },
+
+  openGraph: {
+    title: "Data Preservation | Savartus",
+    description:
+      "Preserve enterprise information for the long term with durable, retrievable nearline and offline optical storage.",
+    url: "/preservation",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Data Preservation | Savartus",
+    description:
+      "Preserve enterprise information for the long term with durable, retrievable nearline and offline optical storage.",
+  },
+};
 
 export default function PreservationPage() {
   return (

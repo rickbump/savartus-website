@@ -1,4 +1,31 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Savartus | Manage. Store. Preserve.",
+
+  description:
+    "Savartus helps organizations manage, store, govern, and preserve enterprise information through Active Archive, Preservation, Data Lifecycle Management, and optical storage technologies.",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    title: "Savartus | Manage. Store. Preserve.",
+    description:
+      "Active Archive, Preservation, Data Lifecycle Management, and enterprise optical storage for managing, storing, governing, and preserving information.",
+    url: "/",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Savartus | Manage. Store. Preserve.",
+    description:
+      "Active Archive, Preservation, Data Lifecycle Management, and enterprise optical storage for managing, storing, governing, and preserving information.",
+  },
+};
 
 export default function HomePage() {
   return (
