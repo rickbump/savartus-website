@@ -6,16 +6,62 @@ import { Header } from "@/components/navigation/Header";
 
 import "./globals.css";
 
+const SITE_URL = "https://www.savartus.com";
+const GOOGLE_ANALYTICS_ID = "G-5ZF3GGF439";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+
+  applicationName: "Savartus",
+
   title: {
     default: "Savartus | Manage. Store. Preserve.",
     template: "%s | Savartus",
   },
-  description:
-    "Savartus provides Active Archive, Preservation, and Data Lifecycle Management solutions for managing, storing, and preserving information.",
-};
 
-const GOOGLE_ANALYTICS_ID = "G-5ZF3GGF439";
+  description:
+    "Savartus provides Active Archive, Preservation, and Data Lifecycle Management solutions for managing, storing, governing, and preserving enterprise information.",
+
+  authors: [
+    {
+      name: "Savartus",
+      url: SITE_URL,
+    },
+  ],
+
+  creator: "Savartus",
+  publisher: "Savartus",
+
+  category: "Enterprise Data Management",
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Savartus",
+    title: "Savartus | Manage. Store. Preserve.",
+    description:
+      "Active Archive, Preservation, and Data Lifecycle Management solutions for enterprise information.",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Savartus | Manage. Store. Preserve.",
+    description:
+      "Active Archive, Preservation, and Data Lifecycle Management solutions for enterprise information.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
 
 export default function RootLayout({
   children,
