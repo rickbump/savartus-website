@@ -25,6 +25,7 @@ export type InsightArticle = {
   featured?: boolean;
   sections: InsightSection[];
   relatedLinks: InsightLink[];
+  sourceLinks?: InsightLink[];
   relatedArticleSlugs: string[];
 };
 
@@ -359,9 +360,9 @@ export const insightArticles: InsightArticle[] = [
       "Important information should remain available on the right performance tier while being preserved on durable optical storage.",
     category: "ACTIVE ARCHIVE",
     author: "Savartus",
-    publishedDate: "2026-10-06",
+    publishedDate: "2026-09-30",
     readingTime: "5 min read",
-    status: "draft",
+    status: "published",
 
     sections: [
       {
@@ -429,8 +430,8 @@ export const insightArticles: InsightArticle[] = [
     ],
 
     relatedArticleSlugs: [
-      "why-optical-storage-matters-again-in-the-ai-era",
-      "old-data-isnt-necessarily-cold-data",
+      "the-evidence-must-outlive-the-storage-system",
+      "why-do-we-manage-data-based-on-its-birthday",
     ],
   },
 
@@ -515,6 +516,217 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "why-optical-storage-matters-again-in-the-ai-era",
       "why-do-we-manage-data-based-on-its-birthday",
+    ],
+  },
+
+  {
+    slug: "the-evidence-must-outlive-the-storage-system",
+    title: "The Evidence Must Outlive the Storage System",
+    description:
+      "Why regulated evidence requires a different approach to storage and preservation, separating evidence management, operational access, and long-term preservation.",
+    excerpt:
+      "Servers, disk arrays, and applications change. Evidence still has to be identified, verified, retrievable, and understandable years later.",
+    category: "DIGITAL EVIDENCE",
+    author: "Savartus",
+    publishedDate: "2026-09-30",
+    readingTime: "14 min read",
+    status: "published",
+
+    sections: [
+      {
+        paragraphs: [
+          "A county evidence unit may hold body-camera video, surveillance exports, interviews, photographs, forensic images, documents, and other digital evidence long after the investigation that created them has ended.",
+          "Some evidence may need to remain available for years. Some for decades. During that time, servers will be replaced, disk arrays refreshed, applications upgraded or retired, storage vendors changed, and file formats may become obsolete.",
+          "Yet the evidence must remain. What happens when evidence needs to outlive the storage system? The answer begins by separating three functions too often treated as one: evidence management, operational access, and long-term preservation.",
+        ],
+      },
+      {
+        heading: "The evidence-management system remains authoritative",
+        paragraphs: [
+          "An evidence-management system may maintain case numbers, evidence-item identifiers, custody events, legal holds, disclosure status, retention requirements, investigator activity, and other information associated with an investigation. A preservation architecture should complement, not replace, those functions.",
+          "It should help answer where the bytes are, how they are protected, whether integrity can be verified, whether another recoverable copy exists if operational disk fails, whether the authoritative original can still be retrieved, and what happened to the object throughout its lifecycle.",
+          "It can also help avoid keeping every closed-case object indefinitely on expensive high-performance storage simply because the evidence must continue to exist. This is where Active Archive and optical preservation become relevant.",
+        ],
+      },
+      {
+        heading: "Access and preservation are different requirements",
+        paragraphs: [
+          "During an active investigation, evidence may need fast access. Investigators search it, play video repeatedly, analyze forensic data, export files, or process evidence with analytical and AI systems. SSD and HDD storage make sense for this phase.",
+          "After a case closes, access may decline dramatically while the retention requirement does not. An organization can find itself maintaining rarely accessed evidence on high-performance disk because it still has to exist.",
+          "That conflates two questions: how quickly must information be accessed, and how long must it be preserved? They do not necessarily need the same storage answer.",
+        ],
+      },
+      {
+        heading: "Active Archive separates access from preservation",
+        paragraphs: [
+          "Consider an ELS-based Active Archive. Routine access to evidence can be served from SSD/HDD cache while each write automatically creates a second copy on write-once optical media. The operational copy is optimized for access; the optical copy is intended for preservation.",
+          "For the ELS300, the disk cache server and optical library are integrated within the same appliance. Everyday access runs through the cache while evidence is automatically written to optical media. The evidence-management application remains authoritative, and the preservation architecture operates underneath it.",
+          "If a cache drive fails or the disk estate is refreshed, the optical copy can provide another recovery source. As evidence becomes less frequently accessed, continued preservation need not depend exclusively on keeping that object on high-performance disk.",
+          "The copy being used does not have to be the copy being preserved.",
+        ],
+      },
+      {
+        heading: "Immutability matters, but it is not chain of custody",
+        paragraphs: [
+          "Write-once optical storage provides an important characteristic for regulated evidence: after the preservation copy is written, it cannot simply be overwritten through normal storage operations. That can strengthen a preservation design.",
+          "But a storage medium alone does not establish chain of custody. A defensible evidence process encompasses evidence identity, origin, integrity, custody and access events, applicable policies, and the ability to demonstrate what happened throughout its lifecycle.",
+          "Federal Rule of Evidence 901 requires evidence sufficient to support a finding that an item is what its proponent claims. Rules 902(13) and 902(14) address certified records generated by electronic processes and certified data copied from electronic devices, storage media, or files. The Advisory Committee notes for Rule 902(14) discuss hash values as a way to establish that copied electronic data is identical to the original.",
+          "Authentication does not automatically establish admissibility; other evidentiary requirements can still apply.",
+        ],
+      },
+      {
+        heading: "Build the preservation record",
+        paragraphs: [
+          "A strong evidence-preservation workflow begins when evidence is received, not years later when someone needs to retrieve it. Associate evidence with case and item identifiers. Record acquisition provenance. Calculate a cryptographic hash. Preserve the authoritative source. Record logical and physical storage locations and relevant preservation and access events.",
+          "When an object is retrieved, check its integrity again. When it is migrated, perform another fixity check to demonstrate whether the information survived the migration unchanged.",
+          "A stronger preservation model brings together identity, provenance, fixity, immutability, and audit history. SWGDE's Best Practices for Archiving Digital and Multimedia Evidence describes archiving as an active, ongoing combination of policies, procedures, infrastructure, tools, and personnel, not simply storage media.",
+          "SWGDE identifies provenance information such as original source, circumstances of collection, physical and logical location, formats, fixity information, actions taken, relationships between original and transcoded objects, access history, and disposition. It also recommends an index that identifies what is stored and where it resides and supports integrity validation.",
+        ],
+      },
+      {
+        heading: "Hash it when it arrives. Verify it when it returns.",
+        paragraphs: [
+          "A cryptographic hash is most useful when verification is built into the evidence lifecycle, not merely calculated once: receipt and hashing, preservation and verification, retrieval and reverification, migration and reverification, and periodic integrity review.",
+          "Federal Rule of Evidence 902(14)'s Advisory Committee notes recognize hash comparison as an established method for determining whether copied electronic data is identical to its original. SWGDE likewise includes fixity information among archive records and calls for verification as part of archive management, retrieval, and migration.",
+          "Years after a case closes, an organization should not simply retrieve a file and assume nothing happened to it. It should be able to retrieve the preserved object and verify its integrity against previously recorded fixity information.",
+        ],
+      },
+      {
+        heading: "Preserve the original. Use the copy.",
+        paragraphs: [
+          "Surveillance and forensic evidence may arrive in proprietary packages containing video, metadata, indexes, timestamps, events, and application-specific information. Investigators may prefer an MP4 because it is easier to play. Both can have value.",
+          "The original package preserves what was received from the source system. The normalized MP4 can provide a convenient representation for investigation, review, analytics, or disclosure. A preservation architecture should maintain the relationship from authoritative original to derived review copy rather than silently replacing the original.",
+          "SWGDE recommends retaining information about original formats and maintaining a clear relationship between original and transcoded information, including how a derivative was created. When appropriate, it also discusses preserving the software or technical information necessary to render proprietary formats.",
+          "This is about more than storage. It is about reproducibility. Years later, the organization can return to the authoritative source rather than depending exclusively on a derivative created by software that may no longer exist.",
+        ],
+      },
+      {
+        heading: "Long-term evidence has an economic problem",
+        paragraphs: [
+          "Preservation requirements can last much longer than performance requirements. Keeping every retained object indefinitely on SSD or continuously spinning HDD means operating infrastructure for performance that much of the information no longer requires. Drives, controllers, power, cooling, maintenance, failures, and periodic refresh all carry costs, and the information must move again when systems reach end of life.",
+          "SWGDE recommends evaluating lifecycle cost for the complete storage environment rather than comparing media acquisition prices alone. Servers and associated hardware require power, cooling, maintenance, and periodic upgrades.",
+          "Optical storage offers another economic model: frequently accessed evidence can remain cached on SSD/HDD while a preservation copy resides on write-once optical media. If evidence becomes active again, it can be restored to cache. Retention then need not mean paying indefinitely for performance that is no longer needed.",
+        ],
+      },
+      {
+        heading: "What about 100-year optical media?",
+        paragraphs: [
+          "Media longevity needs precise treatment. Not all optical media are the same. SWGDE's 2020 guidance discusses conventional CD-R, DVD-R, and Blu-ray and notes that life expectancy varies considerably with media formulation, environment, and handling. It cites certain formulations with life expectancy of up to 100 years under appropriate conditions while also warning about reader availability and technology obsolescence.",
+          "Panasonic reported that its professional 300 GB Archival Disc used WORM (Write Once Read Many) media and had an estimated lifetime of 100 years or more at 30°C and 70% relative humidity based on accelerated testing. Panasonic separately described an optical archival system designed around an estimated data life exceeding 100 years.",
+          "That is meaningful, but it is not a reason to write once and forget. Even if physical media remains intact, drives, interfaces, formats, software, and applications can become obsolete. SWGDE recommends planned media migration and ongoing fixity verification; for optical-media data retained over five years, its guidance recommends annual fixity checks and a planned migration schedule.",
+          "The objective is not to find storage that never changes. It is to preserve evidence through the changes. Long-lived media can extend migration intervals and reduce dependence on continuously operating infrastructure, but preservation remains an active lifecycle process.",
+        ],
+      },
+      {
+        heading: "One appliance is not a disaster-recovery strategy",
+        paragraphs: [
+          "An ELS appliance containing disk cache and optical preservation provides copies across different storage technologies. A disk failure does not necessarily mean the preservation copy is lost. But if the cache and optical copy occupy the same appliance or physical location, they remain exposed to common risks such as fire, flood, theft, physical destruction, or a site-wide disaster.",
+          "For evidence requiring geographic resilience, another copy should exist elsewhere. SWGDE recommends redundancy and preferably geographic dispersal, noting that a single copy presents high risk and recommending multiple copies, ideally using different media types and different locations.",
+          "A suitable architecture might include a local operational cache, local write-once optical preservation, a second-site preservation copy, and offline preservation where risk warrants it. Copy count and location should follow the organization's risk model, retention requirements, and governing policies.",
+        ],
+      },
+      {
+        heading: "Offline preservation changes the cybersecurity equation",
+        paragraphs: [
+          "Continuously writable production storage exists in an active computing environment. Credentials can be compromised, administrative accounts abused, malware introduced, and users can make mistakes. An immutable preservation copy establishes another protection boundary.",
+          "Offline optical preservation can create a stronger boundary by physically separating preservation media from online infrastructure. This creates a continuum: hot/cache for immediate operational access, online optical for write-once preservation with Active Archive accessibility, and offline optical for physical separation from online infrastructure.",
+          "The information's storage state can change without changing its evidentiary identity. The evidence-management system can continue to know what the object is, which case it belongs to, and where it resides.",
+        ],
+      },
+      {
+        heading: "Legal holds must override routine disposition",
+        paragraphs: [
+          "Storage automation cannot blindly delete evidence because a predefined retention period expired. Litigation, court orders, legal holds, discovery obligations, records schedules, and agency policies may change what must happen to an object.",
+          "Federal Rule of Civil Procedure 37(e), for example, addresses electronically stored information that should have been preserved in anticipation or conduct of litigation but was lost because reasonable preservation steps were not taken and cannot be restored or replaced through additional discovery. Its Advisory Committee notes recognize that preservation obligations may require intervention in routine information-system operations.",
+          "The evidence-management, records-management, or governance system should determine whether information must be retained, held, released, or made eligible for disposition. The storage system executes those decisions. Governance determines what should happen; storage makes it happen.",
+        ],
+      },
+      {
+        heading: "Compliance is an architecture, not a storage feature",
+        paragraphs: [
+          "No storage appliance by itself makes an evidence environment compliant. Depending on the agency, information, jurisdiction, system boundary, funding source, and proceeding, requirements may include the FBI CJIS Security Policy, federal or state rules of evidence, discovery obligations, retention schedules, court orders, prosecutor requirements, agency policies, and other controls.",
+          "For example, 28 CFR Part 23 applies in a specific criminal-intelligence context; it should not be generalized to every police evidence repository. Federal Rules of Evidence 901 and 902 address authentication, not whether a particular storage technology is inherently admissible.",
+          "The meaningful question is not whether a storage appliance is evidence-compliant. It is how the architecture helps the organization satisfy the controls that apply to its evidence.",
+        ],
+      },
+      {
+        heading: "Design the workflow, not just the storage",
+        paragraphs: [
+          "The strongest regulated-evidence architecture begins with the workflow: receive, identify, hash, preserve, register, verify, access, retrieve, reverify, then migrate or dispose.",
+          "Around that workflow, preserve case and item identifiers, acquisition provenance, original formats and derivatives, cryptographic hashes and algorithms, access and audit history, legal holds, retention requirements, logical and physical media locations, fixity history, migration history, tested restore procedures, and disposition authority.",
+          "This reflects SWGDE's view of archive management as an ongoing combination of people, policy, practices, procedures, infrastructure, and tools that keeps evidence preserved, safeguarded, accessible, and usable throughout its lifecycle. An optical library is not simply somewhere to put old files; it is one component of a managed evidence-preservation architecture.",
+        ],
+      },
+      {
+        heading: "The evidence must outlive the infrastructure",
+        paragraphs: [
+          "The server will change. The disk array will change. The application may change. The storage vendor may change. Eventually, even preservation media may change.",
+          "But years later, the organization should still be able to retrieve an object and establish: this is the evidence received; this is where it came from; this is the case and item it belongs to; this is how it was preserved; this is what happened to it; its integrity has been verified; and the authoritative evidence remains reproducible.",
+          "That is a higher standard than simply saying, ‘We still have the file.’ It is the difference between storing evidence and deliberately preserving it.",
+          "Technology changes. Evidence persists.",
+        ],
+      },
+    ],
+
+    relatedLinks: [
+      {
+        label: "Explore Active Archive",
+        href: "/active-archive",
+        description:
+          "See how operational access and durable preservation work together.",
+      },
+      {
+        label: "Explore the ELS family",
+        href: "/products/els",
+        description:
+          "Review nearline and offline optical preservation systems.",
+      },
+    ],
+
+    sourceLinks: [
+      {
+        label: "Federal Rules of Evidence 901",
+        href: "https://www.law.cornell.edu/rules/fre/rule_901",
+        description: "Authentication and identification of evidence.",
+      },
+      {
+        label: "Federal Rules of Evidence 902",
+        href: "https://www.law.cornell.edu/rules/fre/rule_902",
+        description:
+          "Self-authentication, including electronic-process records and copied data.",
+      },
+      {
+        label: "Federal Rule of Civil Procedure 37",
+        href: "https://www.law.cornell.edu/rules/frcp/rule_37",
+        description: "Electronically stored information and preservation duties.",
+      },
+      {
+        label: "SWGDE 19-F-003, Version 1.0",
+        href: "https://www.swgde.org/documents/published-complete-listing/19-f-003-swgde-best-practices-for-archiving-digital-and-multimedia-evidence/",
+        description:
+          "Best Practices for Archiving Digital and Multimedia Evidence.",
+      },
+      {
+        label: "Panasonic Archival Disc announcement",
+        href: "https://news.panasonic.com/global/press/data/2016/03/en160310-2/en160310-2.pdf",
+        description:
+          "Manufacturer-reported accelerated-test lifetime estimate and conditions.",
+      },
+      {
+        label: "FBI CJIS Security Policy Resource Center",
+        href: "https://le.fbi.gov/cjis-division-resources/cjis-security-policy-resource-center",
+        description: "Current CJIS Security Policy resources.",
+      },
+      {
+        label: "28 CFR Part 23",
+        href: "https://www.ecfr.gov/current/title-28/chapter-I/subchapter-D/part-23",
+        description: "Criminal intelligence systems operating policies.",
+      },
+    ],
+
+    relatedArticleSlugs: [
+      "performance-and-preservation-should-work-together",
+      "technology-changes-information-persists",
     ],
   },
 ];

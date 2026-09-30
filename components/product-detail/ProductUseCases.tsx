@@ -1,3 +1,5 @@
+import { UseCaseStoryGrid } from "@/components/product-detail/UseCaseStoryGrid";
+
 type ProductUseCasesProps = {
   headline: string;
   description: string;
@@ -20,14 +22,7 @@ export function ProductUseCases({
           <p>{description}</p>
         </div>
 
-        <div className="product-use-case-grid">
-          {useCases.map((useCase) => (
-            <article key={useCase}>
-              <span>✓</span>
-              <strong>{useCase}</strong>
-            </article>
-          ))}
-        </div>
+        <UseCaseStoryGrid useCases={useCases} />
       </div>
     </section>
   );

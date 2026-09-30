@@ -174,19 +174,19 @@ export const elsProducts: ELSProduct[] = [
     category: "Stand Alone",
     categoryLabel: "Stand Alone Active Archive",
 
-    tagline: "Integrated active archive in a compact standalone system.",
+    tagline: "Organizational storage with an automatic optical second copy.",
 
     description:
-      "The Savartus ELS150 combines SSD/HDD performance storage with online optical preservation in a compact standalone active archive platform.",
+      "The Savartus ELS150 is an organizational storage appliance with a built-in disk cache server for everyday access. Each write automatically creates a second, write-once Blu-ray copy, combining responsive file access with durable optical preservation in one system.",
 
     positioning:
-      "An integrated active archive platform combining performance storage and durable optical preservation in one standalone system.",
+      "A 14U all-in-one storage appliance with an integrated cache server and automated write-once optical second copy for organizational data.",
 
-    capacity: "24 TB",
-    media: "Dual-sided optical",
-    mediaCapacity: "200 GB",
-    drives: "Up to 4",
-    formFactor: "Stand-Alone Tower",
+    capacity: "30 TB",
+    media: "Write-once Blu-ray optical",
+    mediaCapacity: "Up to 200 GB per disc",
+    drives: "Up to 4 Blu-ray drives",
+    formFactor: "14U Stand-Alone Tower",
     image: "/images/products/els150/els150.jpg",
     sellSheet: {
       href: "/downloads/data-sheets/Savartus_ELS150_Sell_Sheet.pdf",
@@ -194,34 +194,36 @@ export const elsProducts: ELSProduct[] = [
     },
 
     metrics: [
-      { label: "CAPACITY", value: "24 TB" },
-      { label: "MEDIA", value: "Dual-sided optical" },
-      { label: "DRIVES", value: "Up to 4" },
-      { label: "FORM FACTOR", value: "Stand-Alone Tower" },
+      { label: "CAPACITY", value: "30 TB" },
+      { label: "MEDIA", value: "Write-once Blu-ray optical" },
+      { label: "DRIVES", value: "Up to 4 Blu-ray drives" },
+      { label: "FORM FACTOR", value: "14U Stand-Alone Tower" },
     ],
 
     architecture: {
       performance:
-        "Integrated SSD/HDD performance storage provides fast access to active information.",
+        "The built-in cache server handles everyday organizational reads and writes with millisecond-to-second response and direct file-level access.",
       optical:
-        "Online optical storage preserves information on durable write-once media.",
+        "Each write automatically creates a second, write-once Blu-ray copy with optical RAID 11+1 protection for long-term retention.",
       offline:
-        "Optical media can participate in physically isolated preservation workflows when deeper isolation is required.",
+        "If a disk fails, the system can recover automatically from the Blu-ray copy while the archive remains physically protected for 50+ years.",
     },
 
     specs: [
-      { label: "System Type", value: "Standalone Active Archive" },
-      { label: "Capacity", value: "24 TB with 200 GB media" },
-      { label: "Storage Media", value: "Dual-sided optical" },
-      { label: "Media Capacity", value: "200 GB" },
-      { label: "Number of Cartridges", value: "3" },
+      { label: "System Type", value: "Magnetic-optical hybrid archive appliance" },
+      { label: "Cache Server", value: "Integrated in the same 14U appliance" },
+      { label: "Capacity", value: "30 TB maximum system capacity with 200 GB media" },
+      { label: "Write Workflow", value: "Each write is stored on the built-in cache and automatically copied to write-once optical media" },
+      { label: "Storage Media", value: "Write-once Blu-ray optical" },
+      { label: "Media Capacity", value: "Up to 200 GB per disc" },
+      { label: "Number of Cartridges", value: "3 standard disc magazines" },
       { label: "Media per Cartridge", value: "50" },
       { label: "Maximum Media", value: "150" },
-      { label: "Drives", value: "Up to 4" },
-      { label: "Form Factor", value: "Stand-Alone Tower" },
-      { label: "Performance Storage", value: "Integrated SSD/HDD storage"},
-      { label: "Storage Interface", value: "S3-compatible through oRain"},
-      { label: "Management", value: "Savartus oRain Storage Management"},
+      { label: "Drives", value: "Up to 4 Blu-ray drives" },
+      { label: "Form Factor", value: "14U Stand-Alone Tower" },
+      { label: "Performance Storage", value: "4 x 3.5\" drive bays" },
+      { label: "Storage Interface", value: "S3-compatible through oRain" },
+      { label: "Management", value: "Savartus oRain Storage Management" },
       { label: "File System", value: "XFS" },
       { label: "Optical RAID", value: "11+1" },
       { label: "Interfaces", value: "Gigabit LAN / SAS / S3" },
@@ -230,35 +232,35 @@ export const elsProducts: ELSProduct[] = [
     technicalSpecs: {
       cartridges: "3",
       mediaPerCartridge: "50",
-      magazines: "N/A",
-      cartridgesPerMagazine: "N/A",
+      magazines: "3",
+      cartridgesPerMagazine: "50",
       maxMedia: "150",
 
-      capacity200GB: "24 TB",
-      capacity500GB: "49 TB",
-      capacity1TB: "97 TB",
+      capacity200GB: "30 TB",
+      capacity500GB: "75 TB",
+      capacity1TB: "150 TB",
 
       maxAddressableDrives: "4",
 
       powerRequirements: "110-230 VAC, 50-60 Hz",
-      peakEnergyConsumption: "450 W",
-      typicalEnergyConsumption: "200 W",
+      peakEnergyConsumption: "550 W maximum",
+      typicalEnergyConsumption: "Reduced with intelligent sleep",
 
-      dimensionsInches: '13" × 23.3" × 25.3"',
+      dimensionsInches: '13.0" × 23.3" × 25.3"',
       dimensionsCm: "33.1 × 59.2 × 64.2 cm",
-      rackUnits: "N/A",
+      rackUnits: "14U",
 
       weightLbs: "121 lbs",
       weightKg: "55 kg",
     },
 
     useCases: [
-      "Government records",
+      "Government records archiving",
       "Medical imaging",
       "Regulated evidence",
-      "Scientific and research data",
+      "Scientific data",
       "Compliance retention",
-      "Backup and disaster recovery",
+      "Enterprise backup",
     ],
   },
 
@@ -270,19 +272,19 @@ export const elsProducts: ELSProduct[] = [
     category: "Rack Mount",
     categoryLabel: "Rack Mount",
 
-    tagline: "A dedicated optical tier for Active Archive.",
+    tagline: "Organizational storage with an automatic optical second copy.",
 
     description:
-      "The Savartus ELS300 provides rack-mounted online optical object storage designed to operate with an SSD/HDD cache or performance tier as part of an active archive.",
+      "The Savartus ELS300 is an organizational storage appliance with its disk cache server integrated in the same 7U chassis. It serves everyday access from the built-in cache and automatically creates a second, write-once Blu-ray copy of each write for durable optical preservation.",
 
     positioning:
-      "A compact rack-mounted optical preservation tier for Active Archive deployments.",
+      "A 7U all-in-one storage appliance with an integrated cache server and automated write-once optical second copy for organizational data.",
 
-    capacity: "24 TB",
-    media: "Single-sided optical",
-    mediaCapacity: "100 GB usable per disc",
-    drives: "Up to 6",
-    formFactor: "7U Rack Mount",
+    capacity: "57.6 TB",
+    media: "Write-once Blu-ray optical",
+    mediaCapacity: "Up to 200 GB per disc",
+    drives: "Up to 4 Blu-ray drives",
+    formFactor: "7U Standard Rack-Mount",
     image: "/images/products/els300/els288.jpg",
     sellSheet: {
       href: "/downloads/data-sheets/Savartus_ELS300_Sell_Sheet.pdf",
@@ -290,49 +292,40 @@ export const elsProducts: ELSProduct[] = [
     },
 
     metrics: [
-      { label: "CAPACITY", value: "24 TB" },
-      { label: "MEDIA", value: "Single-sided optical" },
-      { label: "DRIVES", value: "Up to 6" },
+      { label: "CAPACITY", value: "57.6 TB" },
+      { label: "MEDIA", value: "Write-once Blu-ray optical" },
+      { label: "DRIVES", value: "Up to 4 Blu-ray drives" },
       { label: "FORM FACTOR", value: "7U Rack Mount" },
     ],
 
     architecture: {
       performance:
-        "Works with an external SSD/HDD cache or performance tier for high-speed access.",
+        "The integrated disk cache server inside the ELS300 handles everyday reads and writes with millisecond-to-second response while preserving file-level access across the archive.",
       optical:
-        "Provides online optical preservation through a standards-based S3-compatible storage interface.",
+        "The original copy is written to write-once Blu-ray media and protected with optical RAID 11+1 for permanent retention.",
       offline:
-        "Information can participate in physically isolated optical preservation workflows when additional isolation is required.",
+        "If a disk fails, the system recovers from the Blu-ray copy automatically while the archive remains secure, tamper-proof, and resilient over decades.",
     },
 
     specs: [
-      { label: "System Type", value: "Rack-Mounted Online Optical Library" },
-      { label: "Capacity", value: "24 TB with current media" },
-      { label: "Storage Media", value: "Single-sided optical" },
-      {
-        label: "Media Capacity",
-        value: "100 GB usable per current-generation disc",
-      },
-      { label: "Number of Cartridges", value: "24" },
+      { label: "System Type", value: "Magnetic-optical hybrid archive appliance" },
+      { label: "Cache Server", value: "Integrated in the same 7U chassis" },
+      { label: "Capacity", value: "57.6 TB maximum system capacity with 200 GB media" },
+      { label: "Write Workflow", value: "Each write is stored on the built-in cache and automatically copied to write-once optical media" },
+      { label: "Storage Media", value: "Write-once Blu-ray optical" },
+      { label: "Media Capacity", value: "Up to 200 GB per disc" },
+      { label: "Number of Cartridges", value: "24 standard disc cassettes" },
       { label: "Media per Cartridge", value: "12" },
       { label: "Number of Magazines", value: "1" },
       { label: "Cartridges per Magazine", value: "24" },
       { label: "Maximum Media", value: "288" },
-      { label: "Drives", value: "Up to 6" },
-      { label: "Form Factor", value: "7U Rack Mount" },
-      {
-        label: "Storage Interface",
-        value: "S3-compatible through oRain",
-      },
-      {
-        label: "Management",
-        value: "Savartus oRain Storage Management",
-      },
-      {
-        label: "Active Archive",
-        value: "Configured with external SSD/HDD cache or performance storage",
-      },
-      { label: "Maximum Throughput", value: "80 MB/s" },
+      { label: "Drives", value: "Up to 4 Blu-ray drives" },
+      { label: "Form Factor", value: "7U Standard Rack-Mount" },
+      { label: "Disk Configuration", value: "4 x 3.5\" drive bays, independent single-disk mounting" },
+      { label: "Storage Interface", value: "S3-compatible through oRain" },
+      { label: "Management", value: "Savartus oRain Storage Management" },
+      { label: "Active Archive", value: "Integrated cache server + permanent optical retention in one appliance" },
+      { label: "Maximum Throughput", value: "80 MB/s concurrent throughput" },
       { label: "Optical RAID", value: "11+1" },
       { label: "Interfaces", value: "Gigabit LAN / SAS / S3" },
     ],
@@ -344,31 +337,26 @@ export const elsProducts: ELSProduct[] = [
       cartridgesPerMagazine: "24",
       maxMedia: "288",
 
-      /*
-       * ELS300 accesses one side of the optical medium.
-       * Its usable capacity is therefore approximately half
-       * that of a comparable dual-sided configuration.
-       */
-      capacity200GB: "24 TB",
-      capacity500GB: "47 TB",
-      capacity1TB: "94 TB",
+      capacity200GB: "57.6 TB",
+      capacity500GB: "144 TB",
+      capacity1TB: "288 TB",
 
-      maxAddressableDrives: "6",
+      maxAddressableDrives: "4",
 
       powerRequirements: "110-230 VAC, 50-60 Hz",
-      peakEnergyConsumption: "450 W",
-      typicalEnergyConsumption: "200 W",
+      peakEnergyConsumption: "550 W maximum",
+      typicalEnergyConsumption: "Reduced with intelligent sleep",
 
-      dimensionsInches: '17.7" × 12.2" × 36"',
+      dimensionsInches: '17.6" × 12.2" × 36.6"',
       dimensionsCm: "44.8 × 31.0 × 93.0 cm",
       rackUnits: "7U",
 
-      weightLbs: "177 lbs",
+      weightLbs: "176 lbs",
       weightKg: "80 kg",
     },
 
     useCases: [
-      "Government records",
+      "Government records archiving",
       "Medical imaging",
       "Regulated evidence",
       "Scientific data",

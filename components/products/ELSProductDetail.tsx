@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { UseCaseStoryGrid } from "@/components/product-detail/UseCaseStoryGrid";
 import { ELSProductTechnicalDetails } from "@/components/products/ELSProductTechnicalDetails";
 import type { ELSProduct } from "@/data/els-products";
 
@@ -80,16 +81,8 @@ export function ELSProductDetail({ product }: Props) {
                     className="product-detail-metric"
                     key={metric.label}
                   >
-                    <span>
-                      {metric.label === "CAPACITY"
-                        ? "DISC CAPACITY"
-                        : metric.label}
-                    </span>
-                    <strong>
-                      {metric.label === "CAPACITY"
-                        ? product.mediaCapacity
-                        : metric.value}
-                    </strong>
+                    <span>{metric.label}</span>
+                    <strong>{metric.value}</strong>
                   </div>
                 ))}
               </div>
@@ -122,10 +115,16 @@ export function ELSProductDetail({ product }: Props) {
             <div className="product-architecture-item">
               <article className="product-architecture-card product-architecture-performance">
                 <p className="product-detail-card-label">
-                  PERFORMANCE TIER
+                  {product.name === "ELS150" || product.name === "ELS300"
+                    ? "INTEGRATED CACHE SERVER"
+                    : "PERFORMANCE TIER"}
                 </p>
 
-                <h3>SSD / HDD</h3>
+                <h3>
+                  {product.name === "ELS150" || product.name === "ELS300"
+                    ? "Built-in Cache"
+                    : "SSD / HDD"}
+                </h3>
 
                 <p>{product.architecture.performance}</p>
               </article>
@@ -287,14 +286,10 @@ export function ELSProductDetail({ product }: Props) {
             </h2>
           </div>
 
-          <div className="product-use-case-grid">
-            {product.useCases.map((useCase, index) => (
-              <article key={useCase}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{useCase}</strong>
-              </article>
-            ))}
-          </div>
+          <UseCaseStoryGrid
+            systemName={product.name}
+            useCases={product.useCases}
+          />
         </div>
       </section>
 

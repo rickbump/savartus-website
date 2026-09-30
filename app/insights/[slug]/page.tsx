@@ -174,6 +174,26 @@ export default async function InsightArticlePage({
                 <small>Explore →</small>
               </Link>
             ))}
+
+            {article.sourceLinks && article.sourceLinks.length > 0 && (
+              <div className="insight-source-links">
+                <p className="insights-eyebrow">SOURCES AND STANDARDS</p>
+
+                {article.sourceLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="insight-related-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <strong>{link.label}</strong>
+                    <span>{link.description}</span>
+                    <small>View source ↗</small>
+                  </a>
+                ))}
+              </div>
+            )}
           </aside>
         </div>
 
