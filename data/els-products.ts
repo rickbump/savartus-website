@@ -51,6 +51,7 @@ export type ELSProduct = {
   metrics: {
     label: string;
     value: string;
+    note?: string;
   }[];
 
   architecture: {
@@ -292,7 +293,11 @@ export const elsProducts: ELSProduct[] = [
     },
 
     metrics: [
-      { label: "CAPACITY", value: "57.6 TB" },
+      {
+        label: "CAPACITY",
+        value: "288 × 200 GB = 57.6 TB",
+        note: "200 GB discs currently available; capacity can be upgraded with higher-capacity media.",
+      },
       { label: "MEDIA", value: "Write-once Blu-ray optical" },
       { label: "DRIVES", value: "Up to 4 Blu-ray drives" },
       { label: "FORM FACTOR", value: "7U Rack Mount" },

@@ -20,6 +20,7 @@ export function Footer() {
 
         <div className="footer-meta">
           <span>© {new Date().getFullYear()} Savartus</span>
+          <span className="footer-version">Version {siteConfig.version}</span>
         </div>
       </div>
     </footer>

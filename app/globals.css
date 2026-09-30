@@ -238,8 +238,14 @@ a {
 }
 
 .footer-meta {
+  display: grid;
+  gap: 5px;
   color: var(--savartus-gray-500);
   font-size: 0.9rem;
+}
+
+.footer-version {
+  font-size: 0.75rem;
 }
 
 @media (max-width: 960px) {
@@ -3433,6 +3439,18 @@ a {
 .product-detail-metric strong {
   font-size: 1.7rem;
   color: var(--savartus-blue-dark);
+}
+
+.product-detail-metric .product-detail-metric-long-value {
+  font-size: 1.1rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.product-detail-metric-note {
+  color: var(--savartus-gray-500);
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 .product-detail-section {

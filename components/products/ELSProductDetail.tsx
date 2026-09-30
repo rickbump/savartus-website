@@ -82,7 +82,18 @@ export function ELSProductDetail({ product }: Props) {
                     key={metric.label}
                   >
                     <span>{metric.label}</span>
-                    <strong>{metric.value}</strong>
+                    <strong
+                      className={
+                        metric.note ? "product-detail-metric-long-value" : undefined
+                      }
+                    >
+                      {metric.value}
+                    </strong>
+                    {metric.note && (
+                      <small className="product-detail-metric-note">
+                        {metric.note}
+                      </small>
+                    )}
                   </div>
                 ))}
               </div>

@@ -1,5 +1,6 @@
 export const siteConfig = {
   name: "Savartus",
+  version: "1.0.0",
   tagline: "Manage. Store. Preserve.",
   description:
     "Savartus provides Active Archive, Preservation, and Data Lifecycle Management solutions for long-term information management.",
