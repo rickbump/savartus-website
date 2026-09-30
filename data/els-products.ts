@@ -295,7 +295,7 @@ export const elsProducts: ELSProduct[] = [
     metrics: [
       {
         label: "CAPACITY",
-        value: "288 × 200 GB = 57.6 TB",
+        value: "57.6 TB",
         note: "200 GB discs currently available; capacity can be upgraded with higher-capacity media.",
       },
       { label: "MEDIA", value: "Write-once Blu-ray optical" },
