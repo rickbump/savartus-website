@@ -299,6 +299,8 @@ export function ELSProductDetail({ product }: Props) {
 
           <UseCaseStoryGrid
             systemName={product.name}
+            scalable={product.scalable}
+            offline={product.offline}
             useCases={product.useCases}
           />
         </div>

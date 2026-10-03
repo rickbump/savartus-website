@@ -802,7 +802,7 @@ export const elsProducts: ELSProduct[] = [
       "Data centers",
       "Media archives",
       "Defense data",
-      "Healthcare retention",
+      "Healthcare imaging retention",
       "Research repositories",
       "Enterprise active archive",
     ],

@@ -3775,6 +3775,59 @@ a {
   line-height: 1.7;
 }
 
+.use-case-story-contexts {
+  margin-top: 24px;
+  border-top: 1px solid var(--savartus-gray-200);
+}
+
+.use-case-story-contexts article {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--savartus-gray-200);
+}
+
+.use-case-story-contexts h3 {
+  margin: 0;
+  color: var(--savartus-blue-dark);
+  font-size: 1.05rem;
+}
+
+.use-case-story-contexts p {
+  margin: 8px 0 0;
+  color: var(--savartus-gray-700);
+  line-height: 1.6;
+}
+
+.use-case-story-case-study {
+  margin-top: 22px;
+  padding: 18px;
+  display: grid;
+  gap: 7px;
+  border-left: 3px solid var(--savartus-blue);
+  background: var(--savartus-blue-light);
+}
+
+.use-case-story-case-study > span {
+  color: var(--savartus-blue);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.use-case-story-case-study strong {
+  color: var(--savartus-blue-dark);
+}
+
+.use-case-story-case-study p {
+  margin: 0;
+  color: var(--savartus-gray-700);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.use-case-story-case-study small {
+  color: var(--savartus-blue);
+  font-weight: 700;
+}
+
 .use-case-story-product-note {
   margin: 18px 0 0;
   padding-left: 16px;
