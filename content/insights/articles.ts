@@ -118,7 +118,7 @@ export const insightArticles: InsightArticle[] = [
     author: "Savartus",
     publishedDate: "2026-09-25",
     readingTime: "5 min read",
-    status: "draft",
+    status: "published",
 
     sections: [
       {
@@ -194,7 +194,7 @@ export const insightArticles: InsightArticle[] = [
     author: "Savartus",
     publishedDate: "2026-09-29",
     readingTime: "5 min read",
-    status: "draft",
+    status: "published",
 
     sections: [
       {
@@ -278,7 +278,7 @@ export const insightArticles: InsightArticle[] = [
     author: "Savartus",
     publishedDate: "2026-10-02",
     readingTime: "6 min read",
-    status: "draft",
+    status: "published",
 
     sections: [
       {
@@ -444,9 +444,9 @@ export const insightArticles: InsightArticle[] = [
       "Applications, infrastructure, and media change. Information context, provenance, relationships, and governance must persist.",
     category: "INFORMATION MANAGEMENT",
     author: "Savartus",
-    publishedDate: "2026-10-09",
+    publishedDate: "2026-10-02",
     readingTime: "6 min read",
-    status: "draft",
+    status: "published",
 
     sections: [
       {
