@@ -602,13 +602,60 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
     },
   },
   {
-    matches: ["media", "cultural", "film", "heritage", "digital preservation"],
+    matches: ["media", "video", "cultural", "film", "heritage", "digital preservation"],
     story: {
-      title: "A working collection with a preserved source",
+      title: "Find and reuse the footage your archive already owns",
       story:
-        "A media or cultural institution keeps masters, born-digital works, and production files available to curators without treating preservation as a once-a-decade migration project. Durable write-once optical copies retain source material as collections evolve.",
+        "A broadcaster or production studio has decades of finished programs, camera originals, audio, graphics, and project files spread across aging tape, disk, and cloud accounts. A producer needs a cleared clip for a new documentary, but nobody can quickly confirm which master is authoritative, where its high-resolution version lives, or whether the license still covers the intended territory and term. Meanwhile, tape libraries need specialist drives and recurring migration projects, and the media-management platform is not designed to be the only preservation copy. Keep the MAM as the catalog and workflow authority, retain active editing media on performance storage, and use an online ELS library under oRain as a durable tier for selected cleared masters and production assets. Preserve identifiers and rights metadata with each package so staff can find, retrieve, and verify the source without confusing storage with asset management or rights clearance.",
       idea:
-        "Choose a collection and separate preservation masters, access derivatives, descriptive records, and rights information into a retrieval-ready package.",
+        "Choose one completed series or production. Inventory its source masters, derivatives, project files, descriptive metadata, checksum manifests, license windows, territory, talent and music releases, privacy restrictions, and legal holds. Test a complete retrieval through the existing MAM, including verifying the returned file and confirming that rights staff can determine whether the proposed reuse is allowed.",
+      contexts: [
+        {
+          title: "A reuse request becomes a search problem",
+          description:
+            "Editors and producers often need a specific scene, interview, or clean master years after first release. A durable copy helps only when the MAM still points to stable identifiers, descriptive metadata, proxies, and the correct preservation object. Test discovery and recall from the user's workflow, not only a storage-level file read.",
+        },
+        {
+          title: "Preserve the package, not just the video file",
+          description:
+            "A useful preservation package may include the highest-quality available master, audio and caption tracks, project or exchange files where needed, technical metadata, checksums, provenance, and relationships to access derivatives. Select formats and validate them against the organization's preservation plan; storage does not normalize, transcode, or validate a media format.",
+        },
+        {
+          title: "Rights decide what can be kept and reused",
+          description:
+            "A license may limit a work by platform, territory, audience, or term. Footage can also contain identifiable people, confidential material, or third-party music. Record the applicable rights and restrictions in the authoritative catalog, and keep material that may need selective deletion out of an immutable tier until its obligations are resolved.",
+        },
+      ],
+      requirements: [
+        {
+          name: "ISO 14721, OAIS Reference Model",
+          applicability:
+            "A reference model for archival information packages, preservation planning, designated communities, and access. It can guide archive design, but it is not a regulation, an implementation specification, or a certification of ELS or oRain.",
+          href: "https://public.ccsds.org/Pubs/650x0m2.pdf",
+        },
+        {
+          name: "PREMIS Data Dictionary for Preservation Metadata",
+          applicability:
+            "A preservation-metadata standard describing objects, events, agents, and rights. It can inform how an archive records fixity checks, migrations, provenance, and preservation actions; it does not prescribe a storage medium or certify a storage product.",
+          href: "https://www.loc.gov/standards/premis/",
+        },
+        {
+          name: "FADGI Technical Guidelines for Digitizing Cultural Heritage Materials",
+          applicability:
+            "Technical recommendations for digitizing cultural-heritage materials, especially relevant to participating U.S. federal agencies and projects adopting the guidelines. They address capture quality and metadata, not long-term storage certification, and are not a universal legal requirement for commercial media libraries.",
+          href: "https://www.digitizationguidelines.gov/guidelines/digitize-technical.html",
+        },
+        {
+          name: "Copyright licenses and privacy requirements",
+          applicability:
+            "Copyright, talent and music licenses, contracts, and privacy laws can restrict retention, access, or reuse. For personal data in scope of the GDPR, storage limitation and erasure rights may apply; preservation is not an automatic exemption. The U.S. Copyright Act's section 108 exception is conditional and limited to eligible libraries and archives, not a blanket right for studios or broadcasters to preserve or reuse all content.",
+          href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        },
+      ],
+      scopeNote:
+        "This is an initial workflow map, not legal advice. Rights depend on the work, contract, territory, intended reuse, and applicable law; a preservation copy does not grant reuse rights. Resolve retention, privacy, legal holds, and deletion obligations before writing material to immutable media. ELS and oRain provide a storage tier and namespace, not a media-asset-management system, transcoder, rights-management tool, format validator, or preservation certification. Validate supported integrations and retrieval performance with the organization's MAM and production workflow.",
+      insightHref: "/insights/media-archives-find-and-reuse-preserved-content",
+      insightTitle: "Media Archives: Find and Reuse What You Already Own",
     },
   },
   {

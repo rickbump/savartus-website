@@ -1800,22 +1800,131 @@ export const insightArticles: InsightArticle[] = [
       "compliance-retention-right-information-right-time",
     ],
   },
+
+  {
+    slug: "media-archives-find-and-reuse-preserved-content",
+    title: "Media Archives: Find and Reuse What You Already Own",
+    description:
+      "How broadcasters and production studios can preserve finished masters and production assets while keeping discovery, fixity, rights, and recall tied to their media-management workflow.",
+    excerpt:
+      "A clip may exist in the archive and still be unusable: the master is hard to locate, its provenance is unclear, or the license no longer covers the planned reuse. Preservation starts with the package and the workflow, not just the storage medium.",
+    category: "MEDIA ARCHIVES",
+    author: "Savartus",
+    publishedDate: "2026-10-02",
+    readingTime: "8 min read",
+    status: "published",
+
+    sections: [
+      {
+        paragraphs: [
+          "A broadcaster or production studio has decades of finished programs, camera originals, audio, graphics, and project files. They are spread across tape libraries, disk systems, production shares, and cloud accounts accumulated through different projects and acquisitions.",
+          "Then a producer needs a scene for a new documentary, anniversary program, or international release. The asset-management catalog points to an old volume, the tape drive is no longer available, or several versions exist without a clear indication of which is the approved master. Even if the file is found, the team may not know whether the license still covers the platform, territory, or term being proposed.",
+          "This is not just a media-capacity problem. It is a chain of discovery, preservation, integrity, recall, and rights decisions. Storage can help preserve the source, but it cannot make the source findable or cleared for reuse on its own.",
+        ],
+      },
+      {
+        heading: "Make the archive useful at the point of need",
+        paragraphs: [
+          "A media-asset-management system (MAM) should remain the catalog and workflow authority: stable asset identifiers, descriptions, proxies, relationships, production status, and rights records belong in the systems that editors and rights staff use. A preservation tier should return the object those records identify, with enough metadata to verify that it is the expected source.",
+          "Separate preservation masters from access derivatives and active editing media. Preserve the highest-quality approved source available, along with the audio, caption, project, and technical files needed for the organization's future use. Keep current edits on performance storage; do not make an archive tier the editing workspace.",
+        ],
+      },
+      {
+        heading: "Preserve a package, not an isolated file",
+        paragraphs: [
+          "For a selected title or production, define the preservation package: master files, associated tracks, descriptive and technical metadata, checksums, provenance, production identifiers, and relationships to proxies or derivatives. Decide which formats are suitable for long-term retention and how the organization will review format risk over time.",
+          "Standards and guidance can help structure that work. The OAIS Reference Model (ISO 14721) describes concepts such as archival information packages, preservation planning, and designated communities. PREMIS provides a data dictionary for recording preservation objects, events, agents, and rights. Neither specifies optical media, and neither certifies a storage product.",
+          "For digitized film, video, photographs, or audio, FADGI's technical guidelines can inform capture quality and metadata where an organization has adopted them. FADGI is guidance, not a universal mandate for commercial media archives or a certification of the archive's storage system.",
+        ],
+      },
+      {
+        heading: "Rights and privacy are part of preservation",
+        paragraphs: [
+          "A preservation copy does not grant permission to reuse a work. Contracts may restrict a title to a platform, territory, audience, or period. Music, talent, archive footage, and location releases can each carry separate terms. Keep rights records linked to the asset and check them at the time of reuse, rather than assuming that a file in the archive is cleared.",
+          "Privacy and confidentiality matter too. Footage may contain identifiable people or sensitive information. Where the GDPR applies, storage limitation and erasure rights can constrain retention; archival purposes are not a blanket exemption. Write-once media is a poor destination for records that may need selective deletion unless the organization has an approved, legally reviewed control strategy.",
+          "The U.S. Copyright Act includes a limited exception for certain eligible libraries and archives, but its conditions are specific. It is not a general preservation or reuse license for broadcasters, studios, or every work in their collections.",
+        ],
+      },
+      {
+        heading: "An online optical tier for selected masters",
+        paragraphs: [
+          "For selected content that is infrequently accessed but should remain online and retrievable, an ELS library managed through oRain can provide an optical storage tier beneath the organization's existing catalog and workflow. The MAM remains authoritative; it should retain the asset identifiers and metadata that direct users to the preserved object.",
+          "This is not a replacement for the MAM, a media transcoder, or a rights-management system. Validate the supported integration, object naming, metadata handoff, retrieval time, integrity verification, and operational ownership with the actual production workflow. Keep frequently used footage and active projects on performance storage.",
+        ],
+      },
+      {
+        heading: "Pilot the workflow, not just the capacity",
+        paragraphs: [
+          "Choose one completed series or production with known owners and manageable rights. Inventory its masters, derivatives, project files, licenses, releases, privacy restrictions, retention rules, and legal holds. Record identifiers that connect every preserved object to the MAM entry.",
+          "Run a complete test: find an asset from the normal MAM interface, request its preservation master, verify the returned file against its checksum, confirm its provenance, and have rights staff evaluate a realistic reuse request. Measure recall time and document failures, including missing metadata and ambiguous versions.",
+          "Only expand once the team can reliably discover, retrieve, verify, and assess the content. The useful archive is not simply the one that still has the bits; it is the one that can return the right source and the information needed to use it responsibly.",
+        ],
+      },
+    ],
+
+    relatedLinks: [
+      {
+        label: "Explore ELS500",
+        href: "/products/els500",
+        description:
+          "An online optical active-archive system for media and other collections.",
+      },
+      {
+        label: "Explore ELS1000",
+        href: "/products/els1000",
+        description:
+          "Scalable online optical capacity for video repositories.",
+      },
+      {
+        label: "Explore ELS4000",
+        href: "/products/els4000",
+        description:
+          "Large-scale online optical capacity for media archives.",
+      },
+      {
+        label: "Explore oRain",
+        href: "/technology/orain",
+        description:
+          "Learn how oRain manages objects across optical libraries.",
+      },
+    ],
+
+    sourceLinks: [
+      {
+        label: "ISO 14721, OAIS Reference Model",
+        href: "https://public.ccsds.org/Pubs/650x0m2.pdf",
+        description:
+          "Reference model for archival information packages and long-term preservation planning.",
+      },
+      {
+        label: "PREMIS: Preservation Metadata Maintenance Activity",
+        href: "https://www.loc.gov/standards/premis/",
+        description:
+          "Data dictionary and related resources for preservation metadata.",
+      },
+      {
+        label: "FADGI Technical Guidelines",
+        href: "https://www.digitizationguidelines.gov/guidelines/digitize-technical.html",
+        description:
+          "Technical guidance for digitizing cultural heritage materials.",
+      },
+      {
+        label: "EU General Data Protection Regulation",
+        href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        description:
+          "Includes storage limitation and data-subject erasure rights where applicable.",
+      },
+      {
+        label: "U.S. Copyright Act, Section 108",
+        href: "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section108&num=0&edition=prelim",
+        description:
+          "Conditional copyright exceptions for certain libraries and archives.",
+      },
+    ],
+
+    relatedArticleSlugs: [
+      "enterprise-archive-stop-powering-cold-data",
+      "the-evidence-must-outlive-the-storage-system",
+    ],
+  },
 ];
-
-export function getPublishedInsights() {
-  return insightArticles.filter((article) => article.status === "published");
-}
-
-export function getInsightBySlug(slug: string) {
-  return insightArticles.find(
-    (article) =>
-      article.slug === slug &&
-      article.status === "published"
-  );
-}
-
-export function getRelatedInsights(article: InsightArticle) {
-  return article.relatedArticleSlugs
-    .map((slug) => getInsightBySlug(slug))
-    .filter((item): item is InsightArticle => Boolean(item));
-}
