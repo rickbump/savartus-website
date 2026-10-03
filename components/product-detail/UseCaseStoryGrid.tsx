@@ -539,13 +539,66 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
     },
   },
   {
-    matches: ["ai", "machine learning", "training dataset", "model"],
+    matches: ["ai data", "ai dataset", "ai training", "ai infrastructure", "machine learning", "training dataset"],
     story: {
-      title: "Preserve the dataset behind the model",
+      title: "Keep the data behind every model you ship",
       story:
-        "An AI team retains training inputs, evaluation sets, and the associated release artifacts after a model ships. Researchers can revisit the data while durable optical copies keep a reference set for reproducibility, governance, and later model comparisons.",
+        "An AI team trains and evaluates models on large, growing collections: raw source data, labeled sets, cleaned and augmented derivatives, evaluation benchmarks, and the checkpoints produced along the way. Months later a customer, auditor, or regulator asks which data a released model was trained on, a bias finding needs to be reproduced, or a new model has to be compared against the old one on the same benchmark. If the original data was overwritten, cleaned in place, or deleted to free expensive GPU-adjacent storage, those questions cannot be answered. An online ELS library, scaled across networked systems under oRain, keeps each dataset release as an immutable, versioned snapshot alongside its labels, preprocessing code, data cards, and lineage records, while hot training data stays on high-performance storage. The team can free primary capacity without losing the ability to trace, reproduce, or retrain.",
       idea:
-        "Define a dataset release as a bundle: source objects, labels, preprocessing version, evaluation results, and the record that connects them.",
+        "Define a dataset release as a bundle: source objects, labels, preprocessing and filtering code version, data card or datasheet, licensing and consent records, evaluation results, and the identifiers that connect them to each model version. Decide which releases must be preserved, for how long, and who may access them. Then test reproducing one past training run or evaluation from preserved material.",
+      contexts: [
+        {
+          title: "Trace a model back to its data",
+          description:
+            "When a model is released, record exactly which dataset versions trained, validated, and tested it. Preserving those versions as write-once snapshots lets the team answer provenance questions later, rerun an evaluation on the original benchmark, and show what changed between model versions.",
+        },
+        {
+          title: "Separate hot training data from the preserved record",
+          description:
+            "Active training needs high-throughput storage close to compute. Completed dataset releases, checkpoints, and evaluation sets are rarely read but expensive to recreate. Moving them to an online optical tier frees primary capacity while keeping them indexed and retrievable when a retrain or audit needs them.",
+        },
+        {
+          title: "Respect data rights before you preserve",
+          description:
+            "Not all training data should be kept indefinitely. Personal data, licensed content, and data collected for a limited purpose may carry retention limits or deletion obligations. Write-once media cannot be selectively erased, so classify data before it goes to the immutable tier, and keep restricted or deletable data on storage that supports deletion or use encryption with key destruction where appropriate.",
+        },
+      ],
+      requirements: [
+        {
+          name: "EU AI Act, Article 10 (data governance)",
+          applicability:
+            "For providers of high-risk AI systems, training, validation, and testing data must be subject to data governance practices covering data origin, collection processes, preparation steps such as labeling and cleaning, assumptions, and bias examination. Applies from 2 December 2027 for Annex III high-risk systems and 2 August 2028 for Annex I systems, as amended. Most AI systems are not high-risk; confirm classification first.",
+          href: "https://artificialintelligenceact.eu/article/10/",
+        },
+        {
+          name: "EU AI Act, Article 18 (documentation keeping)",
+          applicability:
+            "Providers of high-risk AI systems must keep technical documentation, quality-management documentation, and related records available to authorities for 10 years after the system is placed on the market. This requires keeping documentation that describes the data, not necessarily the datasets themselves; whether to preserve the data is a separate decision.",
+          href: "https://artificialintelligenceact.eu/article/18/",
+        },
+        {
+          name: "GDPR storage limitation and right to erasure",
+          applicability:
+            "Where training data includes personal data of people in the EU, Article 5(1)(e) limits retention to what is necessary for the purpose, and Article 17 can require erasure. Write-once storage is a poor fit for personal data that may need to be deleted; classify data before preserving it immutably and consult privacy counsel.",
+          href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        },
+        {
+          name: "NIST AI Risk Management Framework 1.0",
+          applicability:
+            "Voluntary U.S. guidance for managing AI risk, including documentation, traceability, and data provenance practices. Not a regulation or certification.",
+          href: "https://www.nist.gov/itl/ai-risk-management-framework",
+        },
+        {
+          name: "ISO/IEC 42001:2023, AI management systems",
+          applicability:
+            "An international standard for an organization's AI management system. Organizations can be certified against it; storage products are not. A preserved, traceable dataset record can support the organization's evidence, but does not confer certification.",
+          href: "https://www.iso.org/standard/42001",
+        },
+      ],
+      scopeNote:
+        "Initial applicability map, not legal advice. AI regulation is changing quickly and varies by jurisdiction, sector, and use; confirm current requirements and whether your system is in scope. Copyright, licensing, and contractual terms for training data may also limit what can be kept and for how long. ELS is a storage and preservation tier, not a data catalog, MLOps platform, or compliance certification. Keep version identifiers, lineage, and access controls in the systems your team already uses, and verify integrity and restore paths periodically.",
+      insightHref: "/insights/ai-datasets-preserve-the-data-behind-the-model",
+      insightTitle: "Preserve the Data Behind the Model",
     },
   },
   {

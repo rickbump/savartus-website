@@ -1677,6 +1677,129 @@ export const insightArticles: InsightArticle[] = [
       "compliance-retention-right-information-right-time",
     ],
   },
+
+  {
+    slug: "ai-datasets-preserve-the-data-behind-the-model",
+    title: "Preserve the Data Behind the Model",
+    description:
+      "Why AI teams should keep immutable, versioned snapshots of the datasets behind every released model, and how to do it without keeping everything on expensive primary storage or keeping data they should delete.",
+    excerpt:
+      "When someone asks what a model was trained on, the answer should not depend on whether the data happened to survive the last storage cleanup.",
+    category: "AI DATA",
+    author: "Savartus",
+    publishedDate: "2026-10-02",
+    readingTime: "8 min read",
+    status: "published",
+
+    sections: [
+      {
+        paragraphs: [
+          "An AI team ships a model. Over the following months, it keeps training. Datasets are cleaned, relabeled, filtered, and augmented. Old checkpoints are deleted to free capacity on the high-performance storage next to the GPUs. Benchmarks are updated.",
+          "Then a question arrives. A customer wants to know whether certain data was used to train the released model. An internal review finds a bias problem and needs to reproduce the original evaluation. A regulator asks for documentation of the training data. A new model needs to be compared against the old one on exactly the same test set.",
+          "If the data behind the released model no longer exists in the form it was used, none of those questions has a reliable answer.",
+        ],
+      },
+      {
+        heading: "Datasets change; releases should not",
+        paragraphs: [
+          "Training data is usually treated as a working set: something to be improved continuously. That is right for development. But once a model is released, the specific versions of the data that trained, validated, and tested it become a record.",
+          "The useful unit to preserve is a dataset release: the source objects, labels and annotations, the preprocessing and filtering code version, the data card or datasheet, licensing and consent records, evaluation results, and identifiers that link all of it to the model version. Preserved together, they let a team trace a model to its data, reproduce a result, or retrain from a known point.",
+        ],
+      },
+      {
+        heading: "Keep hot data hot, and the record somewhere durable",
+        paragraphs: [
+          "Active training needs fast storage close to compute. Completed dataset releases, superseded checkpoints, and evaluation sets are read rarely but are expensive or impossible to recreate. Keeping them on primary storage is costly; deleting them to free space is how the record disappears.",
+          "An online ELS library, scaled across networked systems and managed through oRain, gives those releases a durable home. Each release is written to write-once optical media as an immutable snapshot that stays indexed and retrievable. Primary storage holds what training is using now; the optical tier holds what the organization needs to be able to explain later.",
+          "Write-once media also protects the record itself. A preserved dataset release cannot be quietly cleaned, overwritten, or edited after the fact, which matters when the question is what the data looked like at the time.",
+        ],
+      },
+      {
+        heading: "Not everything should be kept",
+        paragraphs: [
+          "Preservation has limits that matter more for AI data than for most records. Training sets can contain personal data, copyrighted or licensed content, and data collected for a specific purpose. Some of it must be deleted on request or when a license or purpose expires.",
+          "Write-once media cannot be selectively erased. Classify data before it goes to the immutable tier. Keep personal or otherwise deletable data on storage that supports deletion, or use encryption with key management that allows a copy to be rendered unreadable when required. Preserve the documentation and lineage of such data even when the data itself cannot be kept indefinitely.",
+          "Where EU personal data is involved, the GDPR's storage-limitation principle in Article 5(1)(e) and the right to erasure in Article 17 apply. These are reasons to design the preservation tier carefully, not reasons to keep nothing.",
+        ],
+      },
+      {
+        heading: "Regulatory and standards context",
+        paragraphs: [
+          "The EU AI Act sets data governance requirements for high-risk AI systems in Article 10: training, validation, and testing data must be governed with attention to its origin, collection, preparation steps such as labeling and cleaning, underlying assumptions, and possible bias. Article 18 requires providers to keep technical and quality-management documentation available to authorities for 10 years after the system is placed on the market. As amended, these obligations apply from 2 December 2027 for high-risk systems listed in Annex III and 2 August 2028 for those under Annex I.",
+          "Two clarifications matter. Most AI systems are not high-risk, so organizations should confirm classification first. And Article 18 requires keeping documentation, including documentation that describes the data, not necessarily the datasets themselves. Preserving the data is often the best way to make that documentation verifiable, but it is a design choice.",
+          "In the United States, the NIST AI Risk Management Framework is voluntary guidance that emphasizes documentation, traceability, and provenance. ISO/IEC 42001 is an international standard for AI management systems; organizations can be certified against it, but storage products cannot. A preserved, traceable dataset record can support an organization's evidence for either, without conferring compliance or certification on its own.",
+          "Copyright, licensing, and contract terms for training data vary widely and may restrict what can be kept and for how long. Review them before preserving third-party data.",
+        ],
+      },
+      {
+        heading: "A practical starting point",
+        paragraphs: [
+          "Pick the most recent model your organization has released. Identify the exact dataset versions behind it, the code that prepared them, and the documentation that describes them. Decide which of those must be preserved, for how long, and who may access them.",
+          "Write that release to the preservation tier, verify it, and then try to reproduce one evaluation result from the preserved copy alone. Whatever was missing is the gap in your current process.",
+          "Repeat for each release going forward. Over time, the organization builds a record that can answer what a model was trained on, without depending on what happened to survive on primary storage.",
+        ],
+      },
+    ],
+
+    relatedLinks: [
+      {
+        label: "Explore ELS1000",
+        href: "/products/els1000",
+        description:
+          "See the scale-out online optical library for large dataset collections.",
+      },
+      {
+        label: "Explore ELS8000",
+        href: "/products/els8000",
+        description:
+          "See the mass-capacity online optical library.",
+      },
+      {
+        label: "Explore oRain",
+        href: "/technology/orain",
+        description:
+          "See how oRain keeps preserved objects indexed across libraries.",
+      },
+    ],
+
+    sourceLinks: [
+      {
+        label: "EU AI Act, Article 10",
+        href: "https://artificialintelligenceact.eu/article/10/",
+        description:
+          "Data and data governance requirements for high-risk AI systems.",
+      },
+      {
+        label: "EU AI Act, Article 18",
+        href: "https://artificialintelligenceact.eu/article/18/",
+        description:
+          "Ten-year documentation keeping for providers of high-risk AI systems.",
+      },
+      {
+        label: "General Data Protection Regulation",
+        href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        description:
+          "Storage limitation (Article 5) and right to erasure (Article 17).",
+      },
+      {
+        label: "NIST AI Risk Management Framework 1.0",
+        href: "https://www.nist.gov/itl/ai-risk-management-framework",
+        description:
+          "Voluntary guidance on AI risk, documentation, and traceability.",
+      },
+      {
+        label: "ISO/IEC 42001:2023",
+        href: "https://www.iso.org/standard/42001",
+        description:
+          "International standard for AI management systems.",
+      },
+    ],
+
+    relatedArticleSlugs: [
+      "scientific-data-must-outlive-the-project",
+      "compliance-retention-right-information-right-time",
+    ],
+  },
 ];
 
 export function getPublishedInsights() {
