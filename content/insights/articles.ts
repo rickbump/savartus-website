@@ -1547,6 +1547,136 @@ export const insightArticles: InsightArticle[] = [
       "long-term-digital-retention-with-els100",
     ],
   },
+
+  {
+    slug: "defense-critical-infrastructure-isolated-recovery",
+    title: "When the Recovery Copy Has to Be Out of Reach",
+    description:
+      "How defense contractors and critical-infrastructure operators can keep a verified, physically isolated copy of protected data and recovery information, while keeping that copy inside their security program.",
+    excerpt:
+      "Defense programs and grid operations both depend on information that must survive an attack and outlast the hardware it lives on. Isolation helps, but only inside a disciplined security boundary.",
+    category: "DEFENSE & CRITICAL INFRASTRUCTURE",
+    author: "Savartus",
+    publishedDate: "2026-10-02",
+    readingTime: "8 min read",
+    status: "published",
+
+    sections: [
+      {
+        paragraphs: [
+          "A defense contractor supports a weapons-system program expected to run for decades. Its engineers produce drawings, specifications, test data, and program records marked as controlled unclassified information. That information must stay protected for the life of the contract, and often long after, for sustainment, audits, and investigations.",
+          "A regional electric utility operates the systems that keep its part of the grid running. If those systems are compromised or destroyed, it has to rebuild them from known-good configurations, images, and data, and it has to do so quickly.",
+          "The organizations are different. The problem is similar: the copy they would recover from often sits on a network an attacker may already be inside, and the information outlives the storage it was written to.",
+        ],
+      },
+      {
+        heading: "The recovery copy is a target",
+        paragraphs: [
+          "Attackers who reach a production network routinely look for backup systems, because destroying or encrypting backups removes the victim's best option for recovery. A copy that is always online and reachable with administrative credentials can be lost in the same incident as the system it protects.",
+          "A physically isolated copy changes that. Media that is not connected to the network cannot be reached through it. But isolation helps only if the copy was prepared and verified before the incident, holds what recovery actually needs, and can be found and restored by authorized people under pressure.",
+        ],
+      },
+      {
+        heading: "How an online and offline ELS architecture fits",
+        paragraphs: [
+          "An online ELS library, paired with performance storage and managed through oRain, holds the working preservation copy: write-once optical media that stays indexed and retrievable for ordinary use. Large programs or operators can scale across networked libraries in one namespace.",
+          "For the copy that must sit outside the network, verified media is transferred into a drive-less offline library such as the ELS8000-OL or ELS10K-OL. Those systems have no drives, so they cannot read or write media on their own; media is written and verified on a compatible online system first. oRain tracks where each item resides, so recovery teams know which media to retrieve.",
+          "Recovery runs in the other direction. Authorized staff identify the needed media, follow the organization's custody procedure, mount it on a compatible online system, verify integrity, and restore into a clean environment. Recovery point depends on how often copies are made and moved offline. Recovery time depends on data volume, retrieval steps, available systems, and practice.",
+        ],
+      },
+      {
+        heading: "Defense contractors: isolation does not mean out of scope",
+        paragraphs: [
+          "DoD contracts that include DFARS 252.204-7012 require contractors to protect covered defense information on their information systems by implementing NIST SP 800-171, and to report cyber incidents to DoD within 72 hours of discovery. That protection extends to media that stores the information, including archive and backup media.",
+          "The CMMC Program, codified at 32 CFR Part 170, assesses whether a contractor's own systems meet the required level. Two points matter for a preservation architecture. First, CMMC certifies the contractor's environment; it does not certify storage products, and no storage vendor can make a contractor compliant. Second, assets that store CUI are in the assessment scope. An offline library holding CUI media is physically separated from the network, but it still holds CUI, so it remains in scope and needs controls such as access restrictions, media protection, physical security, encryption where required, and audit records.",
+          "NIST published SP 800-171 Revision 3 in 2024, but CMMC Level 2 assessments are conducted against Revision 2. Contractors should confirm which revision their contract specifies.",
+          "This scenario covers unclassified information only. Classified information is governed by separate rules and is outside the scope of this discussion.",
+        ],
+      },
+      {
+        heading: "Critical infrastructure: recover operations, not just data",
+        paragraphs: [
+          "For bulk electric system operators, NERC CIP-009 requires documented recovery plans for applicable cyber systems. Those plans must include processes for backing up and storing the information needed to recover system functionality, and the plans must be tested. CIP-009-6 is the currently enforceable version, with a successor scheduled; operators should confirm the version and which of their systems apply.",
+          "A recovery set for an operational system is more than files. It includes configurations, firmware and software baselines, system images, and the documentation needed to rebuild in a known-good state. An offline optical copy of that set, refreshed on a defined schedule and verified, gives the recovery team a source that network access cannot reach.",
+          "CISA's #StopRansomware Guide makes the same point for organizations of every type: keep offline, encrypted backups of critical data and regularly test their availability and integrity. It is voluntary guidance, not a regulation, but it reflects how recovery fails in practice.",
+        ],
+      },
+      {
+        heading: "Long retention across hardware generations",
+        paragraphs: [
+          "Program records and engineering baselines may be needed twenty or thirty years later, long after the servers and disk arrays that created them have been replaced. Write-once optical media avoids rewriting the archive on every refresh and protects preserved copies against alteration.",
+          "Long retention still needs active care: periodic integrity checks, open or well-documented formats, preserved metadata and markings, and a migration plan for media and readers. Isolation and immutability make the copy harder to lose; stewardship keeps it usable.",
+        ],
+      },
+      {
+        heading: "Design and test the path back",
+        paragraphs: [
+          "Start with one protected data set or recovery set. Define its classification and handling rules, who may access it, how copies are written and verified, how often they move offline, how custody and location are recorded, and what is restored first.",
+          "Confirm with your security and compliance leads where the archive sits within your assessment boundary and system security plan before relying on it.",
+          "Then rehearse recovery: retrieve the media, verify it, restore into a clean environment, and measure how long it takes. Include scenarios where the online environment or management systems are unavailable. A recovery copy that has never been restored is an assumption, not a plan.",
+        ],
+      },
+    ],
+
+    relatedLinks: [
+      {
+        label: "Explore ELS8000-OL",
+        href: "/products/els8000-ol",
+        description:
+          "See the drive-less offline optical library for physically isolated preservation.",
+      },
+      {
+        label: "Explore ELS10K-OL",
+        href: "/products/els10k-ol",
+        description:
+          "See the mass-scale offline optical library.",
+      },
+      {
+        label: "Explore the ELS family",
+        href: "/products/els",
+        description:
+          "Compare online and offline optical libraries at every scale.",
+      },
+    ],
+
+    sourceLinks: [
+      {
+        label: "DFARS 252.204-7012",
+        href: "https://www.acquisition.gov/dfars/252.204-7012-safeguarding-covered-defense-information-and-cyber-incident-reporting.",
+        description:
+          "Safeguarding covered defense information and 72-hour cyber incident reporting.",
+      },
+      {
+        label: "NIST SP 800-171 Rev. 3",
+        href: "https://csrc.nist.gov/pubs/sp/800/171/r3/final",
+        description:
+          "Security requirements for protecting CUI in nonfederal systems and organizations.",
+      },
+      {
+        label: "32 CFR Part 170, CMMC Program",
+        href: "https://www.ecfr.gov/current/title-32/subtitle-A/chapter-I/subchapter-G/part-170",
+        description:
+          "Assessment of defense contractors' information systems handling FCI and CUI.",
+      },
+      {
+        label: "NERC CIP-009-6",
+        href: "https://www.nerc.com/standards/reliability-standards/cip/cip-009-6",
+        description:
+          "Recovery plans for bulk electric system cyber systems.",
+      },
+      {
+        label: "CISA #StopRansomware Guide",
+        href: "https://www.cisa.gov/stopransomware/ransomware-guide",
+        description:
+          "Voluntary guidance on offline backups and recovery testing.",
+      },
+    ],
+
+    relatedArticleSlugs: [
+      "credit-union-ransomware-recovery-offline-copies",
+      "compliance-retention-right-information-right-time",
+    ],
+  },
 ];
 
 export function getPublishedInsights() {

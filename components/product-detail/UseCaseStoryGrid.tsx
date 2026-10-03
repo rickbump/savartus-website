@@ -351,6 +351,70 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
     },
   },
   {
+    // Must precede the compliance matcher so labels like "Defense retention" land here.
+    matches: ["defense", "critical infrastructure"],
+    story: {
+      title: "A recoverable copy outside the network that matters most",
+      story:
+        "A defense contractor holds controlled unclassified technical data for a long-running program: engineering drawings, test results, specifications, and program records that must stay protected and available for the life of the contract and beyond. A regional electric utility must be able to restore the systems that operate its grid after a cyber incident or equipment loss. Both face the same problem: their most important recovery copies sit on networks an attacker may reach, and their records outlast several generations of storage hardware. An online ELS library, paired with performance storage under oRain, holds the working preservation copy. Verified optical media can then move to a drive-less offline library such as ELS8000-OL or ELS10K-OL, physically separated from production networks, with its location tracked so authorized staff can retrieve the right set through a controlled restore. The storage design supports the organization's security program; it does not replace it.",
+      idea:
+        "Pick one protected data set, such as a program's technical data package or a control-system recovery set. Define its classification and handling rules, who may access it, how copies are written and verified, how often they move offline, custody and media-location records, restore priorities, and how recovery is tested. Confirm with your security and compliance leads where the archive sits within your assessment boundary before relying on it.",
+      contexts: [
+        {
+          title: "Defense contractors: protect CUI for the life of the program",
+          description:
+            "Contractors that store controlled unclassified information must protect it wherever it resides, including archive and backup media. An optical preservation tier and offline library hold that information, so they belong inside the security boundary: access control, media protection, encryption where required, physical security, and audit records all apply. Physical isolation reduces exposure to network attack, but it does not take CUI out of scope.",
+        },
+        {
+          title: "Critical infrastructure: recover operations, not just files",
+          description:
+            "A utility or pipeline operator needs more than data: it needs configurations, system images, and the information required to rebuild control systems in a known-good state. An offline optical copy, prepared and verified before an incident, gives recovery teams a source that ordinary network access cannot reach. It is useful only if the recovery plan identifies what to restore, in what order, and has been tested.",
+        },
+        {
+          title: "Long retention across hardware generations",
+          description:
+            "Program records and engineering baselines can be needed decades later for sustainment, investigations, or audits. Write-once optical media avoids rewriting the archive on every disk refresh. Integrity checks, format planning, and documented migration still apply over that horizon.",
+        },
+      ],
+      requirements: [
+        {
+          name: "DFARS 252.204-7012, safeguarding covered defense information",
+          applicability:
+            "Applies to DoD contractors whose contracts include the clause. Covered contractor information systems that process, store, or transmit covered defense information must implement NIST SP 800-171, and cyber incidents must be rapidly reported to DoD, meaning within 72 hours of discovery. Media containing that information falls under these protections.",
+          href: "https://www.acquisition.gov/dfars/252.204-7012-safeguarding-covered-defense-information-and-cyber-incident-reporting.",
+        },
+        {
+          name: "NIST SP 800-171, protecting CUI in nonfederal systems",
+          applicability:
+            "Security requirements for nonfederal systems handling CUI, including media protection, access control, and system and information integrity. Revision 3 is current at NIST, while CMMC Level 2 assessments are conducted against Revision 2; confirm which revision your contract specifies.",
+          href: "https://csrc.nist.gov/pubs/sp/800/171/r3/final",
+        },
+        {
+          name: "CMMC Program, 32 CFR Part 170",
+          applicability:
+            "Assesses whether a defense contractor's own information systems meet the required security level when handling FCI or CUI. CMMC certifies the contractor's environment, not a storage product. Assets that store CUI, including archive and offline media, are in the assessment scope; physical separation from CUI assets does not apply to media that itself holds CUI.",
+          href: "https://www.ecfr.gov/current/title-32/subtitle-A/chapter-I/subchapter-G/part-170",
+        },
+        {
+          name: "NERC CIP-009, recovery plans for BES Cyber Systems",
+          applicability:
+            "Mandatory for registered entities operating applicable bulk electric system cyber systems. Requires documented recovery plans that include backing up and storing the information needed to recover system functionality, and periodic testing of those plans. Confirm the current enforceable version and your applicable systems.",
+          href: "https://www.nerc.com/standards/reliability-standards/cip/cip-009-6",
+        },
+        {
+          name: "CISA #StopRansomware Guide",
+          applicability:
+            "Voluntary guidance recommending offline, encrypted backups of critical data and regular testing of their availability and integrity. Not a regulation or product certification.",
+          href: "https://www.cisa.gov/stopransomware/ransomware-guide",
+        },
+      ],
+      scopeNote:
+        "Initial U.S.-focused applicability map, not legal advice. This scenario covers unclassified information only; classified information is governed by separate requirements and is out of scope here. Applicability depends on contract clauses, registration status, system categorization, and jurisdiction. ELS does not hold a CMMC certification, and no storage product makes an organization compliant. Physical isolation reduces exposure to network-based attack but does not guarantee a copy is clean or recoverable: verify restore points, custody, encryption needs, geographic separation, and recovery tests. Offline libraries have no drives, so media is written and verified on a compatible online ELS before controlled transfer.",
+      insightHref: "/insights/defense-critical-infrastructure-isolated-recovery",
+      insightTitle: "When the Recovery Copy Has to Be Out of Reach",
+    },
+  },
+  {
     matches: ["compliance", "regulated", "regulatory", "retention", "audit", "governance"],
     story: {
       title: "Keep regulated information for the right reason, for the right amount of time",
@@ -482,16 +546,6 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
         "An AI team retains training inputs, evaluation sets, and the associated release artifacts after a model ships. Researchers can revisit the data while durable optical copies keep a reference set for reproducibility, governance, and later model comparisons.",
       idea:
         "Define a dataset release as a bundle: source objects, labels, preprocessing version, evaluation results, and the record that connects them.",
-    },
-  },
-  {
-    matches: ["defense", "critical infrastructure", "security"],
-    story: {
-      title: "Long-lived records for high-consequence operations",
-      story:
-        "An operational team preserves mission records, inspections, and incident data while keeping recent material available to authorized users. Write-once optical copies add a durable recovery source alongside normal operational access.",
-      idea:
-        "Select one operational record set and map its access boundaries, retention obligation, and recovery path after loss of the primary environment.",
     },
   },
   {
