@@ -1928,3 +1928,21 @@ export const insightArticles: InsightArticle[] = [
     ],
   },
 ];
+
+export function getPublishedInsights() {
+  return insightArticles.filter((article) => article.status === "published");
+}
+
+export function getInsightBySlug(slug: string) {
+  return insightArticles.find(
+    (article) =>
+      article.slug === slug &&
+      article.status === "published"
+  );
+}
+
+export function getRelatedInsights(article: InsightArticle) {
+  return article.relatedArticleSlugs
+    .map((slug) => getInsightBySlug(slug))
+    .filter((item): item is InsightArticle => Boolean(item));
+}
