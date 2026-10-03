@@ -415,7 +415,7 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
     },
   },
   {
-    matches: ["compliance", "regulated", "regulatory", "retention", "audit", "governance"],
+    matches: ["compliance", "regulated", "regulatory", "audit", "governance"],
     story: {
       title: "Keep regulated information for the right reason, for the right amount of time",
       story:
@@ -529,13 +529,66 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
     },
   },
   {
-    matches: ["backup", "disaster recovery", "recovery", "cyber", "ransomware", "resilience"],
+    matches: ["enterprise backup", "backup"],
     story: {
-      title: "A second copy outside the usual failure path",
+      title: "Stop relying on the backup job that keeps falling behind",
       story:
-        "An organization continues using its familiar storage workflow while a performance tier serves routine reads and writes. A write-once optical copy creates a separate recovery path when a disk failure, ransomware event, or accidental deletion affects the online copy.",
+        "A growing professional-services firm stores shared client deliverables, project records, and internal working files on a file server. Its nightly backup window is shrinking, and a ransomware incident has shown that a copy reachable with the same domain credentials can be exposed along with production. The firm moves a defined working repository to an ELS150 or ELS300. Staff continue using the integrated disk-cache system for everyday file access, while each write to that repository is automatically copied to write-once optical media. That creates another recovery source for data held on the appliance, including a path to recover from cache-disk failure. It is not a replacement for the backup platform: it does not automatically capture every server, VM, SaaS service, system image, identity configuration, or application dependency. Nor is an online ELS a network-isolated or off-site copy; it shares the appliance and site. Keep those distinct protections in the plan and test each restore path.",
       idea:
-        "Trace one critical dataset through write, optical verification, incident declaration, and restore; note who owns each handoff and how quickly service must return.",
+        "Select a bounded file repository and document exactly what enters the ELS, how writes are verified, who can administer the system, and how versions or deletions are handled. Set an RPO and RTO, then test a file-level recovery, a cache-disk failure procedure, a clean restore after ransomware, and an off-site recovery using the separate backup system. Record elapsed times, missing dependencies, and the maximum age of every copy.",
+      contexts: [
+        {
+          title: "A backup window no longer matches the data growth",
+          description:
+            "A separate backup job can fall behind as shared files grow or the available network window shrinks. For files written to the ELS150/ELS300 repository, the appliance automatically creates an optical second copy as part of its write workflow. Confirm throughput, capacity, retention behavior, error reporting, and application compatibility in a pilot; do not assume this captures data that remains on other systems.",
+        },
+        {
+          title: "Make the copy useful during recovery",
+          description:
+            "A recovery team needs known restore points, clean credentials, system images, application installers, keys, configuration, dependency order, and an approved clean environment. The optical copy can contribute selected repository data, but does not provide those surrounding recovery assets. Define who can retrieve and validate files and rehearse the procedure before an incident.",
+        },
+        {
+          title: "Separate immutability from isolation and site resilience",
+          description:
+            "Write-once optical media prevents rewriting the recorded content, but an online appliance remains connected to its management and data paths. The cache and optical media are in the same system and location. A compromised administrator, appliance failure, or site-wide event can still threaten access to the copy. Keep a separately administered offline or off-site backup where the threat model requires it.",
+        },
+      ],
+      requirements: [
+        {
+          name: "CISA #StopRansomware Guide",
+          applicability:
+            "Voluntary guidance recommends offline, encrypted backups of critical data and regular tests of their availability and integrity in a disaster-recovery scenario. It also recommends clean system images and a practiced incident plan. An online ELS copy alone does not satisfy the offline-backup recommendation.",
+          href: "https://www.cisa.gov/stopransomware/ransomware-guide",
+        },
+        {
+          name: "NIST Cybersecurity Framework 2.0",
+          applicability:
+            "Voluntary risk-management guidance that organizations can use to govern backup ownership, identify dependencies, set recovery priorities, and improve response and recovery. It is not a regulation or certification of a storage product.",
+          href: "https://www.nist.gov/cyberframework",
+        },
+        {
+          name: "NIST SP 800-34 Rev. 1, Contingency Planning Guide",
+          applicability:
+            "Contingency-planning guidance for federal information systems. Other organizations may use it as a reference, but it is not a generally applicable private-sector backup regulation. Apply the organization's required impact analysis, recovery objectives, and exercise schedule.",
+          href: "https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final",
+        },
+        {
+          name: "ISO 22301:2019, Business Continuity Management Systems",
+          applicability:
+            "Requirements for an organization's business continuity management system. An organization can seek certification of its management system; the standard does not certify ELS150 or ELS300, and buying a storage appliance does not establish conformance.",
+          href: "https://www.iso.org/standard/75106.html",
+        },
+        {
+          name: "17 CFR 240.17a-4, covered broker-dealer records",
+          applicability:
+            "Applies to specified exchange members, brokers, and dealers for records covered by the rule. Electronic recordkeeping can use a compliant non-rewriteable, non-erasable approach or a compliant time-stamped audit-trail alternative, subject to access, production, redundancy, and other requirements. An optical copy is not by itself proof of compliance and this is not a general enterprise backup rule.",
+          href: "https://www.ecfr.gov/current/title-17/chapter-II/part-240/section-240.17a-4",
+        },
+      ],
+      scopeNote:
+        "Initial planning map, not legal advice. ELS150 and ELS300 create optical copies for data written to their integrated-cache repository; confirm supported workflows and operational recovery procedures with Savartus. This does not automatically back up other servers or services, and online optical storage is not an air gap. The cache and optical copy share one appliance and site, so maintain independent, appropriately isolated and geographically separate copies for risks they cannot cover. Define retention, deletion, encryption, access control, application consistency, capacity, RPO/RTO, and recurring restore tests. Sector rules and contracts may impose additional controls; no storage product alone certifies a complete backup or business-continuity program.",
+      insightHref: "/insights/enterprise-backup-test-the-copy-not-the-job",
+      insightTitle: "Enterprise Backup: Test the Copy, Not the Job",
     },
   },
   {
@@ -661,31 +714,178 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
   {
     matches: ["remote office", "department", "distributed", "edge"],
     story: {
-      title: "Local access, centrally managed preservation",
+      title: "Keep a branch recoverable when the WAN is not",
       story:
-        "A distributed team captures records close to where work happens, then manages them through a consistent archive interface. Durable optical copies reduce dependence on fragile local disks or manual backup routines.",
+        "A regional engineering office, utility field depot, or industrial site creates project files, inspection records, configuration exports, and operational documentation every day. Its uplink is slow or intermittent, so routine transfers to headquarters fall behind; when a disk fails or ransomware reaches the site, the branch cannot depend on a current central copy. Keep active work on the branch's performance storage and preserve selected, verified data to a local ELS100 through a validated local oRain deployment. Maintain a local recovery manifest that staff can use without the central catalog, and reconcile identifiers and status with the central catalog when connectivity returns. A local copy protects against some data and WAN failures, not loss of the site itself: critical recovery sets still need an independently located copy and a tested path back.",
       idea:
-        "Sketch one remote-site workflow from file creation through central discovery, optical copy confirmation, and a test restore.",
+        "Choose one branch data set and define its owner, classification, RPO/RTO, local ingest and verification process, catalog fields needed during an outage, central reconciliation method, media custody, and the separate copy required for site loss. Test normal operation with the WAN available and unavailable, then restore selected files from the local optical copy into a clean test environment.",
+      contexts: [
+        {
+          title: "A disconnected branch still needs a local recovery path",
+          description:
+            "If the uplink is unavailable, a recovery workflow that requires headquarters to locate or authorize every file can fail when staff need it most. Keep a documented local manifest of protected object identifiers, dates, checksums, and media location, with access controlled and updates reconciled to the central catalog after reconnection. Validate which ELS/oRain functions remain available in the actual local deployment during WAN loss; do not assume centralized management is outage-independent.",
+        },
+        {
+          title: "Separate operational data from the authoritative record",
+          description:
+            "The branch can preserve the files it creates locally, but records ownership, retention schedules, legal holds, and enterprise-wide discovery may remain centrally governed. Define which catalog is authoritative, how local changes are reconciled, and how staff prevent duplicate, stale, or deleted records from being mistaken for the current version.",
+        },
+        {
+          title: "Site resilience requires another location",
+          description:
+            "An ELS100 at the branch can provide a local recovery source for a failed disk or compromised network, but it shares the branch's physical risks. Fire, theft, flood, or site-wide compromise can take both production and local archive together. Identify which data needs a second copy at headquarters or another site, and test that recovery path separately from a local restore.",
+        },
+      ],
+      requirements: [
+        {
+          name: "CISA #StopRansomware Guide",
+          applicability:
+            "Voluntary guidance for organizations recommends offline, encrypted backups of critical data and regular tests of backup availability and integrity in disaster-recovery scenarios. It also emphasizes recovery planning and clean restoration. It is not a regulation or a certification of ELS100.",
+          href: "https://www.cisa.gov/stopransomware/ransomware-guide",
+        },
+        {
+          name: "NIST Cybersecurity Framework 2.0",
+          applicability:
+            "Voluntary risk-management guidance for organizations of different sizes and sectors. Its Govern, Identify, Protect, Detect, Respond, and Recover functions can help define branch responsibilities, dependencies, recovery priorities, and exercises; the framework is not a regulation or product certification.",
+          href: "https://www.nist.gov/cyberframework",
+        },
+        {
+          name: "NIST SP 800-34 Rev. 1, Contingency Planning Guide",
+          applicability:
+            "Guidance for contingency planning of federal information systems. Other organizations may use it as a planning reference, but it is not a generally applicable private-sector regulation. Tailor recovery strategies and exercises to the system's impact and organizational obligations.",
+          href: "https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final",
+        },
+        {
+          name: "NERC CIP-009-6, Recovery Plans for BES Cyber Systems",
+          applicability:
+            "Conditional: mandatory only for applicable registered entities and systems within the Bulk Electric System cyber-system categorization and applicability criteria. It requires documented recovery plans and testing; it does not apply to an ordinary branch office merely because it belongs to an electric utility. Confirm current standards, entity registration, system categorization, and regional requirements with the utility's compliance lead.",
+          href: "https://www.nerc.com/standards/reliability-standards/cip/cip-009-6",
+        },
+      ],
+      scopeNote:
+        "Initial U.S.-focused planning map, not legal advice. CISA and NIST frameworks cited here are guidance, not certifications. NERC CIP-009 applies only where the registered entity, BES Cyber System, and applicability criteria bring the system into scope. ELS100 is an online optical library with no integrated disk cache; pair it with suitable local performance storage if the workload needs one. Confirm with Savartus which oRain services, catalog operations, ingest, and restore workflows are supported during WAN loss. A branch-local copy is not geographic disaster recovery: keep and test a separate copy at another location when site loss is in scope. Define encryption, access control, retention, legal hold, and media-handling requirements before deployment.",
+      insightHref: "/insights/remote-offices-recovery-without-the-wan",
+      insightTitle: "Remote Offices: Recovery Without the WAN",
     },
   },
   {
-    matches: ["offline", "physically isolated", "deep preservation"],
+    matches: ["offline", "physically isolated", "deep preservation", "deep retention"],
     story: {
-      title: "An offline copy with a known way back",
+      title: "Isolate the recovery copy and rehearse the way back",
       story:
-        "A security team separates a preserved copy from production systems but keeps a catalog of what is stored, where it resides, and how it can be restored. The result is a recovery plan that pairs physical isolation with deliberate discovery and retrieval steps.",
+        "An organization has already seen attackers target production data and network-connected backups. Its recovery team needs a known-good set of system configurations, critical project files, software installers, and operating procedures that ordinary network credentials cannot reach. The team selects and verifies those files on a compatible online ELS system, then transfers the optical media into a drive-less ELS8000-OL or ELS10K-OL. oRain records media location and object awareness, while a separately protected recovery manifest gives responders an out-of-band way to identify priority media if normal services are unavailable. The offline library provides physical separation for the media; it does not write or read discs itself. Before a restore, staff retrieve and mount media through a compatible online system, verify the contents, and restore into a clean environment. They repeat the exercise and maintain copies at another location when the site-loss risk requires it.",
       idea:
-        "Define the isolation boundary, the catalog fields needed to locate a file, and the people authorized to approve a restore.",
+        "Choose one recovery set. Document classification, source and timestamp, checksums, encryption and key custody, media IDs and locations, the catalog or manifest needed during an outage, approved custodians, the online system used to write and verify media, the transfer procedure, recovery priorities, and the RPO/RTO. Then conduct a restore exercise with the online management network unavailable and record what the responders could actually retrieve.",
+      contexts: [
+        {
+          title: "Keep critical recovery media outside ordinary network reach",
+          description:
+            "A physically disconnected media store reduces the paths through which network-based malware or compromised credentials can reach the media. It does not prove the source copy is clean, stop insiders or physical threats, or replace separate accounts, custody controls, incident response, and integrity verification. Build the offline copy before an incident and protect the process that prepares it.",
+        },
+        {
+          title: "Know what is stored and where it is",
+          description:
+            "Drive-less libraries cannot inventory disc contents by reading them. Prepare and verify media on a compatible online ELS first, then record the media identifier, contents, source time, checksum results, and physical location in oRain and in a protected recovery manifest. Retain enough catalog information outside the isolated system to find priority media if the usual network or management service is down.",
+        },
+        {
+          title: "Make the return path part of the plan",
+          description:
+            "To restore, authorized staff must locate and retrieve the media, mount it through a compatible online environment, verify it again, and recover files into a clean system. Recovery time depends on those handoffs, data volume, available drives and systems, and staff practice. A physically isolated rack does not by itself provide a geographically separate copy; place another verified set off-site when required by the risk assessment.",
+        },
+      ],
+      requirements: [
+        {
+          name: "CISA #StopRansomware Guide",
+          applicability:
+            "Voluntary guidance recommends offline, encrypted backups of critical data and regular tests of their availability and integrity in a disaster-recovery scenario. Encryption, selection of clean recovery points, custody, and restore procedures remain the organization's responsibility; the guide does not certify an ELS system.",
+          href: "https://www.cisa.gov/stopransomware/ransomware-guide",
+        },
+        {
+          name: "NIST Cybersecurity Framework 2.0",
+          applicability:
+            "A voluntary risk-management framework organizations can use to assign recovery responsibilities, identify dependencies, and improve response and recovery. It is not a regulation or product certification.",
+          href: "https://www.nist.gov/cyberframework",
+        },
+        {
+          name: "NIST SP 800-34 Rev. 1, Contingency Planning Guide",
+          applicability:
+            "Contingency-planning guidance for federal information systems. Other organizations may use it as a reference, but it is not a generally applicable private-sector regulation. Tailor recovery plans and exercises to the system's impact and obligations.",
+          href: "https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final",
+        },
+        {
+          name: "NERC CIP-009, Recovery Plans for BES Cyber Systems",
+          applicability:
+            "Conditional: applies only to registered entities and cyber systems that meet the Bulk Electric System categorization and standard applicability criteria. Where in scope, the standard requires documented recovery plans and testing. An organization is not covered merely because it is a utility or critical-infrastructure operator; confirm entity, system, current effective version, and regional requirements with its compliance lead.",
+          href: "https://www.nerc.com/standards/reliability-standards/cip/cip-009-6",
+        },
+        {
+          name: "ISO 22301:2019, Business Continuity Management Systems",
+          applicability:
+            "Requirements for an organization's business continuity management system. An organization may seek certification of that management system; the standard does not certify a storage product or make a recovery plan effective without exercises.",
+          href: "https://www.iso.org/standard/75106.html",
+        },
+      ],
+      scopeNote:
+        "Initial planning map, not legal advice. ELS8000-OL and ELS10K-OL have no drives: they do not write, verify, or read media. Prepare and verify media on a compatible online ELS before controlled transfer; restore by mounting the media through a compatible online system. oRain can track media location and object awareness, but maintain an independently protected recovery manifest and test access when central services are unavailable. Physical isolation does not prove media is clean or provide geographic redundancy. Define encryption, custody, access, retention, integrity checks, off-site copies, and recovery objectives. NERC CIP obligations are conditional on registered-entity and BES Cyber System applicability; no product confers compliance or certification.",
+      insightHref: "/insights/offline-preservation-isolate-and-test-the-restore",
+      insightTitle: "Offline Preservation: Isolate and Test the Restore",
     },
   },
   {
-    matches: ["archive", "repository", "object stor", "video", "data center", "preservation"],
+    matches: ["archive", "repositor", "object stor", "video", "data center", "preservation"],
     story: {
-      title: "Turn a growing archive into a managed collection",
+      title: "Stop powering data nobody is reading",
       story:
-        "A team groups completed projects, large objects, and video assets into collections with clear owners and retention needs. Frequently requested information remains in an online access tier; durable optical copies give the organization a long-lived source without making every byte depend on primary storage.",
+        "A large enterprise or data center operator stores petabytes that grow every year: finished projects, video, logs, backups of record, research output, and object data that applications wrote once and rarely read again. Most of it sits on continuously spinning disk or in cloud archive tiers. The disk estate draws power and cooling around the clock and has to be refreshed and migrated every few years; cloud archive tiers can add retrieval and egress charges and multi-hour restore times. Meanwhile, energy reporting and efficiency rules are tightening. Scale-out ELS libraries under oRain give that cold data an online home on optical media, which needs no power to retain what is written on it. Objects stay in one namespace and remain retrievable through the same S3-compatible interface, while performance storage is reserved for data that is actually active. Capacity grows by adding networked libraries rather than rebuilding the archive.",
       idea:
-        "Choose one collection and define its owner, discovery metadata, retrieval service level, retention event, and preservation copy.",
+        "Measure before moving anything. Pick one large data class and record its size, growth, access frequency over the last year, current storage tier, power and cooling share, refresh schedule, and any cloud retrieval costs. Define the access-time target the business actually needs for it. Then pilot moving that class to an ELS library, measure retrieval times and energy before and after, and use the measured results, not estimates, to decide how far to extend it.",
+      contexts: [
+        {
+          title: "Most stored data is rarely read",
+          description:
+            "In many environments, a large share of stored data is not accessed for months or years after it is written, yet it is kept on the same always-on infrastructure as active data. Identifying that data by access pattern, not just age, is the first step. Data that is cold but must stay online and retrievable is the natural fit for an online optical tier.",
+        },
+        {
+          title: "Grow capacity without rebuilding the archive",
+          description:
+            "Disk-based archives typically need to be migrated to new hardware every several years. Write-once optical media is not rewritten on a refresh cycle, and ELS libraries scale by adding networked systems that oRain manages as one namespace. Plan for eventual media and reader migration, but on a much longer horizon than disk refreshes.",
+        },
+        {
+          title: "Energy you can report, measured honestly",
+          description:
+            "Moving cold data off spinning disk reduces IT energy and cooling load, which shows up in total energy use. It does not improve PUE by itself; PUE compares total facility energy to IT energy, and lowering IT load can even raise the ratio. Report the change in absolute energy and in energy per stored terabyte, and measure it rather than estimating.",
+        },
+      ],
+      requirements: [
+        {
+          name: "EU Energy Efficiency Directive (2023/1791), Article 12",
+          applicability:
+            "Owners and operators of data centers in the EU with at least 500 kW of installed IT power demand must publish energy-performance information annually, starting 15 May 2024, including energy consumption, power use, renewable energy share, waste heat, water use, and the amount of data stored and processed. Data centers used exclusively for defense and civil protection are exempt. Applies to the facility, not to individual products.",
+          href: "https://eur-lex.europa.eu/eli/dir/2023/1791/oj",
+        },
+        {
+          name: "Delegated Regulation (EU) 2024/1364, EU data center rating scheme",
+          applicability:
+            "Sets the information and key performance indicators data centers report under Article 12. In September 2026 the European Commission proposed a common rating scheme and opened consultation on minimum performance standards, with a legislative proposal planned for 2027. Track these as they develop; they are not yet final requirements.",
+          href: "https://energy.ec.europa.eu/topics/energy-efficiency/energy-efficiency-targets-directive-and-rules/energy-efficiency-directive/energy-performance-data-centres_en",
+        },
+        {
+          name: "Germany, Energy Efficiency Act (EnEfG) §11",
+          applicability:
+            "Sets PUE limits for German data centers: existing facilities must reach 1.5 from July 2027 and 1.3 from July 2030, and facilities starting operation from July 2026 must reach 1.2, along with waste-heat reuse and renewable-electricity requirements. Applies to qualifying data center operators in Germany. Reducing IT load alone does not lower PUE.",
+          href: "https://www.gesetze-im-internet.de/enefg/__11.html",
+        },
+        {
+          name: "ISO/IEC 30134-2:2026, Power Usage Effectiveness",
+          applicability:
+            "The international standard defining how PUE is measured and reported. Useful for consistent measurement; it is not a regulation, and storage products are not certified against it.",
+          href: "https://www.iso.org/standard/30134-2",
+        },
+      ],
+      scopeNote:
+        "Applicability depends on facility size, location, and ownership; confirm which rules apply to your sites. Energy and cost results depend on your data's access patterns, the systems being replaced, and how often data is recalled. Measure actual consumption before and after rather than relying on vendor estimates. Optical libraries suit data that is cold but must remain online; data needing continuous high-throughput access belongs on performance storage. ELS is a storage tier, not a data-classification or lifecycle-policy engine.",
+      insightHref: "/insights/enterprise-archive-stop-powering-cold-data",
+      insightTitle: "Stop Powering Data Nobody Is Reading",
     },
   },
 ];
