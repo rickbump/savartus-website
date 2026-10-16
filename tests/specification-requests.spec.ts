@@ -1,5 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { neonConfig } from "@neondatabase/serverless";
+import { ClientSecretCredential } from "@azure/identity";
+import { syncSpecificationContact } from "../lib/specification-crm";
+import { neon } from "@neondatabase/serverless";
 import { POST } from "../app/api/specification-requests/route";
 import {
   parseSpecificationRequest,
@@ -34,6 +37,7 @@ function fakeServices() {
       expect(request).toEqual(details);
       events.push("email");
     },
+    async sync() { return true; },
   };
   return { services, events, records };
 }
@@ -99,6 +103,20 @@ test("does not report success when recording acceptance fails", async () => {
   services.update = async () => { throw new Error("Update unavailable"); };
   await expect(submitSpecificationRequest(details, services)).rejects.toThrow("Update unavailable");
   expect(events).toEqual(["save", "email"]);
+});
+
+test("CRM outages never prevent sending the download email", async () => {
+  const { services, events } = fakeServices();
+  services.sync = async () => { throw new Error("CRM unavailable"); };
+  await submitSpecificationRequest(details, services);
+  expect(events).toEqual(["save", "email", "accepted"]);
+});
+
+test("a retained failed CRM sync still permits download email", async () => {
+  const { services, events } = fakeServices();
+  services.sync = async () => false;
+  await submitSpecificationRequest(details, services);
+  expect(events).toEqual(["save", "email", "accepted"]);
 });
 
 for (const status of ["pending", "accepted", "failed"] as const) {
@@ -192,6 +210,12 @@ test.describe("Neon storage adapter", () => {
     neonConfig.fetchFunction = async (_url: string, options: RequestInit) => {
       if (typeof options.body !== "string") throw new Error("Expected Neon query body.");
       const body = JSON.parse(options.body);
+      if ("queries" in body) {
+        queries.push(...body.queries);
+        return Response.json({ results: body.queries.map(() => ({
+          fields, rows, rowCount: rows.length, command: "SELECT",
+        })) });
+      }
       queries.push(body);
       return Response.json({ fields, rows, rowCount: rows.length, command: "SELECT" });
     };
@@ -240,6 +264,8 @@ test.describe("Neon storage adapter", () => {
     expect(queries[0].query).not.toContain(maliciousName);
     expect(queries[0].params).toContain(maliciousName);
     expect(queries[0].params.at(-1)).toBeNull();
+    expect(queries[1].query).toContain("INSERT INTO specification_crm_sync");
+    expect(queries[1].params).toContain(record.version);
   });
 
   test("passes the previous version and reports lost reservations", async () => {
@@ -263,5 +289,119 @@ test.describe("Neon storage adapter", () => {
     delete process.env.AZURE_CLIENT_SECRET;
     expect(() => createRequestServices()).toThrow("configuration is incomplete");
     expect(queries).toEqual([]);
+  });
+
+  test("emails the requestor and BCCs Rick without adding a visible CC", async () => {
+    const originalGetToken = ClientSecretCredential.prototype.getToken;
+    const originalFetch = globalThis.fetch;
+    let sent = false;
+    try {
+      ClientSecretCredential.prototype.getToken = async () => ({
+        token: "test-token-only",
+        expiresOnTimestamp: Date.now() + 60_000,
+      });
+      globalThis.fetch = async (url, options) => {
+        expect(String(url)).toBe(
+          "https://graph.microsoft.com/v1.0/users/sender%40example.com/sendMail",
+        );
+        const body = JSON.parse(String(options?.body));
+        expect(body.message.toRecipients).toEqual([
+          { emailAddress: { address: details.email } },
+        ]);
+        expect(body.message.bccRecipients).toEqual([
+          { emailAddress: { address: "rick.bump@savartus.com" } },
+        ]);
+        expect(body.message.ccRecipients).toBeUndefined();
+        expect(body.message.body.content).toContain(environment.SPECIFICATION_DOWNLOAD_URL);
+        sent = true;
+        return new Response(null, { status: 202 });
+      };
+      await createRequestServices().send(details);
+      expect(sent).toBe(true);
+    } finally {
+      ClientSecretCredential.prototype.getToken = originalGetToken;
+      globalThis.fetch = originalFetch;
+    }
+  });
+});
+
+test.describe("CRM synchronization", () => {
+  const databaseUrl = "postgresql://test:test@example.neon.tech/test?sslmode=require";
+  let originalFetch: typeof globalThis.fetch;
+  let originalNeonFetch: typeof neonConfig.fetchFunction;
+  let oldUrl: string | undefined;
+  let oldToken: string | undefined;
+  let statements: string[];
+  let crmStatus: number;
+  let remoteCalls: number;
+
+  test.beforeEach(() => {
+    originalFetch = globalThis.fetch;
+    originalNeonFetch = neonConfig.fetchFunction;
+    oldUrl = process.env.CRM_CONTACT_IMPORT_URL;
+    oldToken = process.env.CRM_CONTACT_IMPORT_TOKEN;
+    process.env.CRM_CONTACT_IMPORT_URL = "https://crm.example.invalid/api/integrations/website-contacts";
+    process.env.CRM_CONTACT_IMPORT_TOKEN = "test-only-token-".repeat(4);
+    statements = [];
+    crmStatus = 201;
+    remoteCalls = 0;
+    neonConfig.fetchFunction = async (_url: string, options: RequestInit) => {
+      const body = JSON.parse(String(options.body));
+      statements.push(body.query);
+      return Response.json({
+        fields: [{ name: "payload", dataTypeID: 3802 }],
+        rows: body.query.includes("SELECT payload") ? [[JSON.stringify({
+          ...details, requestId: "33333333-3333-3333-3333-333333333333",
+          requestedAt: "2026-10-16T12:00:00.000Z",
+        })]] : [],
+        command: "SELECT",
+      });
+    };
+    globalThis.fetch = async (_url, options) => {
+      remoteCalls += 1;
+      expect(options?.redirect).toBe("error");
+      expect(options?.body).toContain(details.email);
+      const payload = JSON.parse(String(options?.body));
+      expect(payload.source).toBe("Requested Specification from Website");
+      expect(payload.leadSource).toBeUndefined();
+      expect(options?.headers).toMatchObject({
+        Authorization: `Bearer ${process.env.CRM_CONTACT_IMPORT_TOKEN}`,
+      });
+      return Response.json(
+        crmStatus === 201 ? { contactId: "44444444-4444-4444-4444-444444444444" } : { error: "Unavailable" },
+        { status: crmStatus },
+      );
+    };
+  });
+
+  test.afterEach(() => {
+    globalThis.fetch = originalFetch;
+    neonConfig.fetchFunction = originalNeonFetch;
+    for (const [key, value] of [
+      ["CRM_CONTACT_IMPORT_URL", oldUrl], ["CRM_CONTACT_IMPORT_TOKEN", oldToken],
+    ] as const) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+
+  test("marks a successful import synced with its CRM contact ID", async () => {
+    expect(await syncSpecificationContact(neon(databaseUrl), "33333333-3333-3333-3333-333333333333")).toBe(true);
+    expect(remoteCalls).toBe(1);
+    expect(statements[1]).toContain("status = 'synced'");
+  });
+
+  test("retains a job after CRM failure and records the attempt", async () => {
+    crmStatus = 503;
+    expect(await syncSpecificationContact(neon(databaseUrl), "33333333-3333-3333-3333-333333333333")).toBe(false);
+    expect(statements[1]).toContain("last_error");
+    expect(statements[1]).not.toContain("status = 'synced'");
+  });
+
+  test("missing configuration leaves a pending job without calling CRM", async () => {
+    delete process.env.CRM_CONTACT_IMPORT_TOKEN;
+    expect(await syncSpecificationContact(neon(databaseUrl), "33333333-3333-3333-3333-333333333333")).toBe(false);
+    expect(remoteCalls).toBe(0);
+    expect(statements[1]).toContain("attempts = attempts + 1");
   });
 });

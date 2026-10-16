@@ -10,6 +10,7 @@
   "build": "next build",
   "start": "next start",
   "lint": "eslint",
+  "crm:retry": "node --experimental-strip-types scripts/retry-specification-crm.mjs",
   "qa:links": "playwright test tests/site-links.spec.ts"
 },
   "dependencies": {

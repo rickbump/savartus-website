@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { neon } from "@neondatabase/serverless";
 import { ClientSecretCredential } from "@azure/identity";
+import { syncSpecificationContact } from "./specification-crm";
 
 export type SpecificationRequest = {
   name: string;
@@ -23,6 +24,7 @@ export type RequestServices = {
   reserve: (record: RequestRecord, previousVersion?: string) => Promise<boolean>;
   update: (record: RequestRecord) => Promise<void>;
   send: (request: SpecificationRequest) => Promise<void>;
+  sync: (requestId: string) => Promise<boolean>;
 };
 
 export class SpecificationRequestError extends Error {
@@ -110,6 +112,16 @@ export async function submitSpecificationRequest(
   }
 
   try {
+    await services.sync(record.version);
+  } catch (error) {
+    // The sync job was saved with the request; a CRM/storage outage must not block the email.
+    console.error("Specification CRM sync interrupted; job retained for retry", {
+      requestId: record.version,
+      type: error instanceof Error ? error.name : "UnknownError",
+    });
+  }
+
+  try {
     await services.send(request);
   } catch (error) {
     await services.update({ ...record, status: "failed" });
@@ -173,7 +185,7 @@ export function createRequestServices(): RequestServices {
       };
     },
     async reserve(record, previousVersion) {
-      const rows = await sql`
+      const results = await sql.transaction([sql`
         INSERT INTO specification_requests
           (email_key, version, name, organization, title, email, source, requested_at, status)
         VALUES
@@ -186,9 +198,26 @@ export function createRequestServices(): RequestServices {
           requested_at = EXCLUDED.requested_at, status = 'pending', email_accepted_at = NULL
         WHERE specification_requests.version = ${previousVersion ?? null}::uuid
         RETURNING email_key
-      `;
-      return rows.length === 1;
+      `, sql`
+        INSERT INTO specification_crm_sync (request_id, email_key, payload)
+        SELECT ${record.version}::uuid, email_key,
+          ${JSON.stringify({
+            requestId: record.version,
+            name: record.name,
+            organization: record.organization,
+            title: record.title,
+            email: record.email,
+            source: record.source,
+            leadSource: "Requested Specification from Website",
+            requestedAt: record.requestedAt,
+          })}::jsonb
+        FROM specification_requests
+        WHERE email_key = ${record.rowKey} AND version = ${record.version}::uuid
+        ON CONFLICT (request_id) DO NOTHING
+      `]);
+      return results[0].length === 1;
     },
+    sync: (requestId) => syncSpecificationContact(sql, requestId),
     async update(record) {
       const rows = await sql`
         UPDATE specification_requests
@@ -231,6 +260,7 @@ export function createRequestServices(): RequestServices {
                 ].join("\n"),
               },
               toRecipients: [{ emailAddress: { address: request.email } }],
+              bccRecipients: [{ emailAddress: { address: "rick.bump@savartus.com" } }],
             },
           }),
           signal: AbortSignal.timeout(15_000),

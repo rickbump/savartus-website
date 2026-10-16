@@ -157,7 +157,8 @@ export function FullDocumentRequest({ source, compact = false }: Props) {
 
               <p className="full-document-note">
                 We store your name, employer, title, and email to fulfill and keep a
-                record of this request. Submitting does not subscribe you to marketing emails.
+                record of this request, including in our contact management system.
+                Submitting does not subscribe you to marketing emails.
               </p>
 
               <div className="full-document-actions">

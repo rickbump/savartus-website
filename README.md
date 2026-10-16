@@ -34,6 +34,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The shared **Full Document** form submits to `POST /api/specification-requests`.
 The server validates the fields, saves the request in Neon Postgres, and
 asks Microsoft Graph to email the download link from a Microsoft 365 mailbox.
+Each download email BCCs `rick.bump@savartus.com`; the requestor remains the To recipient.
 No visitor email application is opened, and no credentials are exposed to the browser.
 
 ### Required setup before going live
@@ -122,6 +123,58 @@ npx playwright test tests/specification-requests.spec.ts tests/specification-req
 
 These tests use fake storage/email services or intercept the browser API call;
 they never send real emails. Live Neon/Microsoft 365 verification is still required.
+
+### CRM contact synchronization
+
+Each new request also creates a durable `specification_crm_sync` job in the same
+database transaction as the request reservation. It attempts to import the
+contact before sending the email; a CRM failure is logged and retained for retry,
+but does not prevent delivery of the download email. The CRM call has an
+eight-second timeout and never follows sign-in redirects.
+
+Before deploying this change:
+
+1. Deploy the matching CRM endpoint, Prisma migration, token and exact nginx
+   location from the neighboring `crm-savartus` project. Its README documents
+   the server setup. Normal CRM APIs must remain behind Microsoft sign-in.
+2. Run `scripts/specification-requests.sql` again against the website's Neon
+   database to add the sync queue. Existing request data is preserved.
+3. Set these server-only Vercel Production settings:
+
+   ```dotenv
+   CRM_CONTACT_IMPORT_URL=https://crm.savartus.com/api/integrations/website-contacts
+   CRM_CONTACT_IMPORT_TOKEN=THE_SAME_RANDOM_TOKEN_CONFIGURED_ON_THE_CRM
+   ```
+
+   The token must contain at least 32 characters; generate a random credential,
+   not a memorable password. Mark it sensitive. No browser receives this token.
+4. Deploy the website and verify a controlled submission creates a contact and
+   updates the queue status to `synced`.
+
+The CRM receives `Requested Specification from Website` in its API's `source`
+field as the lead source. The original website form location remains in the
+website request and queue payload. New
+contacts store this in the CRM's Lead source field; existing lead sources remain
+unchanged and differing values are recorded in notes
+under `*** New Values from Specification request ***`. It matches email addresses
+case-insensitively, including alternate emails. New contacts use a matching
+company account or a new PROSPECT account. Ambiguous matches remain pending for
+manual review. Per-request UUID receipts prevent duplicate contacts/notes when
+timeouts or retries repeat a call.
+
+To retry pending jobs, set `DATABASE_URL`, `CRM_CONTACT_IMPORT_URL`, and
+`CRM_CONTACT_IMPORT_TOKEN` privately in `.env.local` and run:
+
+```bash
+npm run crm:retry
+```
+
+This requires Node.js 22.18 or later for TypeScript stripping. It processes up to
+25 pending jobs, never resends download emails, and exits nonzero if any attempted
+job fails. Re-run for further batches. There is no automatic scheduler; pending
+jobs require this operational retry command. Synced jobs remain for traceability.
+Include queue payloads and CRM import receipts in retention/deletion procedures.
+Requests submitted before this integration are not automatically backfilled.
 
 ## Deploy on Vercel
 

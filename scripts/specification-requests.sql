@@ -10,3 +10,19 @@ CREATE TABLE IF NOT EXISTS specification_requests (
   status text NOT NULL CHECK (status IN ('pending', 'accepted', 'failed')),
   email_accepted_at timestamptz
 );
+
+CREATE TABLE IF NOT EXISTS specification_crm_sync (
+  request_id uuid PRIMARY KEY,
+  email_key text NOT NULL,
+  payload jsonb NOT NULL,
+  status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'synced')),
+  attempts integer NOT NULL DEFAULT 0,
+  last_error text,
+  last_attempt_at timestamptz,
+  contact_id text,
+  created_at timestamptz NOT NULL DEFAULT NOW(),
+  synced_at timestamptz
+);
+
+CREATE INDEX IF NOT EXISTS specification_crm_sync_pending
+  ON specification_crm_sync (last_attempt_at, created_at) WHERE status = 'pending';
