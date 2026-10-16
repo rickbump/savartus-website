@@ -362,7 +362,7 @@ test.describe("CRM synchronization", () => {
       expect(options?.redirect).toBe("error");
       expect(options?.body).toContain(details.email);
       const payload = JSON.parse(String(options?.body));
-      expect(payload.source).toBe("Requested Specification from Website");
+      expect(payload.source).toBe("Website - Specification page");
       expect(payload.leadSource).toBeUndefined();
       expect(options?.headers).toMatchObject({
         Authorization: `Bearer ${process.env.CRM_CONTACT_IMPORT_TOKEN}`,

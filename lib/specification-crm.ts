@@ -39,7 +39,7 @@ export async function syncSpecificationContact(sql: Database, requestId: string)
         organization: payload.organization,
         title: payload.title,
         email: payload.email,
-        source: "Requested Specification from Website",
+        source: "Website - Specification page",
         requestedAt: payload.requestedAt,
       }),
       redirect: "error",

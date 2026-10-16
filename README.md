@@ -151,7 +151,7 @@ Before deploying this change:
 4. Deploy the website and verify a controlled submission creates a contact and
    updates the queue status to `synced`.
 
-The CRM receives `Requested Specification from Website` in its API's `source`
+The CRM receives `Website - Specification page` in its API's `source`
 field as the lead source. The original website form location remains in the
 website request and queue payload. New
 contacts store this in the CRM's Lead source field; existing lead sources remain

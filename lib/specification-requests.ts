@@ -208,7 +208,7 @@ export function createRequestServices(): RequestServices {
             title: record.title,
             email: record.email,
             source: record.source,
-            leadSource: "Requested Specification from Website",
+            leadSource: "Website - Specification page",
             requestedAt: record.requestedAt,
           })}::jsonb
         FROM specification_requests

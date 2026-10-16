@@ -102,7 +102,7 @@ export default function DLMSpecificationPage() {
       <section className="dlmspec-section dlmspec-downloads">
         <div className="site-container">
           <div className="dlmspec-download-panel">
-            <div>
+            <div className="dlmspec-download-copy">
               <p className="dlmspec-eyebrow">DOCUMENTS</p>
 
               <h2>
@@ -126,9 +126,9 @@ export default function DLMSpecificationPage() {
               >
                 Download Overview
               </a>
-
-              <FullDocumentRequest source="DLM specification document panel" />
             </div>
+
+            <FullDocumentRequest source="DLM specification document panel" />
           </div>
         </div>
       </section>
