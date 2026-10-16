@@ -1,44 +1,55 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useId, useRef, useState } from "react";
 
 type Props = {
   source: string;
   compact?: boolean;
 };
 
-const requestRecipient = "info@savartus.com";
-
 export function FullDocumentRequest({ source, compact = false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const pending = useRef(false);
   const formId = useId();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (pending.current) return;
 
     const formData = new FormData(event.currentTarget);
-    const name = String(formData.get("name") ?? "");
-    const organization = String(formData.get("organization") ?? "");
-    const title = String(formData.get("title") ?? "");
-    const email = String(formData.get("email") ?? "");
-
-    const subject = "Full Enterprise Data Lifecycle Specification request";
-    const body = [
-      "Please send the full Enterprise Data Lifecycle Specification download link.",
-      "",
-      `Name: ${name}`,
-      `Employer / Institution: ${organization}`,
-      `Title: ${title}`,
-      `Email: ${email}`,
-      `Request source: ${source}`,
-    ].join("\n");
-
-    window.location.href = `mailto:${requestRecipient}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-
-    setSubmitted(true);
+    pending.current = true;
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/specification-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...Object.fromEntries(formData), source }),
+      });
+      const result: unknown = await response.json();
+      if (!response.ok) {
+        setError(
+          result && typeof result === "object" && "error" in result &&
+          typeof result.error === "string"
+            ? result.error
+            : "We couldn't email your link. Please try again shortly.",
+        );
+        return;
+      }
+      if (!result || typeof result !== "object" || !("success" in result) ||
+          result.success !== true) {
+        throw new Error("Unexpected submission response.");
+      }
+      setSubmitted(true);
+    } catch {
+      setError("We couldn't confirm your request. Please check your connection and try again, or contact info@savartus.com.");
+    } finally {
+      pending.current = false;
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -68,74 +79,109 @@ export function FullDocumentRequest({ source, compact = false }: Props) {
             </p>
           </div>
 
-          <form className="full-document-form" onSubmit={handleSubmit}>
-            <div className="contact-field">
-              <label htmlFor={`${formId}-name`}>Name</label>
-              <input
-                id={`${formId}-name`}
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-              />
-            </div>
+          {submitted ? (
+            <p className="full-document-note" role="status">
+              Your download email is on its way. Check your inbox and spam folder
+              for a message from Savartus.
+            </p>
+          ) : (
+            <form
+              className="full-document-form"
+              onSubmit={handleSubmit}
+              aria-busy={isSubmitting}
+            >
+              <div className="contact-field">
+                <label htmlFor={`${formId}-name`}>Name</label>
+                <input
+                  id={`${formId}-name`}
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  maxLength={150}
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
 
-            <div className="contact-field">
-              <label htmlFor={`${formId}-organization`}>
-                Employer / Institution
-              </label>
-              <input
-                id={`${formId}-organization`}
-                name="organization"
-                type="text"
-                autoComplete="organization"
-                required
-              />
-            </div>
+              <div className="contact-field">
+                <label htmlFor={`${formId}-organization`}>
+                  Employer / Institution
+                </label>
+                <input
+                  id={`${formId}-organization`}
+                  name="organization"
+                  type="text"
+                  autoComplete="organization"
+                  maxLength={200}
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
 
-            <div className="contact-field">
-              <label htmlFor={`${formId}-title`}>Title</label>
-              <input
-                id={`${formId}-title`}
-                name="title"
-                type="text"
-                autoComplete="organization-title"
-                required
-              />
-            </div>
+              <div className="contact-field">
+                <label htmlFor={`${formId}-title`}>Title</label>
+                <input
+                  id={`${formId}-title`}
+                  name="title"
+                  type="text"
+                  autoComplete="organization-title"
+                  maxLength={150}
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
 
-            <div className="contact-field">
-              <label htmlFor={`${formId}-email`}>Email</label>
-              <input
-                id={`${formId}-email`}
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-              />
-            </div>
+              <div className="contact-field">
+                <label htmlFor={`${formId}-email`}>Email</label>
+                <input
+                  id={`${formId}-email`}
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  maxLength={254}
+                  disabled={isSubmitting}
+                  required
+                />
+              </div>
 
-            <div className="full-document-actions">
-              <button type="submit" className="button button-primary">
-                Request Link
-              </button>
+              <div hidden>
+                <label htmlFor={`${formId}-website`}>Leave this field empty</label>
+                <input
+                  id={`${formId}-website`}
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
 
-              <button
-                type="button"
-                className="button button-secondary"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
-
-            {submitted && (
               <p className="full-document-note">
-                Your email client should open with the request. Send that email
-                and Savartus will reply with the full-document link.
+                We store your name, employer, title, and email to fulfill and keep a
+                record of this request. Submitting does not subscribe you to marketing emails.
               </p>
-            )}
-          </form>
+
+              <div className="full-document-actions">
+                <button
+                  type="submit"
+                  className="button button-primary"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Request Link"}
+                </button>
+
+                <button
+                  type="button"
+                  className="button button-secondary"
+                  disabled={isSubmitting}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+
+              {error && <p className="full-document-note" role="alert">{error}</p>}
+            </form>
+          )}
         </div>
       )}
     </div>
