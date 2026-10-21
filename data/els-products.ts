@@ -829,7 +829,7 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "Up to 40",
     formFactor: "45U Rack Mount",
-    image: "/images/products/els8000/els8000",
+    image: "/images/products/els8000/els8000.png",
     sellSheet: {
       href: "/downloads/data-sheets/Savartus_ELS8000_Sell_Sheet.pdf",
       label: "Download ELS8000 Sell Sheet",
@@ -1043,7 +1043,7 @@ export const elsProducts: ELSProduct[] = [
     mediaCapacity: "200 GB",
     drives: "No drives",
     formFactor: "45U Rack Mount",
-    image: "/images/products/els8000/els8000",
+    image: "/images/products/els8000/els8000.png",
     sellSheet: {
       href: "/downloads/data-sheets/Savartus_ELS8000-OL_Sell_Sheet.pdf",
       label: "Download ELS8000-OL Sell Sheet",
