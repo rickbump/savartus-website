@@ -181,3 +181,23 @@ Requests submitted before this integration are not automatically backfilled.
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Production site health check
+
+`.github/workflows/site-health.yml` runs `scripts/site-health-check.mjs` every day at 11:00 UTC against https://www.savartus.com (it can also be run manually from the Actions tab). The check covers:
+
+- homepage availability, `robots.txt`, `sitemap.xml`, and correct 404 handling
+- every page reachable from the homepage or sitemap (HTTP status, error text, slow responses)
+- every internal asset/image and every external link
+- broken `#anchors`, redirects, orphaned or unlisted sitemap pages
+- SEO basics (title, description, single `<h1>`, canonical, duplicate titles)
+
+If errors are found, the job fails and opens (or comments on) a GitHub issue labelled `site-health`. The issue closes automatically on the next passing run. The report is published to the run summary and uploaded as an artifact.
+
+To run it locally:
+
+```bash
+npm run health:check                      # production
+npm run health:check -- --no-external     # skip external links
+npm run health:check -- --base-url=http://localhost:3000
+```

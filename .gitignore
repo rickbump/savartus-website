@@ -46,3 +46,6 @@ test-results/
 
 # local security documentation
 Security Inventory.docx
+
+# site health check output
+site-health-report/

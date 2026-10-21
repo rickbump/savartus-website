@@ -1,0 +1,76 @@
+name: Site health check
+
+on:
+  schedule:
+    - cron: "0 11 * * *" # daily, 11:00 UTC (7:00 AM ET)
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Site to check"
+        default: "https://www.savartus.com"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: site-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Crawl site
+        id: crawl
+        continue-on-error: true
+        env:
+          SITE_HEALTH_BASE_URL: ${{ inputs.base_url || 'https://www.savartus.com' }}
+        run: node scripts/site-health-check.mjs
+
+      - name: Publish summary
+        if: always()
+        run: cat site-health-report/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-health-report
+          path: site-health-report/
+          retention-days: 30
+
+      - name: Open or update issue on failure
+        if: steps.crawl.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create site-health --color B60205 --description "Automated site health check" 2>/dev/null || true
+          { cat site-health-report/report.md; echo; echo "[Workflow run]($RUN_URL)"; } > issue-body.md
+          existing=$(gh issue list --label site-health --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file issue-body.md
+          else
+            gh issue create --title "Site health check failing: www.savartus.com" --label site-health --body-file issue-body.md
+          fi
+
+      - name: Close issue when healthy
+        if: steps.crawl.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          for n in $(gh issue list --label site-health --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "✅ Site health check passed: $RUN_URL"
+          done
+
+      - name: Fail job if errors found
+        if: steps.crawl.outcome == 'failure'
+        run: exit 1
