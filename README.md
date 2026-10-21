@@ -188,7 +188,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 - homepage availability, `robots.txt`, `sitemap.xml`, and correct 404 handling
 - every page reachable from the homepage or sitemap (HTTP status, error text, slow responses)
-- every internal asset/image and every external link
+- every internal asset/image and every external link (external links fail the check only when dead: 404/410 or unknown domain; timeouts, 5xx and bot blocks are warnings)
 - broken `#anchors`, redirects, orphaned or unlisted sitemap pages
 - SEO basics (title, description, single `<h1>`, canonical, duplicate titles)
 
