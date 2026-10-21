@@ -340,8 +340,11 @@ function evaluateLinks(sitemapUrls) {
       addIssue("error", "broken-asset", url, `Internal resource returned ${info.status}`, from);
     } else if (typeof info.status === "number" && BOT_BLOCK_STATUSES.has(info.status)) {
       addIssue("warning", "external-link", url, `External link returned ${info.status} (may be bot protection)`, from);
-    } else {
+    } else if (typeof info.status === "number" || info.status === "ENOTFOUND") {
       addIssue("error", "external-link", url, `External link failed: ${info.status}`, from);
+    } else {
+      // Timeouts/connection resets on third-party sites are usually transient.
+      addIssue("warning", "external-link", url, `External link unreachable: ${info.status}`, from);
     }
   }
 
