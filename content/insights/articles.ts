@@ -2032,7 +2032,7 @@ export const insightArticles: InsightArticle[] = [
       },
       {
         label: "U.S. Copyright Act, Section 108",
-        href: "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section108&num=0&edition=prelim",
+        href: "https://www.copyright.gov/title17/92chap1.html#108",
         description:
           "Conditional copyright exceptions for certain libraries and archives.",
       },
