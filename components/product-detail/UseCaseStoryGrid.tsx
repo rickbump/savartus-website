@@ -161,7 +161,7 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
           name: "FBI CJIS Security Policy v6.1",
           applicability:
             "Assess when the archive stores Criminal Justice Information or is within a CJI system boundary. Confirm controls, vendor access, and validation expectations with the agency’s CJIS Systems Agency; this is not a product certification.",
-          href: "https://le.fbi.gov/cjis-division-resources/cjis-security-policy-resource-center",
+          href: "https://le.fbi.gov/cjis-division/cjis-security-policy-resource-center/appendicies/",
         },
         {
           name: "28 CFR Part 23",
@@ -335,7 +335,7 @@ const storyPatterns: { matches: string[]; story: UseCaseStory }[] = [
           name: "HIPAA Privacy Rule",
           applicability:
             "Applies to PHI handled by covered entities and their business associates, not to every research institution or every de-identified research dataset. Research use/disclosure, authorization or waiver, access controls, and business-associate terms require case-specific review.",
-          href: "https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html",
+          href: "https://www.hhs.gov/hipaa/for-professionals/privacy/index.html",
         },
         {
           name: "NIST AI Risk Management Framework 1.0",

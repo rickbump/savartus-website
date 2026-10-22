@@ -714,7 +714,7 @@ export const insightArticles: InsightArticle[] = [
       },
       {
         label: "FBI CJIS Security Policy Resource Center",
-        href: "https://le.fbi.gov/cjis-division-resources/cjis-security-policy-resource-center",
+        href: "https://le.fbi.gov/cjis-division/cjis-security-policy-resource-center/appendicies/",
         description: "Current CJIS Security Policy resources.",
       },
       {
@@ -893,7 +893,7 @@ export const insightArticles: InsightArticle[] = [
       },
       {
         label: "HHS HIPAA Privacy Rule overview",
-        href: "https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html",
+        href: "https://www.hhs.gov/hipaa/for-professionals/privacy/index.html",
         description:
           "Covered entities, business associates, protected health information, and research uses.",
       },
