@@ -1,0 +1,215 @@
+{
+  "$comment": "Ordered SEO fix queue. scripts/seo-daily.mjs opens one Copilot task at a time (in this order) while its check is failing, and closes it once the live site passes. Human tasks are opened alongside. Edit freely: reorder, add, or remove tasks.",
+  "tasks": [
+    {
+      "id": "T1",
+      "owner": "copilot",
+      "check": "permanent-redirects",
+      "title": "Make /optical-object-storage a permanent (308) redirect",
+      "why": "A temporary 307 redirect tells Google the old URL may come back, so ranking signals are not consolidated onto /preservation.",
+      "files": ["app/optical-object-storage/page.tsx"],
+      "steps": [
+        "Replace `redirect(\"/preservation\")` with `permanentRedirect(\"/preservation\")` from `next/navigation` (check node_modules/next/dist/docs or nextjs.org docs for the Next.js 16 API).",
+        "Alternatively add a `permanent: true` redirect in next.config and delete the page — choose whichever keeps the change smallest."
+      ],
+      "acceptance": ["`curl -sI https://www.savartus.com/optical-object-storage` returns 308 (or 301) with `location: /preservation` after deploy."]
+    },
+    {
+      "id": "T2",
+      "owner": "copilot",
+      "check": "social-image",
+      "title": "Add a default social share image (og:image / twitter:image) for every page",
+      "why": "No page has an og:image, so links shared on LinkedIn, Slack, Teams, and X render without a preview image, which lowers click-through.",
+      "files": ["app/opengraph-image.tsx", "app/twitter-image.tsx", "app/layout.tsx", "public/"],
+      "steps": [
+        "Add `app/opengraph-image.tsx` using `ImageResponse` from `next/og` (1200×630) with the Savartus name, the tagline \"Manage. Store. Preserve.\", and the brand colors already used in the site. Export `alt`, `size`, and `contentType`.",
+        "Add `app/twitter-image.tsx` (re-export the same image) so `twitter:image` is emitted.",
+        "Confirm the file-convention image is inherited by nested routes (product, insight, and solution pages). If a route defines its own `openGraph` metadata without images, make sure the default image still appears.",
+        "Set `twitter.card` to `summary_large_image` in the root metadata if it is not already set."
+      ],
+      "acceptance": ["Every page in the sitemap outputs `og:image` and `twitter:image` meta tags that return an image (HTTP 200, image/* content type)."]
+    },
+    {
+      "id": "T3",
+      "owner": "copilot",
+      "check": "organization-schema",
+      "title": "Add Organization and WebSite JSON-LD structured data to the homepage",
+      "why": "Organization/WebSite structured data helps Google show the correct brand name, logo, and site name in search results and the knowledge panel.",
+      "files": ["app/layout.tsx", "app/page.tsx"],
+      "steps": [
+        "Render a `<script type=\"application/ld+json\">` on the homepage containing an `@graph` with `Organization` (name Savartus, url https://www.savartus.com, logo using an existing logo file in /public, and contact/sameAs only if those values already exist in the codebase) and `WebSite` (name, url).",
+        "Follow the existing JSON-LD pattern in `app/insights/[slug]/page.tsx` (`JSON.stringify(data).replace(/</g, \"\\\\u003c\")`).",
+        "Do not invent addresses, phone numbers, or social profiles that are not already on the site."
+      ],
+      "acceptance": ["The homepage HTML contains valid JSON-LD with `@type` Organization and WebSite."]
+    },
+    {
+      "id": "T4",
+      "owner": "copilot",
+      "check": "home-title-category",
+      "title": "Put the product category into the homepage title and description",
+      "why": "The homepage title \"Savartus | Manage. Store. Preserve.\" contains no searchable category terms, so it cannot rank for searches like \"long-term data archive storage\".",
+      "files": ["app/page.tsx", "app/layout.tsx"],
+      "steps": [
+        "Change the homepage title to something like \"Savartus | Long-Term Data Archive & Preservation Storage\" (≤ 65 characters, including the words archive/storage/preservation). Keep the brand first on the homepage only.",
+        "Rewrite the homepage meta description to 140–160 characters, summarizing what Savartus offers using only claims already on the page."
+      ],
+      "acceptance": ["The homepage `<title>` contains archive, storage, preservation, or lifecycle and is ≤ 65 characters.", "The meta description is 70–165 characters."]
+    },
+    {
+      "id": "T5",
+      "owner": "copilot",
+      "check": "descriptive-titles",
+      "title": "Replace generic hub-page titles with descriptive, keyword-bearing titles",
+      "why": "Titles like \"Products | Savartus\" and \"Insights | Savartus\" waste the most important on-page ranking signal.",
+      "files": ["app/products/page.tsx", "app/resources/page.tsx", "app/insights/page.tsx", "app/active-archive/page.tsx", "app/preservation/page.tsx"],
+      "steps": [
+        "Give each page a title with 3+ words that names what it covers. Examples: \"Archive Storage Products: ELS Libraries & Software\", \"Data Archiving Resources & Specifications\", \"Data Preservation Insights & Articles\", \"Active Archive Storage Solutions\", \"Long-Term Data Preservation Solutions\".",
+        "Keep each full title (including \" | Savartus\") ≤ 65 characters and unique.",
+        "Use only terms that match the content already on each page."
+      ],
+      "acceptance": ["Every non-brand page has 3+ words before \" | Savartus\" and stays ≤ 65 characters."]
+    },
+    {
+      "id": "T6",
+      "owner": "copilot",
+      "check": "title-length",
+      "title": "Shorten page titles longer than 65 characters",
+      "why": "Google truncates long titles in results, cutting off the most specific words.",
+      "files": ["app/products/els300/page.tsx", "content/insights/articles.ts", "app/insights/[slug]/page.tsx"],
+      "steps": [
+        "Run `node scripts/seo-audit.mjs --no-psi` to list the pages that are currently too long.",
+        "Shorten each title to ≤ 65 characters including \" | Savartus\", keeping the primary keyword at the front. For Insights, prefer adding a dedicated `seoTitle` field (falling back to `title`) instead of changing the visible article headline."
+      ],
+      "acceptance": ["No page title exceeds 65 characters."]
+    },
+    {
+      "id": "T7",
+      "owner": "copilot",
+      "check": "description-length",
+      "title": "Rewrite meta descriptions to 70–165 characters",
+      "why": "Most meta descriptions are 170–250 characters, so Google truncates or rewrites them. Concise descriptions improve click-through.",
+      "files": ["app/**/page.tsx", "content/insights/articles.ts", "data/els-products.ts"],
+      "steps": [
+        "Run `node scripts/seo-audit.mjs --no-psi` and open `seo-report/audit.json` to get the failing pages and their current lengths.",
+        "Rewrite each description to 120–160 characters: lead with the primary topic, include one concrete benefit, and use only claims already on that page.",
+        "For Insights, add an optional `seoDescription` field (falling back to the current excerpt) rather than editing visible copy.",
+        "Keep every description unique."
+      ],
+      "acceptance": ["Every page's meta description is 70–165 characters and unique."]
+    },
+    {
+      "id": "T8",
+      "owner": "copilot",
+      "check": "product-schema",
+      "title": "Add Product JSON-LD to every ELS product page",
+      "why": "Product structured data helps Google understand each library model and its specifications. Rich results require offers or reviews, which we deliberately omit because prices are not published.",
+      "files": ["components/products/ELSProductDetail.tsx", "data/els-products.ts"],
+      "steps": [
+        "In `ELSProductDetail`, render `<script type=\"application/ld+json\">` with `@type: Product`, `name`, `description`, `image` (absolute URL), `brand` (`{\"@type\": \"Brand\", \"name\": \"Savartus\"}`), `category`, and `additionalProperty` entries for key specifications from `data/els-products.ts`.",
+        "Do not add offers, prices, ratings, or reviews.",
+        "Use the escaping pattern from `app/insights/[slug]/page.tsx`."
+      ],
+      "acceptance": ["Every /products/els* page contains valid Product JSON-LD."]
+    },
+    {
+      "id": "T9",
+      "owner": "copilot",
+      "check": "breadcrumb-schema",
+      "title": "Add visible breadcrumbs and BreadcrumbList JSON-LD to product and Insight pages",
+      "why": "Breadcrumbs replace the raw URL in search results with a readable path and strengthen internal linking to the hub pages.",
+      "files": ["components/", "components/products/ELSProductDetail.tsx", "app/insights/[slug]/page.tsx"],
+      "steps": [
+        "Create a small reusable `Breadcrumbs` component that renders a visible, accessible breadcrumb trail (`<nav aria-label=\"Breadcrumb\">`) styled to match the site, plus a matching BreadcrumbList JSON-LD script.",
+        "Products: Home › Products › ELS Libraries (/products/els) › <model>. Insights: Home › Insights › <article title>.",
+        "Use absolute URLs in the JSON-LD `item` fields."
+      ],
+      "acceptance": ["Every /products/els* and /insights/* page contains BreadcrumbList JSON-LD and a visible breadcrumb trail."]
+    },
+    {
+      "id": "T10",
+      "owner": "copilot",
+      "check": "product-inlinks",
+      "title": "Cross-link ELS product models so each is linked from 4+ pages",
+      "why": "Some product pages are linked from only 1–2 pages, so Google treats them as low-importance and crawls them less often.",
+      "files": ["components/products/ELSProductDetail.tsx", "data/els-products.ts", "app/products/els/page.tsx"],
+      "steps": [
+        "Add a \"Compare other ELS models\" section to `ELSProductDetail` that links to every other ELS model page with descriptive anchor text (model name plus a short capacity or positioning phrase taken from `data/els-products.ts`).",
+        "Make sure /products/els links to every model."
+      ],
+      "acceptance": ["Every /products/els* page is linked from at least 4 other pages in the sitemap."]
+    },
+    {
+      "id": "T11",
+      "owner": "copilot",
+      "check": "insight-inlinks",
+      "title": "Link every Insight article from 3+ other pages",
+      "why": "Several Insights are linked only from the Insights index, so they are hard for Google to discover and receive little internal authority.",
+      "files": ["content/insights/articles.ts", "app/insights/[slug]/page.tsx", "components/product-detail/UseCaseStoryGrid.tsx"],
+      "steps": [
+        "Run `node scripts/seo-audit.mjs --no-psi` to list Insights below the threshold.",
+        "Extend `relatedArticleSlugs` so every Insight appears as a related article on at least two topically related Insights.",
+        "Where a solution or product page discusses the same industry (e.g., medical imaging, government records, media archives, backup), add a contextual \"Read the Insight\" link to that article."
+      ],
+      "acceptance": ["Every /insights/* article is linked from at least 3 other pages in the sitemap."]
+    },
+    {
+      "id": "T12",
+      "owner": "copilot",
+      "check": "content-depth",
+      "title": "Expand thin landing pages (homepage, /resources) to 400+ words",
+      "why": "The homepage (~300 words) and /resources (~220 words) are too thin to rank for competitive archive-storage searches.",
+      "files": ["app/page.tsx", "app/resources/page.tsx"],
+      "steps": [
+        "Homepage: add a concise \"What Savartus does\" section and a short FAQ (3–5 questions) built only from facts already published elsewhere on the site (product pages, Orain, DLM specification, Insights). Link each answer to the relevant page.",
+        "/resources: add a 1–2 sentence description to each resource and a short introduction explaining who each resource is for.",
+        "Do not invent statistics, customers, certifications, or claims."
+      ],
+      "acceptance": ["The homepage and /resources each have 400+ words of main content."]
+    },
+    {
+      "id": "T13",
+      "owner": "copilot",
+      "check": "mobile-performance",
+      "title": "Fix mobile Core Web Vitals on pages below target",
+      "why": "Mobile performance is a ranking factor and affects bounce rate.",
+      "files": ["app/", "components/"],
+      "steps": [
+        "Open the dashboard or `seo-report/audit.json` (`psi` section) to see which pages miss the targets and by how much.",
+        "Typical fixes: give the LCP hero image `priority`/`preload` and correct `sizes`, convert large PNGs to WebP/AVIF via `next/image`, set explicit image dimensions to prevent CLS, and defer non-critical client components and scripts.",
+        "Measure before and after with PageSpeed Insights (mobile)."
+      ],
+      "acceptance": ["Audited pages score ≥ 90 mobile performance with LCP ≤ 2.5 s and CLS ≤ 0.1."]
+    },
+    {
+      "id": "H1",
+      "owner": "you",
+      "check": "search-console",
+      "title": "Verify savartus.com in Google Search Console and submit the sitemap",
+      "why": "Search Console is the only source of real ranking, click, and indexing data from Google, and it alerts you to penalties and crawl problems.",
+      "files": [],
+      "steps": [
+        "Go to https://search.google.com/search-console → Add property → **Domain** → `savartus.com`.",
+        "Copy the `google-site-verification=…` TXT record and add it at your DNS provider, then click Verify (DNS can take a few minutes to propagate).",
+        "Open Sitemaps → submit `https://www.savartus.com/sitemap.xml`.",
+        "Close this issue when done. The daily check also detects the DNS record automatically."
+      ],
+      "acceptance": ["Property verified and sitemap shows status \"Success\"."]
+    },
+    {
+      "id": "H2",
+      "owner": "you",
+      "check": null,
+      "title": "Import the site into Bing Webmaster Tools (also covers DuckDuckGo, Yahoo, ChatGPT search)",
+      "why": "Bing's index powers several other search and AI answer engines, and import from Search Console takes about 2 minutes.",
+      "dependsOn": "H1",
+      "files": [],
+      "steps": [
+        "Go to https://www.bing.com/webmasters → Sign in → **Import from Google Search Console**.",
+        "Confirm the sitemap was imported.",
+        "Close this issue when done."
+      ],
+      "acceptance": ["savartus.com is verified in Bing Webmaster Tools with the sitemap submitted."]
+    }
+  ]
+}

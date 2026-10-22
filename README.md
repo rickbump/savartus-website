@@ -201,3 +201,26 @@ npm run health:check                      # production
 npm run health:check -- --no-external     # skip external links
 npm run health:check -- --base-url=http://localhost:3000
 ```
+
+## Daily SEO plan and dashboard
+
+`.github/workflows/seo-daily.yml` runs at 6:00 AM ET on weekdays (or manually from the Actions tab). It runs `scripts/seo-daily.mjs`, which:
+
+1. Audits the live site with `scripts/seo-audit.mjs` (titles, descriptions, structured data, social images, internal links, content depth, redirects, indexability, and mobile performance when `PSI_API_KEY` is set).
+2. Works through the fix queue in `seo/backlog.json`. It keeps one `seo-task` issue open for the GitHub Copilot coding agent at a time and opens tasks for you (for example, Search Console) alongside it. Task issues close automatically once their check passes on production, and they reopen if a fix doesn't hold.
+3. Rewrites the **📊 SEO Dashboard** issue (label `seo-dashboard`, pinned). It shows every check, the fix queue, and a score trend.
+4. Opens **SEO daily plan — YYYY-MM-DD** (label `seo-daily`, assigned to the site owner) with today's actions, such as which PR to review and merge. It closes the previous day's plan.
+
+Optional repository secrets:
+
+- `COPILOT_ASSIGN_TOKEN`: a fine-grained personal access token for this repo with Metadata (read) and Actions, Contents, Issues, and Pull requests (read/write). With it, tasks are assigned to Copilot automatically. Without it, the daily plan asks you to assign Copilot (one click).
+- `PSI_API_KEY`: a Google PageSpeed Insights API key that enables the mobile performance check.
+
+To reorder or add work, edit `seo/backlog.json`. Each task names the audit `check` that proves it is done. To skip a task, close its issue as **not planned**.
+
+To run it locally:
+
+```bash
+npm run seo:audit -- --no-psi                                   # audit only, writes seo-report/audit.json
+GITHUB_TOKEN=$(gh auth token) node scripts/seo-daily.mjs --dry-run --no-psi   # preview today's plan without changing issues
+```

@@ -12,7 +12,8 @@
   "lint": "eslint",
   "crm:retry": "node --experimental-strip-types scripts/retry-specification-crm.mjs",
   "qa:links": "playwright test tests/site-links.spec.ts",
-  "health:check": "node scripts/site-health-check.mjs"
+  "health:check": "node scripts/site-health-check.mjs",
+  "seo:audit": "node scripts/seo-audit.mjs"
 },
   "dependencies": {
     "@azure/identity": "^4.14.0",

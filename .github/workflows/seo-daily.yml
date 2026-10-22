@@ -1,0 +1,54 @@
+name: SEO daily plan
+
+on:
+  schedule:
+    # 6:00 AM America/New_York on weekdays. Two crons cover EDT (10:00 UTC) and EST (11:00 UTC);
+    # the script skips the run that is before 6 AM ET or after today's plan already exists.
+    - cron: "0 10 * * 1-5"
+    - cron: "0 11 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: seo-daily
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Audit site and update SEO plan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COPILOT_ASSIGN_TOKEN: ${{ secrets.COPILOT_ASSIGN_TOKEN }}
+          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+        run: node scripts/seo-daily.mjs ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f seo-report/briefing.md ]; then
+            cat seo-report/briefing.md >> "$GITHUB_STEP_SUMMARY"
+            echo -e "\n---\n" >> "$GITHUB_STEP_SUMMARY"
+            cat seo-report/dashboard.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: seo-report
+          path: seo-report/
+          if-no-files-found: ignore
+          retention-days: 30
