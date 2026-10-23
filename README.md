@@ -184,6 +184,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Production site health check
 
+Legacy URLs with equivalent current content use permanent (308) redirects in
+`next.config.ts`: `/about` goes to `/company`, and
+`/solutions/enterprise-laser-storage` goes to `/products/els`. Unknown URLs
+still return 404 rather than redirecting to unrelated content.
+Run `npx playwright test tests/legacy-redirects.spec.ts` to check these redirects,
+query-string preservation, and destination availability.
+
 `.github/workflows/site-health.yml` runs `scripts/site-health-check.mjs` every day at 11:00 UTC against https://www.savartus.com (it can also be run manually from the Actions tab). The check covers:
 
 - homepage availability, `robots.txt`, `sitemap.xml`, and correct 404 handling
