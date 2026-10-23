@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { FMSInformationModel } from "@/components/fms/FMSInformationModel";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "File Management System | Savartus",
     description:
       "Create a searchable, managed information layer across enterprise storage with metadata, identifiers, relationships, and workflow context.",
@@ -26,6 +28,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "File Management System | Savartus",
     description:

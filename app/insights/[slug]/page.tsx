@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -42,6 +43,7 @@ export async function generateMetadata({
     },
 
     openGraph: {
+      images: socialImages.openGraph,
       title: `${article.title} | Savartus`,
       description: article.description,
       url: canonicalPath,
@@ -52,6 +54,7 @@ export async function generateMetadata({
     },
 
     twitter: {
+      images: socialImages.twitter,
       card: "summary_large_image",
       title: `${article.title} | Savartus`,
       description: article.description,

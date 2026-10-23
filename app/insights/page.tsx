@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { insightArticles } from "@/content/insights/articles";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Insights | Savartus",
     description:
       "Perspectives on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI, and long-term enterprise data strategy.",
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Insights | Savartus",
     description:

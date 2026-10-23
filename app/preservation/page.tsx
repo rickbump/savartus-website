@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { OnlineOffline } from "@/components/optical-object-storage/OnlineOffline";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Data Preservation | Savartus",
     description:
       "Preserve enterprise information for the long term with durable, retrievable nearline and offline optical storage.",
@@ -24,6 +26,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Data Preservation | Savartus",
     description:

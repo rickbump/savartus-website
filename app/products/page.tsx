@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 
 import { ProductFamilies } from "@/components/products/ProductFamilies";
 import { SoftwareProducts } from "@/components/products/SoftwareProducts";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Products | Savartus",
     description:
       "Enterprise technologies for managing, storing, and preserving information, including optical storage systems, storage management, file management, and Data Lifecycle Management.",
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Products | Savartus",
     description:

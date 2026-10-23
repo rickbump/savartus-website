@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { OrainControlPlane } from "@/components/orain/OrainControlPlane";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "oRain Storage Management | Savartus",
     description:
       "Manage and orchestrate information across performance, nearline optical, and offline storage with Savartus oRain.",
@@ -26,6 +28,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "oRain Storage Management | Savartus",
     description:

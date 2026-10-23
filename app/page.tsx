@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Savartus | Manage. Store. Preserve.",
     description:
       "Active Archive, Preservation, Data Lifecycle Management, and enterprise optical storage for managing, storing, governing, and preserving information.",
@@ -20,6 +22,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Savartus | Manage. Store. Preserve.",
     description:

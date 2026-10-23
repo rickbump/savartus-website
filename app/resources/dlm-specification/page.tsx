@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Enterprise Data Lifecycle™ Specification | Savartus",
     description:
       "A technology-independent information governance architecture for understanding enterprise information state, policy, lifecycle transitions, and governed decisions.",
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Enterprise Data Lifecycle™ Specification | Savartus",
     description:

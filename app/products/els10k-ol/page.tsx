@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import { notFound } from "next/navigation";
 
 import { ELSProductDetail } from "@/components/products/ELSProductDetail";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "ELS10K-OL Offline Optical Storage System | Savartus",
     description:
       "High-capacity offline optical storage for physically isolated, long-term enterprise information preservation.",
@@ -23,6 +25,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "ELS10K-OL Offline Optical Storage System | Savartus",
     description:

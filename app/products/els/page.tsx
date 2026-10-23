@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 
 import { ELSCategories } from "@/components/els-family/ELSCategories";
 import { ELSArchitecture } from "@/components/els-family/ELSArchitecture";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Enterprise Optical Storage Systems | Savartus",
     description:
       "Scalable nearline and offline optical storage systems for enterprise preservation, Active Archive, and long-term information retention.",
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Enterprise Optical Storage Systems | Savartus",
     description:

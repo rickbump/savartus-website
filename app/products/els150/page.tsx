@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import { notFound } from "next/navigation";
 
 import { ELSProductDetail } from "@/components/products/ELSProductDetail";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "ELS150 Magnetic-Optical Hybrid Storage System | Savartus",
     description:
       "A 14U organizational storage appliance with a built-in cache server and an automatic write-once optical second copy, up to 30 TB.",
@@ -23,6 +25,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "ELS150 Magnetic-Optical Hybrid Storage System | Savartus",
     description:

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import { ContactForm } from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Contact Savartus | Savartus",
     description:
       "Talk with Savartus about Data Lifecycle Management, Active Archive, information preservation, enterprise optical storage, and managed services.",
@@ -20,6 +22,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Contact Savartus | Savartus",
     description:

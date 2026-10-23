@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Image from "next/image";
 import Link from "next/link";
 import { FullDocumentRequest } from "@/components/resources/FullDocumentRequest";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "About Savartus | Savartus",
     description:
       "Meet the people and experience behind Savartus and our approach to data lifecycle management, storage, security, Active Archive, and information preservation.",
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "About Savartus | Savartus",
     description:

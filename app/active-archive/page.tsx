@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 
 import { ActiveArchiveArchitecture } from "@/components/active-archive/ActiveArchiveArchitecture";
 import { LifecycleState } from "@/components/active-archive/LifecycleState";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Active Archive | Savartus",
     description:
       "Keep information active while preserving it for the long term with performance storage and nearline optical preservation.",
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Active Archive | Savartus",
     description:

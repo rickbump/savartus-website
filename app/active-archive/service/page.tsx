@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 import { ServiceArchitecture } from "@/components/aaas/ServiceArchitecture";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
+    images: socialImages.openGraph,
     title: "Active Archive as a Service | Savartus",
     description:
       "Combine high-performance storage with immediate optical preservation while adapting performance capacity as information access requirements change.",
@@ -26,6 +28,7 @@ export const metadata: Metadata = {
   },
 
   twitter: {
+    images: socialImages.twitter,
     card: "summary_large_image",
     title: "Active Archive as a Service | Savartus",
     description:

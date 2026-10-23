@@ -204,6 +204,13 @@ npm run health:check -- --base-url=http://localhost:3000
 
 ## Daily SEO plan and dashboard
 
+Social previews are generated at build time by `app/opengraph-image.tsx` and
+`app/twitter-image.tsx` (1200×630 PNG). Pages that define their own `openGraph`
+or `twitter` metadata must include the corresponding images from
+`lib/social-images.ts`, because those metadata objects replace layout defaults.
+Run `npx playwright test tests/social-images.spec.ts` to check every sitemap
+page's image tags and the generated PNG responses.
+
 `.github/workflows/seo-daily.yml` runs at 6:00 AM ET on weekdays (or manually from the Actions tab). It runs `scripts/seo-daily.mjs`, which:
 
 1. Audits the live site with `scripts/seo-audit.mjs` (titles, descriptions, structured data, social images, internal links, content depth, redirects, indexability, and mobile performance when `PSI_API_KEY` is set).
