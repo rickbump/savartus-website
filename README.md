@@ -191,6 +191,19 @@ still return 404 rather than redirecting to unrelated content.
 Run `npx playwright test tests/legacy-redirects.spec.ts` to check these redirects,
 query-string preservation, and destination availability.
 
+Additional legacy aliases route `/learn` to `/resources`, `/blog` to `/insights`,
+`/solutions` to the homepage solutions section, `/solutions/data-lifecycle-management`
+to `/data-lifecycle-management`, and `/contact-us/contact-savartus-team` to `/contact`.
+The screenshot-based inventory in `seo/legacy-url-triage.csv` records every
+reviewed URL and unresolved source-content decisions. Historical Analytics 404s
+do not necessarily mean a URL still fails: check current responses before adding
+redirects. Missing legal terms, case studies, and discontinued products must not
+be redirected to unrelated content simply to eliminate a 404.
+The inventory covers all 68 rows across the supplied screenshots, including
+trailing-slash variants and three Insights that currently return HTTP 200.
+Rows marked `needs-source` remain unresolved until original content or a
+verified equivalent destination is available; they are not silently redirected.
+
 `.github/workflows/site-health.yml` runs `scripts/site-health-check.mjs` every day at 11:00 UTC against https://www.savartus.com (it can also be run manually from the Actions tab). The check covers:
 
 - homepage availability, `robots.txt`, `sitemap.xml`, and correct 404 handling

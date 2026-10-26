@@ -1,0 +1,69 @@
+row,path,action,destination,reason
+1,/solutions/enterprise-laser-storage,already-redirected,/products/els,Equivalent optical storage overview; previously deployed permanent redirect
+2,/cases/sophia,needs-source,,Original case study absent; do not invent customer claims
+3,/publishing-systems/rx400m-usb-solution,needs-source,,Legacy publishing product absent
+4,/cases/datamyte-inc,needs-source,,Original case study absent
+5,/legal/rimage-software-license-agreement,needs-source,,Original license agreement required
+6,/solutions/sophia,needs-source,,Sophia solution absent; no verified replacement
+7,/learn/newsroom,needs-source,,Original newsroom absent; Insights is not a verified replacement for company announcements
+8,/legal/technical-support-services-agreement,needs-source,,Original support agreement required
+9,/about,already-redirected,/company,Previously deployed company page redirect
+10,/data-ingestion-101,needs-source,,Original educational article absent
+11,/savartus-terms-conditions,needs-source,,Legal terms must be recovered or approved; no equivalent in repository
+12,/cases/mcdonagh-brothers-inc,needs-source,,Customer case study absent; do not invent customer claims
+13,/data-migration-restoration-services,needs-source,,No equivalent published migration and restoration service
+14,/legal/rimage-services-agreement,needs-source,,Requires original agreement or verified authoritative destination
+15,/legal/rimage-supplier-code-content,needs-source,,Path transcribed from screenshot; confirm spelling with Analytics CSV and locate original document
+16,/publishing-systems/producer-v-8300n,needs-source,,Legacy publishing product absent; ELS is not a replacement for disc publishing
+17,/solutions/immutable-data-archive-f-a-q,needs-source,,Original FAQ absent; do not substitute a general product page for specific answers
+18,/webinar-your-data-is-growing,needs-source,,Original webinar absent
+19,/cases/beryllium-infosec,needs-source,,Customer case study absent
+20,/learn,redirect,/resources,Current learning and resource hub
+21,/legal/shipping,needs-source,,Shipping policy absent; requires approved terms
+22,/legal/warranty,needs-source,,Warranty terms absent; requires approved terms
+23,/market-item/distribution-financial,needs-source,,Original financial distribution solution absent
+24,/market-item/medical-imaging,needs-source,,Imaging distribution page is not established as equivalent to current preservation article
+25,/publishing-systems/professional-2450,needs-source,,Legacy publishing product absent
+26,/insights/media-archives-find-and-reuse-preserved-content,already-current,,Published Insight; verify current HTTP 200 rather than redirecting historical 404
+27,/legal/website-terms-of-use,needs-source,,Website terms absent; requires approved terms
+28,/market-item/sales-marketing-conference-records-presentations-multimedia,needs-source,,Original distribution solution absent
+29,/video-item/producer-v-product-video,needs-source,,Original product video absent
+30,/5-phases-of-data-lifecycle-management,needs-source,,Original five-phase article absent; current lifecycle architecture is not the same article
+31,/cases/major-healthcare-center,needs-source,,Customer case study absent
+32,/data-breach-liability,needs-source,,Original article absent; do not invent legal advice
+33,/digital-asset-management-checklist,needs-source,,Original checklist absent
+34,/dlm-best-practices,needs-source,,Original article absent
+35,/effective-dlm,needs-source,,Original article absent
+36,/harnessing-ai,needs-source,,Original article absent
+37,/legal/warranty/rimage-optical-media-warranty,needs-source,,Product-specific warranty absent; requires original terms
+38,/market-item/case-management-and-record-retention,needs-source,,Original market solution absent; preservation article not established as equivalent
+39,/market-item/forensics,needs-source,,Original forensics solution absent
+40,/market-item/mergers-and-acquisitions,needs-source,,Original market solution absent
+41,/market-item/patient-records-distribution,needs-source,,Patient-record distribution solution is not equivalent to imaging preservation
+42,/market-item/sales-marketing-product-documentation,needs-source,,Original distribution solution absent
+43,/partnering-to-unlock-the-power-of-archived-data,needs-source,,Original article absent
+44,/publishing-systems,needs-source,,Disc publishing catalog absent; do not redirect to unrelated ELS archive systems
+45,/publishing-systems/prism-iii,needs-source,,Legacy publishing product absent
+46,/service/enterprise-laser-storage,needs-source,,Original service page absent; confirm whether this was support or a product overview
+47,/service/sophia,needs-source,,Sophia service absent
+48,/solutions,redirect,/#solutions,Existing homepage section presents current solutions
+49,/solutions-backup/rx400c,needs-source,,Legacy product absent
+50,/solutions/data-lifecycle-management,redirect,/data-lifecycle-management,Same solution at current canonical URL
+51,/user-list-item,needs-source,,Unknown legacy route; requires original purpose before choosing a destination
+52,/about/,already-redirected,/company,Existing about redirect plus Next.js trailing-slash normalization
+53,/benefits-tiered-storage,needs-source,,Original article absent; no verified content-equivalent replacement
+54,/blog,redirect,/insights,Current article index
+55,/blog/,redirect,/insights,Same article index alias with trailing-slash normalization
+56,/breaking-down-silos,needs-source,,Original article absent
+57,/contact-us/contact-savartus-team,redirect,/contact,Current Savartus contact page; additional visible row beyond requested 46
+58,/data-backup-and-restore/,needs-source,,Original backup and restore page absent; no verified equivalent service page
+59,/data-migration-restoration-services/,needs-source,,Trailing-slash alias of unresolved migration and restoration service
+60,/insights/performance-and-preservation-should-work-together,already-current,,Verified production HTTP 200; historical 404 needs no redirect
+61,/insights/the-evidence-must-outlive-the-storage-system,already-current,,Verified production HTTP 200; historical 404 needs no redirect
+62,/learn/,redirect,/resources,Trailing-slash alias of resource hub redirect
+63,/pricing,needs-source,,No published pricing page; do not invent prices or substitute contact without approval
+64,/privacy-policy/,needs-source,,Privacy policy absent; requires approved text reflecting actual data practices
+65,/solutions/,redirect,/#solutions,Trailing-slash alias of solutions section redirect
+66,/solutions/enterprise-laser-storage/,already-redirected,/products/els,Trailing-slash normalization followed by previously deployed product redirect
+67,/solutions/immutable-data-archive-f-a-q/,needs-source,,Trailing-slash alias of unresolved FAQ
+68,/solutions/sophia/,needs-source,,Trailing-slash alias of unresolved Sophia solution
