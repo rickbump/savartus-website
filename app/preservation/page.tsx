@@ -8,7 +8,7 @@ import { ScaleAndResilience } from "@/components/optical-object-storage/ScaleAnd
 import { OpticalClosingCTA } from "@/components/optical-object-storage/OpticalClosingCTA";
 
 export const metadata: Metadata = {
-  title: "Data Preservation",
+  title: "Long-Term Data Preservation Solutions",
   description:
     "Savartus provides long-term information preservation using nearline and offline optical storage designed to keep enterprise data durable, retrievable, and protected.",
 
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     images: socialImages.openGraph,
-    title: "Data Preservation | Savartus",
+    title: "Long-Term Data Preservation Solutions | Savartus",
     description:
       "Preserve enterprise information for the long term with durable, retrievable nearline and offline optical storage.",
     url: "/preservation",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     images: socialImages.twitter,
     card: "summary_large_image",
-    title: "Data Preservation | Savartus",
+    title: "Long-Term Data Preservation Solutions | Savartus",
     description:
       "Preserve enterprise information for the long term with durable, retrievable nearline and offline optical storage.",
   },

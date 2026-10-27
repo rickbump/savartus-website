@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "File Management System",
 
   description:
-    "Savartus FMS creates a managed information layer across enterprise storage, maintaining metadata, identifiers, relationships, searchable attributes, and workflow context for files and objects.",
+    "Manage files and objects across enterprise storage with Savartus FMS, preserving metadata, identifiers, relationships, search attributes, and workflow context.",
 
   alternates: {
     canonical: "/products/file-management",

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "ELS500 Enterprise Optical Storage System",
 
   description:
-    "Explore the Savartus ELS500, a scalable enterprise optical storage system for nearline information preservation, Active Archive environments, and long-term retention.",
+    "Explore the Savartus ELS500 enterprise optical storage system for scalable nearline preservation, Active Archive, and long-term information retention.",
 
   alternates: {
     canonical: "/products/els500",

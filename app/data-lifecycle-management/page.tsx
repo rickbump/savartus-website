@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Data Lifecycle Management",
 
   description:
-    "Savartus Data Lifecycle Management helps organizations govern enterprise information according to identity, context, policy, value, risk, retention, protection, and lifecycle requirements.",
+    "Govern enterprise information by identity, context, policy, value, risk, retention, and protection with Savartus Data Lifecycle Management.",
 
   alternates: {
     canonical: "/data-lifecycle-management",

@@ -15,6 +15,8 @@ export type InsightArticle = {
   slug: string;
   title: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
   excerpt: string;
   category: string;
   author: string;
@@ -32,6 +34,8 @@ export type InsightArticle = {
 export const insightArticles: InsightArticle[] = [
   {
     slug: "why-do-we-manage-data-based-on-its-birthday",
+    seoDescription:
+      "Govern enterprise information by value, risk, retention, protection, and business requirements rather than age alone. Explore a state-based lifecycle approach.",
     title: "Why do we manage data based on its birthday?",
     description:
       "Age is easy to measure, but enterprise information should be governed according to value, risk, retention, protection, obligations, and business requirements—not simply elapsed time.",
@@ -732,6 +736,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "scientific-data-must-outlive-the-project",
+    seoDescription:
+      "Preserve research data with metadata, provenance, processing history, and access limits so it remains usable for validation and reuse after a project ends.",
     title: "Scientific Data Must Outlive the Project",
     description:
       "Research datasets can support validation, longitudinal comparison, and future AI long after a grant or study ends. Their preservation needs to include the data, metadata, provenance, processing history, access limits, and a workable path to reuse.",
@@ -919,6 +925,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "long-term-digital-retention-with-els100",
+    seoDescription:
+      "Explore an ELS100 optical preservation tier for long-term digital retention without keeping every retained file on high-performance storage.",
     title: "Long-Term Digital Retention with ELS100",
     description:
       "A dedicated optical preservation tier for organizations that need important digital information to remain protected for years or decades, without keeping every retained file on high-performance storage.",
@@ -1049,6 +1057,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "medical-imaging-beyond-the-pacs-refresh-cycle",
+    seoDescription:
+      "Consider optical preservation for less-accessed imaging while planning for PACS retrieval, patient privacy, and medical-record retention requirements.",
     title: "Keep Imaging Records Beyond the PACS Refresh Cycle",
     description:
       "How a hospital can consider an optical preservation tier for less-frequently accessed imaging while keeping PACS retrieval, patient privacy, and record-retention duties in view.",
@@ -1171,6 +1181,9 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "credit-union-ransomware-recovery-offline-copies",
+    seoTitle: "Credit Union Ransomware Recovery: Offline Copies",
+    seoDescription:
+      "Explore physically isolated optical copies in credit union ransomware recovery plans alongside clean rebuilds, tested restores, and incident reporting.",
     title: "Ransomware Recovery for Credit Unions: The Offline Copy",
     description:
       "How a federally insured credit union can include physically isolated optical media in a ransomware recovery plan, alongside clean rebuilds, tested restores, and incident reporting.",
@@ -1285,6 +1298,9 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "compliance-retention-right-information-right-time",
+    seoTitle: "Compliance Retention and Optical Preservation",
+    seoDescription:
+      "Separate retention policy from storage infrastructure while records systems govern classification, legal holds, and disposition of preserved information.",
     title: "Compliance Retention: The Right Information, for the Right Time",
     description:
       "How regulated organizations can separate retention policy from storage infrastructure, using online, lower-activity, and offline optical preservation while records systems remain authoritative for classification, holds, and disposition.",
@@ -1412,6 +1428,9 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "government-records-public-access-permanent-preservation",
+    seoTitle: "Public Records Access and Long-Term Preservation",
+    seoDescription:
+      "Keep retained government records findable for public-records requests and archival transfer without relying on primary storage for decades.",
     title: "Public Records That Outlive the System That Created Them",
     description:
       "How state, local, and federal agencies can keep retained and permanent records findable for public-records requests and ready for archival transfer, without keeping them on primary storage for decades.",
@@ -1550,6 +1569,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "defense-critical-infrastructure-isolated-recovery",
+    seoDescription:
+      "Plan verified, physically isolated recovery copies for defense and critical infrastructure while keeping protected data inside the security program.",
     title: "When the Recovery Copy Has to Be Out of Reach",
     description:
       "How defense contractors and critical-infrastructure operators can keep a verified, physically isolated copy of protected data and recovery information, while keeping that copy inside their security program.",
@@ -1680,6 +1701,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "ai-datasets-preserve-the-data-behind-the-model",
+    seoDescription:
+      "Preserve immutable, versioned AI dataset snapshots for model traceability while managing primary storage costs and respecting data deletion requirements.",
     title: "Preserve the Data Behind the Model",
     description:
       "Why AI teams should keep immutable, versioned snapshots of the datasets behind every released model, and how to do it without keeping everything on expensive primary storage or keeping data they should delete.",
@@ -1803,6 +1826,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "enterprise-archive-stop-powering-cold-data",
+    seoDescription:
+      "Explore moving cold data off always-spinning disks to optical preservation, and measure the energy impact rather than assuming savings.",
     title: "Stop Powering Data Nobody Is Reading",
     description:
       "Why large enterprises and data center operators should move cold-but-online data off always-spinning disk, how energy reporting rules make that visible, and why the result should be measured rather than assumed.",
@@ -1919,6 +1944,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "media-archives-find-and-reuse-preserved-content",
+    seoDescription:
+      "Preserve media masters and production assets while keeping discovery, fixity, rights, and recall connected to the media-management workflow.",
     title: "Media Archives: Find and Reuse What You Already Own",
     description:
       "How broadcasters and production studios can preserve finished masters and production assets while keeping discovery, fixity, rights, and recall tied to their media-management workflow.",
@@ -2046,6 +2073,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "remote-offices-recovery-without-the-wan",
+    seoDescription:
+      "Preserve selected branch-office data and test local recovery without making headquarters or WAN connectivity the only path to a restore.",
     title: "Remote Offices: Recovery Without the WAN",
     description:
       "How a branch with limited connectivity can preserve selected local data and test its recovery path without making headquarters the only place that can find or restore it.",
@@ -2168,6 +2197,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "enterprise-backup-test-the-copy-not-the-job",
+    seoDescription:
+      "Test optical second copies for defined file repositories while treating full-system backup, isolation, and site recovery as separate requirements.",
     title: "Enterprise Backup: Test the Copy, Not the Job",
     description:
       "How an automatic optical second copy can strengthen protection for a defined file repository, while keeping full-system backup, isolation, and site recovery as separate requirements.",
@@ -2291,6 +2322,8 @@ export const insightArticles: InsightArticle[] = [
 
   {
     slug: "offline-preservation-isolate-and-test-the-restore",
+    seoDescription:
+      "Create an isolated optical recovery copy, retain the inventory needed to locate it, and rehearse the path back to online systems.",
     title: "Offline Preservation: Isolate and Test the Restore",
     description:
       "How to create a physically isolated optical recovery copy, retain the inventory needed to find it during an incident, and rehearse the complete path back to online systems.",

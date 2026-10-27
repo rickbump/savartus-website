@@ -9,9 +9,9 @@ import { ServiceCTA } from "@/components/active-archive/ServiceCTA";
 import { ClosingCTA } from "@/components/active-archive/ClosingCTA";
 
 export const metadata: Metadata = {
-  title: "Active Archive",
+  title: "Active Archive Storage Solutions",
   description:
-    "Savartus Active Archive combines high-performance storage with nearline optical preservation so information remains active while needed and preserved for the long term.",
+    "Combine high-performance storage with nearline optical preservation to keep enterprise information active when needed and preserved for the long term.",
 
   alternates: {
     canonical: "/active-archive",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     images: socialImages.openGraph,
-    title: "Active Archive | Savartus",
+    title: "Active Archive Storage Solutions | Savartus",
     description:
       "Keep information active while preserving it for the long term with performance storage and nearline optical preservation.",
     url: "/active-archive",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     images: socialImages.twitter,
     card: "summary_large_image",
-    title: "Active Archive | Savartus",
+    title: "Active Archive Storage Solutions | Savartus",
     description:
       "Keep information active while preserving it for the long term with performance storage and nearline optical preservation.",
   },

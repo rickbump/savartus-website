@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "About Savartus",
 
   description:
-    "Learn about Savartus, our leadership, history, and expertise in Data Lifecycle Management, Active Archive, enterprise storage, security, and long-term information preservation.",
+    "Meet the Savartus team and explore our experience in Data Lifecycle Management, Active Archive, enterprise storage, security, and information preservation.",
 
   alternates: {
     canonical: "/company",

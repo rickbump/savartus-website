@@ -3,10 +3,10 @@ import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Resources",
+  title: "Data Archiving Resources & Specifications",
 
   description:
-    "Explore Savartus technical resources, product information, Enterprise Data Lifecycle documentation, Active Archive architecture, preservation, and Enterprise Library Systems.",
+    "Find Savartus technical resources, ELS product information, and Enterprise Data Lifecycle documentation for archive and preservation planning.",
 
   alternates: {
     canonical: "/resources",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     images: socialImages.openGraph,
-    title: "Resources | Savartus",
+    title: "Data Archiving Resources & Specifications | Savartus",
     description:
       "Technical resources for Data Lifecycle Management, Active Archive, preservation, optical storage, and Savartus Enterprise Library Systems.",
     url: "/resources",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     images: socialImages.twitter,
     card: "summary_large_image",
-    title: "Resources | Savartus",
+    title: "Data Archiving Resources & Specifications | Savartus",
     description:
       "Technical resources for Data Lifecycle Management, Active Archive, preservation, optical storage, and Savartus Enterprise Library Systems.",
   },

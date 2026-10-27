@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Active Archive as a Service",
 
   description:
-    "Savartus Active Archive as a Service combines high-performance storage with immediate optical preservation, allowing performance capacity to change as access requirements evolve.",
+    "Combine high-performance storage and immediate optical preservation with Savartus Active Archive as a Service as access and capacity requirements evolve.",
 
   alternates: {
     canonical: "/active-archive/service",

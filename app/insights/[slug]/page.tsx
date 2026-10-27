@@ -32,11 +32,13 @@ export async function generateMetadata({
   }
 
   const canonicalPath = `/insights/${article.slug}`;
+  const title = article.seoTitle ?? article.title;
+  const description = article.seoDescription ?? article.description;
 
   return {
-    title: article.title,
+    title,
 
-    description: article.description,
+    description,
 
     alternates: {
       canonical: canonicalPath,
@@ -44,8 +46,8 @@ export async function generateMetadata({
 
     openGraph: {
       images: socialImages.openGraph,
-      title: `${article.title} | Savartus`,
-      description: article.description,
+      title: `${title} | Savartus`,
+      description,
       url: canonicalPath,
       type: "article",
       publishedTime: article.publishedDate,
@@ -56,8 +58,8 @@ export async function generateMetadata({
     twitter: {
       images: socialImages.twitter,
       card: "summary_large_image",
-      title: `${article.title} | Savartus`,
-      description: article.description,
+      title: `${title} | Savartus`,
+      description,
     },
   };
 }

@@ -5,10 +5,10 @@ import Link from "next/link";
 import { insightArticles } from "@/content/insights/articles";
 
 export const metadata: Metadata = {
-  title: "Insights",
+  title: "Data Preservation Insights & Articles",
 
   description:
-    "Savartus insights on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI-era data strategy, and enterprise information governance.",
+    "Read Savartus perspectives on Data Lifecycle Management, Active Archive, optical storage, AI data preservation, and enterprise information governance.",
 
   alternates: {
     canonical: "/insights",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     images: socialImages.openGraph,
-    title: "Insights | Savartus",
+    title: "Data Preservation Insights & Articles | Savartus",
     description:
       "Perspectives on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI, and long-term enterprise data strategy.",
     url: "/insights",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     images: socialImages.twitter,
     card: "summary_large_image",
-    title: "Insights | Savartus",
+    title: "Data Preservation Insights & Articles | Savartus",
     description:
       "Perspectives on Data Lifecycle Management, Active Archive, information preservation, optical storage, AI, and long-term enterprise data strategy.",
   },

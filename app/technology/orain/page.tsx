@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "oRain Storage Management",
 
   description:
-    "Savartus oRain provides storage management and orchestration across performance, nearline optical, and offline storage tiers, including object location, media tracking, movement, and retrieval.",
+    "Manage performance, nearline optical, and offline storage with Savartus oRain, including object location, media tracking, data movement, and retrieval.",
 
   alternates: {
     canonical: "/technology/orain",

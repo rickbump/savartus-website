@@ -15,12 +15,12 @@ export const metadata: Metadata = {
   applicationName: "Savartus",
 
   title: {
-    default: "Savartus | Manage. Store. Preserve.",
+    default: "Enterprise Optical Storage & Data Lifecycle | Savartus",
     template: "%s | Savartus",
   },
 
   description:
-    "Savartus provides Active Archive, Preservation, and Data Lifecycle Management solutions for managing, storing, governing, and preserving enterprise information.",
+    "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
 
   authors: [
     {
@@ -38,16 +38,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Savartus",
-    title: "Savartus | Manage. Store. Preserve.",
+    title: "Enterprise Optical Storage & Data Lifecycle | Savartus",
     description:
-      "Active Archive, Preservation, and Data Lifecycle Management solutions for enterprise information.",
+      "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Savartus | Manage. Store. Preserve.",
+    title: "Enterprise Optical Storage & Data Lifecycle | Savartus",
     description:
-      "Active Archive, Preservation, and Data Lifecycle Management solutions for enterprise information.",
+      "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
   },
 
   robots: {

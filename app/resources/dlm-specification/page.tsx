@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Enterprise Data Lifecycle™ Specification",
 
   description:
-    "Explore the Enterprise Data Lifecycle™ Specification, a technology-independent information governance architecture for lifecycle state, policy, governed decisions, authorization, verification, and continuous reevaluation.",
+    "Explore the Enterprise Data Lifecycle™ Specification: an architecture for information state, policy, governed decisions, authorization, and verification.",
 
   alternates: {
     canonical: "/resources/dlm-specification",

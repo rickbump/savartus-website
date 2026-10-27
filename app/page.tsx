@@ -3,10 +3,12 @@ import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Savartus | Manage. Store. Preserve.",
+  title: {
+    absolute: "Enterprise Optical Storage & Data Lifecycle | Savartus",
+  },
 
   description:
-    "Savartus helps organizations manage, store, govern, and preserve enterprise information through Active Archive, Preservation, Data Lifecycle Management, and optical storage technologies.",
+    "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
 
   alternates: {
     canonical: "/",
@@ -14,9 +16,9 @@ export const metadata: Metadata = {
 
   openGraph: {
     images: socialImages.openGraph,
-    title: "Savartus | Manage. Store. Preserve.",
+    title: "Enterprise Optical Storage & Data Lifecycle | Savartus",
     description:
-      "Active Archive, Preservation, Data Lifecycle Management, and enterprise optical storage for managing, storing, governing, and preserving information.",
+      "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
     url: "/",
     type: "website",
   },
@@ -24,9 +26,9 @@ export const metadata: Metadata = {
   twitter: {
     images: socialImages.twitter,
     card: "summary_large_image",
-    title: "Savartus | Manage. Store. Preserve.",
+    title: "Enterprise Optical Storage & Data Lifecycle | Savartus",
     description:
-      "Active Archive, Preservation, Data Lifecycle Management, and enterprise optical storage for managing, storing, governing, and preserving information.",
+      "Explore Savartus enterprise optical storage, Active Archive, data preservation, and Data Lifecycle Management for long-term information needs.",
   },
 };
 

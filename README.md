@@ -224,6 +224,14 @@ npm run health:check -- --base-url=http://localhost:3000
 
 ## Daily SEO plan and dashboard
 
+Page titles include the root layout's ` | Savartus` suffix and must stay within
+65 characters; descriptions must be unique and 70–165 characters. Insights can
+set optional `seoTitle` and `seoDescription` values in `content/insights/articles.ts`.
+These apply to search and social metadata only; article headlines, decks, and
+Article JSON-LD retain the original editorial fields. Run
+`npx playwright test tests/seo-metadata.spec.ts` to verify rendered sitemap
+metadata, fallback values, canonicals, and preservation of visible article copy.
+
 Social previews are generated at build time by `app/opengraph-image.tsx` and
 `app/twitter-image.tsx` (1200×630 PNG). Pages that define their own `openGraph`
 or `twitter` metadata must include the corresponding images from
