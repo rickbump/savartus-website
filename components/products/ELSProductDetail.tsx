@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { UseCaseStoryGrid } from "@/components/product-detail/UseCaseStoryGrid";
 import { ELSProductTechnicalDetails } from "@/components/products/ELSProductTechnicalDetails";
 import type { ELSProduct } from "@/data/els-products";
@@ -20,11 +21,45 @@ export function ELSProductDetail({ product }: Props) {
       value: `${product.technicalSpecs.weightLbs} / ${product.technicalSpecs.weightKg}`,
     },
   ];
+  const productUrl = new URL(product.href, "https://www.savartus.com").href;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `${productUrl}#product`,
+    url: productUrl,
+    name: product.name,
+    model: product.name,
+    description: product.description,
+    ...(product.image
+      ? { image: new URL(product.image, "https://www.savartus.com").href }
+      : {}),
+    brand: { "@type": "Brand", name: "Savartus" },
+    category: product.categoryLabel,
+    additionalProperty: primarySpecs.map((spec) => ({
+      "@type": "PropertyValue",
+      name: spec.label,
+      value: spec.value,
+    })),
+  };
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="product-detail-hero">
         <div className="site-container">
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Products", href: "/products" },
+              { name: "ELS Libraries", href: "/products/els" },
+              { name: product.name, href: product.href },
+            ]}
+          />
           <div className="product-detail-hero-grid">
             <div>
               <p className="product-detail-eyebrow">

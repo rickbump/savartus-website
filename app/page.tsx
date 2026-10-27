@@ -33,8 +33,34 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.savartus.com/#organization",
+        name: "Savartus",
+        url: "https://www.savartus.com",
+        logo: "https://www.savartus.com/images/brand/savartus-shield.jpeg",
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.savartus.com/#website",
+        name: "Savartus",
+        url: "https://www.savartus.com",
+        publisher: { "@id": "https://www.savartus.com/#organization" },
+      },
+    ],
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="aa-hero">
         <div className="site-container aa-hero-inner">
           <p className="aa-eyebrow">SAVARTUS</p>

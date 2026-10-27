@@ -224,6 +224,17 @@ npm run health:check -- --base-url=http://localhost:3000
 
 ## Daily SEO plan and dashboard
 
+The homepage publishes Organization and WebSite JSON-LD using the existing
+Savartus name, canonical URL, and logo. ELS model pages publish Product JSON-LD
+from `data/els-products.ts` and their displayed specifications; no prices,
+availability, offers, or reviews are inferred. Product markup alone does not
+guarantee eligibility for Google product rich results.
+`components/Breadcrumbs.tsx` renders accessible visible navigation and matching
+BreadcrumbList JSON-LD on ELS model and published Insight pages. Existing Article
+schema and editorial titles remain unchanged. All JSON-LD escapes `<` as `\\u003c`.
+Run `npx playwright test tests/structured-data.spec.ts` to verify schema values,
+images, breadcrumb order, and consistency with the visible navigation.
+
 Page titles include the root layout's ` | Savartus` suffix and must stay within
 65 characters; descriptions must be unique and 70–165 characters. Insights can
 set optional `seoTitle` and `seoDescription` values in `content/insights/articles.ts`.

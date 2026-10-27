@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 import {
   getInsightBySlug,
@@ -117,9 +118,13 @@ export default async function InsightArticlePage({
       <article className="insight-article">
         <header className="insight-article-hero">
           <div className="site-container insight-article-hero-inner">
-            <Link href="/insights" className="insight-article-back">
-              ← Insights
-            </Link>
+            <Breadcrumbs
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Insights", href: "/insights" },
+                { name: article.title, href: `/insights/${article.slug}` },
+              ]}
+            />
 
             <p className="insights-eyebrow">{article.category}</p>
 
