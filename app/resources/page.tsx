@@ -48,6 +48,13 @@ export default function ResourcesPage() {
             educational resources for managing, storing, and preserving
             enterprise information.
           </p>
+          <p className="resources-hero-copy">
+            Start with the specification when defining governance requirements,
+            the architecture pages when planning storage tiers, and the ELS
+            comparison when evaluating hardware. These resources connect policy
+            decisions to deployment choices without treating storage capacity
+            as a substitute for information governance.
+          </p>
         </div>
       </section>
 
@@ -66,6 +73,9 @@ export default function ResourcesPage() {
               A technology-independent architecture for understanding
               information state, governance requirements, policy, and lifecycle
               transitions across the enterprise.
+              Use this resource to distinguish information lifecycle state from
+              storage placement and to understand how policy, authorization,
+              verification, and reevaluation fit into a governed decision.
             </p>
           </div>
 
@@ -97,6 +107,13 @@ export default function ResourcesPage() {
               <br />
               working together.
             </h2>
+            <p className="resources-lead">
+              For infrastructure and operations teams, these pages explain the
+              relationship between active access and long-term preservation.
+              Review the service option alongside the architecture to decide
+              which responsibilities belong in your environment and which can
+              be delivered through a managed deployment.
+            </p>
           </div>
 
           <div className="resources-grid">
@@ -146,6 +163,13 @@ export default function ResourcesPage() {
               <br />
               ELS family.
             </h2>
+            <p className="resources-lead">
+              Compare system type, media configuration, drives, and form factor
+              before selecting a library. Individual model pages include
+              specifications and downloadable sell sheets. Distinguish nearline
+              access from physically isolated retention when assessing how a
+              system fits your preservation and recovery workflow.
+            </p>
           </div>
 
           <div className="resources-grid">
@@ -195,6 +219,13 @@ export default function ResourcesPage() {
               <br />
               and storage management.
             </h2>
+            <p className="resources-lead">
+              Use the software resources to separate storage orchestration,
+              information discovery, and governance. oRain tracks objects,
+              media, and locations; FMS supplies metadata and workflow context;
+              DLM addresses policy-driven information requirements rather than
+              relying only on a file&apos;s age.
+            </p>
           </div>
 
           <div className="resources-grid">
@@ -228,6 +259,54 @@ export default function ResourcesPage() {
               <p>
                 Policy-driven lifecycle management based on information
                 requirements rather than age.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="resources-section">
+        <div className="site-container">
+          <div className="resources-section-header">
+            <p className="resources-eyebrow">APPLY THE ARCHITECTURE</p>
+            <h2>Read the operational perspective.</h2>
+            <p className="resources-lead">
+              The Insights library connects archive design to real planning
+              questions. These articles discuss considerations and workflows,
+              not customer endorsements or guarantees of compliance.
+            </p>
+          </div>
+          <div className="resources-grid">
+            <Link
+              href="/insights/medical-imaging-beyond-the-pacs-refresh-cycle"
+              className="resources-card"
+            >
+              <span>HEALTHCARE RECORDS</span>
+              <h3>Preserve imaging beyond a PACS refresh</h3>
+              <p>
+                Consider retrieval, patient privacy, and retention duties when
+                planning an optical preservation tier for imaging records.
+              </p>
+            </Link>
+            <Link
+              href="/insights/government-records-public-access-permanent-preservation"
+              className="resources-card"
+            >
+              <span>PUBLIC RECORDS</span>
+              <h3>Keep retained records findable</h3>
+              <p>
+                Plan discovery, public-records access, and archival transfer
+                without tying permanent information to one primary system.
+              </p>
+            </Link>
+            <Link
+              href="/insights/media-archives-find-and-reuse-preserved-content"
+              className="resources-card"
+            >
+              <span>MEDIA ARCHIVES</span>
+              <h3>Find and reuse preserved assets</h3>
+              <p>
+                Connect preservation to discovery, fixity, rights, and recall
+                within a media-management workflow.
               </p>
             </Link>
           </div>

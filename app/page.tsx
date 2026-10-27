@@ -251,6 +251,68 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="products-section">
+        <div className="site-container">
+          <div className="products-section-header">
+            <p className="products-eyebrow">PLANNING YOUR ARCHIVE</p>
+            <h2>Start with the information requirements.</h2>
+            <p className="products-lead">
+              Access, retention, protection, and governance are different
+              requirements. Understand each before choosing where information
+              should live or how it should move between storage environments.
+            </p>
+          </div>
+          <div className="products-software-grid">
+            <article className="products-software-card">
+              <h3>How is Active Archive different from backup?</h3>
+              <p>
+                Active Archive combines performance storage for current use
+                with an independent optical preservation copy. Backup and
+                recovery still require a defined scope, verified copies, and
+                a tested path back into service. A preserved file repository
+                is not automatically a full-system recovery plan.
+              </p>
+              <Link
+                href="/insights/enterprise-backup-test-the-copy-not-the-job"
+                className="products-card-link"
+              >
+                Read about testing recovery copies
+              </Link>
+            </article>
+            <article className="products-software-card">
+              <h3>When should information move?</h3>
+              <p>
+                Age alone does not determine business value or retention.
+                Savartus Data Lifecycle Management considers information
+                identity, context, risk, policy, and protection requirements.
+                Information state and storage state are separate: retained
+                information can need faster access again without losing its
+                governance context.
+              </p>
+              <Link href="/data-lifecycle-management" className="products-card-link">
+                Explore information lifecycle governance
+              </Link>
+            </article>
+            <article className="products-software-card">
+              <h3>What does offline preservation require?</h3>
+              <p>
+                Physically isolated media separates a retained copy from
+                ordinary network access. The inventory, location information,
+                and recovery workflow must remain usable when the copy is
+                needed. Plan how teams will locate, mount, verify, and restore
+                information, not just how they will write it.
+              </p>
+              <Link
+                href="/insights/offline-preservation-isolate-and-test-the-restore"
+                className="products-card-link"
+              >
+                Explore isolated copies and restore testing
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="products-closing">
         <div className="site-container products-closing-inner">
           <p className="products-eyebrow products-eyebrow-light">

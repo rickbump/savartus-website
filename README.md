@@ -224,6 +224,16 @@ npm run health:check -- --base-url=http://localhost:3000
 
 ## Daily SEO plan and dashboard
 
+ELS model pages include a comparison section linking to other models using
+their existing positioning text. Insight recommendations are curated through
+`relatedArticleSlugs` and resolved through `getRelatedInsights`, which includes
+published articles only. Homepage planning answers and Resources introductions
+explain existing architecture and operational considerations, not new product
+claims. Run `npx playwright test tests/content-discovery.spec.ts` to verify
+rendered incoming links from distinct sitemap pages (4+ per ELS model and 3+
+per Insight), published recommendation targets, and landing-page content depth.
+These are editorial audit thresholds, not Google ranking guarantees.
+
 The homepage publishes Organization and WebSite JSON-LD using the existing
 Savartus name, canonical URL, and logo. ELS model pages publish Product JSON-LD
 from `data/els-products.ts` and their displayed specifications; no prices,

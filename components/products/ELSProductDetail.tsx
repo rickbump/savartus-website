@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { UseCaseStoryGrid } from "@/components/product-detail/UseCaseStoryGrid";
 import { ELSProductTechnicalDetails } from "@/components/products/ELSProductTechnicalDetails";
-import type { ELSProduct } from "@/data/els-products";
+import { elsProducts, type ELSProduct } from "@/data/els-products";
 
 type Props = {
   product: ELSProduct;
@@ -338,6 +338,35 @@ export function ELSProductDetail({ product }: Props) {
             offline={product.offline}
             useCases={product.useCases}
           />
+        </div>
+      </section>
+
+      <section className="product-detail-section">
+        <div className="site-container">
+          <div className="product-detail-section-header">
+            <p className="product-detail-eyebrow">COMPARE ELS MODELS</p>
+            <h2>Find the right preservation platform.</h2>
+            <p>
+              Compare other ELS models by deployment type, capacity, and
+              preservation requirements. Review each model&apos;s specifications
+              before selecting a system.
+            </p>
+          </div>
+          <div className="resources-grid">
+            {elsProducts
+              .filter((candidate) => candidate.slug !== product.slug)
+              .map((candidate) => (
+                <Link
+                  href={candidate.href}
+                  className="resources-card"
+                  key={candidate.slug}
+                >
+                  <span>{candidate.categoryLabel}</span>
+                  <h3>{candidate.name}</h3>
+                  <p>{candidate.positioning}</p>
+                </Link>
+              ))}
+          </div>
         </div>
       </section>
 

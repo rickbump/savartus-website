@@ -436,6 +436,8 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "the-evidence-must-outlive-the-storage-system",
       "why-do-we-manage-data-based-on-its-birthday",
+      "why-optical-storage-matters-again-in-the-ai-era",
+      "enterprise-archive-stop-powering-cold-data",
     ],
   },
 
@@ -731,6 +733,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "performance-and-preservation-should-work-together",
       "technology-changes-information-persists",
+      "government-records-public-access-permanent-preservation",
     ],
   },
 
@@ -920,6 +923,8 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "technology-changes-information-persists",
       "performance-and-preservation-should-work-together",
+      "medical-imaging-beyond-the-pacs-refresh-cycle",
+      "ai-datasets-preserve-the-data-behind-the-model",
     ],
   },
 
@@ -1052,6 +1057,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "scientific-data-must-outlive-the-project",
       "technology-changes-information-persists",
+      "media-archives-find-and-reuse-preserved-content",
     ],
   },
 
@@ -1293,6 +1299,8 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "the-evidence-must-outlive-the-storage-system",
       "long-term-digital-retention-with-els100",
+      "enterprise-backup-test-the-copy-not-the-job",
+      "remote-offices-recovery-without-the-wan",
     ],
   },
 
@@ -1423,6 +1431,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "long-term-digital-retention-with-els100",
       "the-evidence-must-outlive-the-storage-system",
+      "government-records-public-access-permanent-preservation",
     ],
   },
 
@@ -1564,6 +1573,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "compliance-retention-right-information-right-time",
       "long-term-digital-retention-with-els100",
+      "medical-imaging-beyond-the-pacs-refresh-cycle",
     ],
   },
 
@@ -1696,6 +1706,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "credit-union-ransomware-recovery-offline-copies",
       "compliance-retention-right-information-right-time",
+      "offline-preservation-isolate-and-test-the-restore",
     ],
   },
 
@@ -1821,6 +1832,8 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "scientific-data-must-outlive-the-project",
       "compliance-retention-right-information-right-time",
+      "why-optical-storage-matters-again-in-the-ai-era",
+      "media-archives-find-and-reuse-preserved-content",
     ],
   },
 
@@ -2317,6 +2330,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "credit-union-ransomware-recovery-offline-copies",
       "remote-offices-recovery-without-the-wan",
+      "offline-preservation-isolate-and-test-the-restore",
     ],
   },
 
@@ -2449,6 +2463,7 @@ export const insightArticles: InsightArticle[] = [
     relatedArticleSlugs: [
       "credit-union-ransomware-recovery-offline-copies",
       "defense-critical-infrastructure-isolated-recovery",
+      "enterprise-backup-test-the-copy-not-the-job",
     ],
   },
 ];
