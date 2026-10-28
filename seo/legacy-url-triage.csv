@@ -1,23 +1,23 @@
 row,path,action,destination,reason
 1,/solutions/enterprise-laser-storage,already-redirected,/products/els,Equivalent optical storage overview; previously deployed permanent redirect
-2,/cases/sophia,needs-source,,Original case study absent; do not invent customer claims
+2,/cases/sophia,retired,,Sophia is not a Savartus offering (owner decision 2026-10-28); intentional 404
 3,/publishing-systems/rx400m-usb-solution,needs-source,,Legacy publishing product absent
-4,/cases/datamyte-inc,needs-source,,Original case study absent
-5,/legal/rimage-software-license-agreement,needs-source,,Original license agreement required
-6,/solutions/sophia,needs-source,,Sophia solution absent; no verified replacement
+4,/cases/datamyte-inc,retired,,Legacy case study removed (owner decision 2026-10-28); intentional 404
+5,/legal/rimage-software-license-agreement,retired,,Rimage document removed (owner decision 2026-10-28); intentional 404
+6,/solutions/sophia,retired,,Sophia is not a Savartus offering (owner decision 2026-10-28); intentional 404
 7,/learn/newsroom,needs-source,,Original newsroom absent; Insights is not a verified replacement for company announcements
 8,/legal/technical-support-services-agreement,needs-source,,Original support agreement required
 9,/about,already-redirected,/company,Previously deployed company page redirect
 10,/data-ingestion-101,needs-source,,Original educational article absent
 11,/savartus-terms-conditions,needs-source,,Legal terms must be recovered or approved; no equivalent in repository
-12,/cases/mcdonagh-brothers-inc,needs-source,,Customer case study absent; do not invent customer claims
+12,/cases/mcdonagh-brothers-inc,retired,,Legacy case study removed (owner decision 2026-10-28); intentional 404
 13,/data-migration-restoration-services,needs-source,,No equivalent published migration and restoration service
-14,/legal/rimage-services-agreement,needs-source,,Requires original agreement or verified authoritative destination
-15,/legal/rimage-supplier-code-content,needs-source,,Path transcribed from screenshot; confirm spelling with Analytics CSV and locate original document
+14,/legal/rimage-services-agreement,retired,,Rimage document removed (owner decision 2026-10-28); intentional 404
+15,/legal/rimage-supplier-code-content,retired,,Rimage document removed (owner decision 2026-10-28); intentional 404
 16,/publishing-systems/producer-v-8300n,needs-source,,Legacy publishing product absent; ELS is not a replacement for disc publishing
 17,/solutions/immutable-data-archive-f-a-q,needs-source,,Original FAQ absent; do not substitute a general product page for specific answers
 18,/webinar-your-data-is-growing,needs-source,,Original webinar absent
-19,/cases/beryllium-infosec,needs-source,,Customer case study absent
+19,/cases/beryllium-infosec,retired,,Legacy case study removed (owner decision 2026-10-28); intentional 404
 20,/learn,redirect,/resources,Current learning and resource hub
 21,/legal/shipping,needs-source,,Shipping policy absent; requires approved terms
 22,/legal/warranty,needs-source,,Warranty terms absent; requires approved terms
@@ -29,13 +29,13 @@ row,path,action,destination,reason
 28,/market-item/sales-marketing-conference-records-presentations-multimedia,needs-source,,Original distribution solution absent
 29,/video-item/producer-v-product-video,needs-source,,Original product video absent
 30,/5-phases-of-data-lifecycle-management,needs-source,,Original five-phase article absent; current lifecycle architecture is not the same article
-31,/cases/major-healthcare-center,needs-source,,Customer case study absent
+31,/cases/major-healthcare-center,retired,,Legacy case study removed (owner decision 2026-10-28); intentional 404
 32,/data-breach-liability,needs-source,,Original article absent; do not invent legal advice
 33,/digital-asset-management-checklist,needs-source,,Original checklist absent
 34,/dlm-best-practices,needs-source,,Original article absent
 35,/effective-dlm,needs-source,,Original article absent
 36,/harnessing-ai,needs-source,,Original article absent
-37,/legal/warranty/rimage-optical-media-warranty,needs-source,,Product-specific warranty absent; requires original terms
+37,/legal/warranty/rimage-optical-media-warranty,retired,,Rimage document removed (owner decision 2026-10-28); intentional 404
 38,/market-item/case-management-and-record-retention,needs-source,,Original market solution absent; preservation article not established as equivalent
 39,/market-item/forensics,needs-source,,Original forensics solution absent
 40,/market-item/mergers-and-acquisitions,needs-source,,Original market solution absent
@@ -45,7 +45,7 @@ row,path,action,destination,reason
 44,/publishing-systems,needs-source,,Disc publishing catalog absent; do not redirect to unrelated ELS archive systems
 45,/publishing-systems/prism-iii,needs-source,,Legacy publishing product absent
 46,/service/enterprise-laser-storage,needs-source,,Original service page absent; confirm whether this was support or a product overview
-47,/service/sophia,needs-source,,Sophia service absent
+47,/service/sophia,retired,,Sophia is not a Savartus offering (owner decision 2026-10-28); intentional 404
 48,/solutions,redirect,/#solutions,Existing homepage section presents current solutions
 49,/solutions-backup/rx400c,needs-source,,Legacy product absent
 50,/solutions/data-lifecycle-management,redirect,/data-lifecycle-management,Same solution at current canonical URL
@@ -66,7 +66,7 @@ row,path,action,destination,reason
 65,/solutions/,redirect,/#solutions,Trailing-slash alias of solutions section redirect
 66,/solutions/enterprise-laser-storage/,already-redirected,/products/els,Trailing-slash normalization followed by previously deployed product redirect
 67,/solutions/immutable-data-archive-f-a-q/,needs-source,,Trailing-slash alias of unresolved FAQ
-68,/solutions/sophia/,needs-source,,Trailing-slash alias of unresolved Sophia solution
+68,/solutions/sophia/,retired,,Trailing-slash alias of retired Sophia solution; intentional 404
 69,/market-item/archiving-long-term-storage,redirect,/preservation,Equivalent long-term archiving topic
 70,/market-item/archiving-safety-of-data,redirect,/preservation,Equivalent data-safety archiving topic
 71,/market-item/digital-evidence-management,redirect,/insights/the-evidence-must-outlive-the-storage-system,Existing evidence-preservation article is the topical equivalent

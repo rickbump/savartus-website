@@ -194,12 +194,6 @@ export default function CompanyPage() {
 
             <div className="about-history-copy">
               <p>
-                Part of that heritage comes from Rimage, a pioneer in automated
-                digital media systems whose engineering combined robotics,
-                software, and optical technology.
-              </p>
-
-              <p>
                 Savartus carries that experience forward while addressing a
                 broader enterprise problem: how organizations understand,
                 govern, store, protect, and preserve information throughout its
