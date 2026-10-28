@@ -8,6 +8,12 @@ const redirects = [
   ["/solutions/data-lifecycle-management", "/data-lifecycle-management"],
   ["/blog", "/insights"],
   ["/contact-us/contact-savartus-team", "/contact"],
+  ["/market-item/archiving-long-term-storage", "/preservation"],
+  ["/market-item/archiving-safety-of-data", "/preservation"],
+  [
+    "/market-item/digital-evidence-management",
+    "/insights/the-evidence-must-outlive-the-storage-system",
+  ],
 ] as const;
 
 for (const [source, destination] of redirects) {
@@ -80,6 +86,10 @@ test("unknown legacy URLs are not redirected to unrelated pages", async ({ reque
     "/data-migration-restoration-services",
     "/solutions/immutable-data-archive-f-a-q",
     "/solutions/sophia",
+    "/market-item/legal",
+    "/market-item/security-financial",
+    "/market-item/govt-law-enforcement",
+    "/publishing-systems/everest-encore",
     "/this-page-does-not-exist",
   ]) {
     const response = await request.get(path, { maxRedirects: 0 });

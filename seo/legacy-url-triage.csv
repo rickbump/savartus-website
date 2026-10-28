@@ -67,3 +67,12 @@ row,path,action,destination,reason
 66,/solutions/enterprise-laser-storage/,already-redirected,/products/els,Trailing-slash normalization followed by previously deployed product redirect
 67,/solutions/immutable-data-archive-f-a-q/,needs-source,,Trailing-slash alias of unresolved FAQ
 68,/solutions/sophia/,needs-source,,Trailing-slash alias of unresolved Sophia solution
+69,/market-item/archiving-long-term-storage,redirect,/preservation,Equivalent long-term archiving topic
+70,/market-item/archiving-safety-of-data,redirect,/preservation,Equivalent data-safety archiving topic
+71,/market-item/digital-evidence-management,redirect,/insights/the-evidence-must-outlive-the-storage-system,Existing evidence-preservation article is the topical equivalent
+72,/market-item/legal,needs-source,,Original market solution absent
+73,/market-item/security-financial,needs-source,,Original market solution absent
+74,/market-item/govt-law-enforcement,needs-source,,Original market solution absent
+75,/market-item/sports-entertainment-internal-review,needs-source,,Original market solution absent
+76,/publishing-systems/everest-encore,needs-source,,Legacy publishing product absent
+77,/partnering-to-unlock-the-power-of-archived-data-2,needs-source,,Duplicate of unresolved article

@@ -35,6 +35,21 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/market-item/archiving-long-term-storage",
+        destination: "/preservation",
+        permanent: true,
+      },
+      {
+        source: "/market-item/archiving-safety-of-data",
+        destination: "/preservation",
+        permanent: true,
+      },
+      {
+        source: "/market-item/digital-evidence-management",
+        destination: "/insights/the-evidence-must-outlive-the-storage-system",
+        permanent: true,
+      },
+      {
         source: "/contact-us/contact-savartus-team",
         destination: "/contact",
         permanent: true,
