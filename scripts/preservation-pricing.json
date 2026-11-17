@@ -1,0 +1,9 @@
+{
+  "currency": "usd",
+  "tiers": {
+    "tb1": { "monthlyAmount": 7.5 },
+    "tb5": { "monthlyAmount": 35 },
+    "tb10": { "monthlyAmount": 65 },
+    "tb25": { "monthlyAmount": 150 }
+  }
+}

@@ -5605,6 +5605,257 @@ a {
 }
 
 /* =========================================================
+   PRESERVATION SIGNUP
+   ========================================================= */
+
+.preservation-tier {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.preservation-tier .preservation-tier-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.preservation-tier .preservation-tier-price {
+  color: var(--savartus-blue);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.preservation-tier .preservation-tier-summary {
+  color: var(--gray-500);
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.preservation-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.preservation-terms {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 4px 0 24px;
+  color: var(--gray-800);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.preservation-terms input {
+  flex: none;
+  margin-top: 3px;
+}
+
+.preservation-error {
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #e6b3b3;
+  border-radius: 8px;
+  background: #fdf2f2;
+  color: #8a1f1f;
+  font-size: 0.85rem;
+}
+
+.preservation-points {
+  margin: 20px 0 0;
+  padding-left: 1.2em;
+  color: var(--gray-800);
+  line-height: 1.7;
+}
+
+.contact-form .button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.preservation-progress {
+  margin: 28px 0;
+  max-width: 640px;
+}
+
+.preservation-progress-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preservation-progress-steps li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-200, #e5e7eb);
+  color: var(--gray-500);
+}
+
+.preservation-progress-steps li.is-done {
+  color: var(--gray-800);
+}
+
+.preservation-progress-mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gray-200, #e5e7eb);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.preservation-progress-steps li.is-done .preservation-progress-mark {
+  background: var(--savartus-blue);
+  color: white;
+}
+
+.preservation-progress-note {
+  margin-top: 20px;
+  color: var(--gray-800);
+  line-height: 1.6;
+}
+
+/* Getting started, FAQ, calculator, and terms pages */
+
+.preservation-doc {
+  padding: 64px 0 96px;
+}
+
+.preservation-doc-inner {
+  max-width: 820px;
+}
+
+.preservation-doc h2 {
+  margin: 48px 0 12px;
+}
+
+.preservation-doc h3 {
+  margin: 28px 0 8px;
+}
+
+.preservation-doc p,
+.preservation-doc li {
+  color: var(--gray-800);
+  line-height: 1.7;
+}
+
+.preservation-doc pre {
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.preservation-doc code {
+  font-size: 0.9em;
+}
+
+.preservation-doc dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 20px;
+}
+
+.preservation-doc dt {
+  font-weight: 700;
+}
+
+.preservation-doc dd {
+  margin: 0;
+}
+
+.preservation-placeholder {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #fff3cd;
+  color: #7a5a00;
+  font-weight: 700;
+}
+
+.preservation-faq details {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--gray-200, #e5e7eb);
+}
+
+.preservation-faq summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.preservation-faq details p {
+  margin: 10px 0 0;
+}
+
+.preservation-calculator {
+  margin-top: 32px;
+  padding: 24px;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 12px;
+}
+
+.preservation-calculator-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.preservation-calculator label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.preservation-calculator select,
+.preservation-calculator input {
+  min-width: 160px;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-300, #d1d5db);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.preservation-calculator-result {
+  margin: 20px 0 0;
+  font-size: 1.05rem;
+}
+
+.preservation-calculator-result strong {
+  color: var(--savartus-blue);
+  font-size: 1.4rem;
+}
+
+@media (max-width: 640px) {
+  .preservation-doc dl {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
    COMPANY
    ========================================================= */
 

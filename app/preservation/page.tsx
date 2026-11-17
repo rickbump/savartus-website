@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { socialImages } from "@/lib/social-images";
 import Link from "next/link";
+import { signupEnabled } from "@/lib/preservation/config";
 
 import { OnlineOffline } from "@/components/optical-object-storage/OnlineOffline";
 import { OpticalCharacteristics } from "@/components/optical-object-storage/OpticalCharacteristics";
@@ -55,7 +56,13 @@ export default function PreservationPage() {
           </p>
 
           <div className="opt-hero-actions">
-            <a href="#workflow" className="button button-primary">
+            {signupEnabled() ? (
+              <Link href="/preservation/signup" className="button button-primary">
+                Start Preserving Online
+              </Link>
+            ) : null}
+
+            <a href="#workflow" className={signupEnabled() ? "button button-secondary" : "button button-primary"}>
               Explore the Workflow
             </a>
 
