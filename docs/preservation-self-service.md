@@ -28,6 +28,7 @@ The signup page's cost calculator uses the same pricing function, so its estimat
 | Provisioning (resumable) | `lib/preservation/provision.ts`, `lib/preservation/cloutility.ts` |
 | Emails (welcome, upgrade, staff alerts) | `lib/preservation/notify.ts` |
 | Retry job | `app/api/preservation/provision-retry/route.ts` |
+| Daily billing job | `app/api/preservation/billing-sync/route.ts`, `lib/preservation/usage-billing.ts`, schedule in `vercel.json` |
 | Monthly usage billing | `app/api/preservation/billing-data/route.ts`, `lib/preservation/usage-pricing.ts` |
 | Customer guide, terms, privacy | `app/preservation/getting-started/`, `app/preservation/terms/`, `app/privacy/` |
 | Database | `scripts/preservation-accounts.sql` |
@@ -125,7 +126,8 @@ CLOUTILITY_SUBSCRIPTION_TB10=
 CLOUTILITY_SUBSCRIPTION_TB25=
 CLOUTILITY_STORAGE_PRODUCT_CODE=
 CLOUTILITY_BILLING_WEBHOOK_TOKEN=       # long random string
-PRESERVATION_JOB_TOKEN=                 # long random string
+PRESERVATION_JOB_TOKEN=                 # long random string; for running the jobs by hand
+CRON_SECRET=                            # long random string; Vercel Cron sends it to the scheduled jobs
 PRESERVATION_S3_ENDPOINT=               # public S3 endpoint shown to customers, e.g. https://s3.savartus.com
 PRESERVATION_S3_REGION=                 # optional, defaults to us-east-1
 PRESERVATION_SENDER_EMAIL=              # mailbox emails are sent from (defaults to SPECIFICATION_SENDER_EMAIL)
@@ -140,7 +142,7 @@ If the mail settings are missing, emails are skipped and logged; provisioning an
 
 ## 5. Retries, held accounts, and alerts
 
-Call `GET /api/preservation/provision-retry` with `Authorization: Bearer $PRESERVATION_JOB_TOKEN` every 10 minutes. It resumes any account whose provisioning failed or was interrupted. Each step is recorded as it succeeds, so a retry continues where the last run stopped.
+`vercel.json` runs `GET /api/preservation/provision-retry` daily at 14:30 UTC (the Hobby plan allows one run a day; on Pro, every 10 minutes is better). Vercel Cron authenticates with `CRON_SECRET`; to run it by hand, send `Authorization: Bearer $PRESERVATION_JOB_TOKEN`. It resumes any account whose provisioning failed or was interrupted. Each step is recorded as it succeeds, so a retry continues where the last run stopped.
 
 - After **8 attempts** the retry job stops. The account stays `failed` with the error in `last_error`.
 - An error a retry cannot fix (today: the customer's email already has a Cloutility login elsewhere) **holds** the account at once.
@@ -165,6 +167,8 @@ The pricing, charging, duplicate-skipping, and upgrade logic was tested end to e
 
 **How billing data arrives (confirmed 2026-11-17).** Cloutility's Post URL carries only a notification: `{"trigger":"new billing data available"}`, or `{"trigger":"test for new billing data available"}` from the subscriber's Verify button (acknowledged with 200, nothing billed). On a real trigger the route reads the newest run from `GET v1/bunits/{parent}/billing`, fetches it with `GET v1/bunits/{parent}/billing/{date}`, and takes each invoice's `PayingBusinessUnit.Contract.ErpReference` and each line's `Product.ProductCode.Name` (or `InheritedProductCode.Name`) and `Quantity`. If billing data has lines but none with `CLOUTILITY_STORAGE_PRODUCT_CODE`, staff get an alert and nothing is charged.
 
+**Daily billing job (added 2026-11-17).** Cloutility's verify call to the production Post URL got 403 from Vercel's system mitigations (Hobby plan, no IP bypass), so the site doesn't rely on the notification: `vercel.json` runs `GET /api/preservation/billing-sync` daily at 14:00 UTC, which bills the newest billing run. Each customer and billing date is charged once, so the job and the notification never double-charge.
+
 **Dry run.** `GET /api/preservation/billing-data?token=<token>&date=YYYY-MM-DD&forecast=true` shows the billing lines Cloutility would produce for that date (future dates are simulated) and what each account would be charged. It charges nothing.
 
 - [ ] **Usage quantity.** Once a test bucket holds data, run a dry run for the next billing date and confirm the storage line's `Quantity` is the customer's total number of 1 TB packages, not just the packages above an included amount. (On 2026-11-17 the simulation had no lines because the test bucket is empty.)
@@ -177,7 +181,7 @@ Engineering and operations:
 - [ ] **Dedicated oRain account** for Cloutility with a non-expiring password (section 2, step 10).
 - [ ] **Fixed outbound IP** for the site, whitelisted in Cloutility (section 2, step 9).
 - [ ] **Usage billing verified** (section 6), then the billing-data subscriber created.
-- [ ] **Retry job scheduled** (section 5).
+- [ ] **`CRON_SECRET` set in Vercel**, so the daily retry and billing jobs (section 5 and 6) can run.
 - [ ] **Mail settings** set in production and a welcome email received on a test signup.
 - [ ] **Stripe live mode** set up (section 3), webhook secret in production, Dashboard settings done.
 - [ ] **One live end-to-end signup** with a real card, then refunded: confirmation page progress, both emails, portal login, Renew secret, and an upload with an S3 client.

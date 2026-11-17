@@ -1,22 +1,16 @@
-import { timingSafeEqual } from "node:crypto";
 import { accountsNeedingProvisioning } from "@/lib/preservation/accounts";
-import { jobToken } from "@/lib/preservation/config";
+import { jobAuthorized } from "@/lib/preservation/job-auth";
 import { provisionAccount } from "@/lib/preservation/provision";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
-function authorized(request: Request) {
-  const supplied = Buffer.from(request.headers.get("authorization") ?? "");
-  const expected = Buffer.from(`Bearer ${jobToken()}`);
-  return supplied.length === expected.length && timingSafeEqual(supplied, expected);
-}
-
-// Run on a schedule (e.g. every 10 minutes) with
+// Runs daily from vercel.json (Vercel Cron sends CRON_SECRET), or by hand with
 // `Authorization: Bearer $PRESERVATION_JOB_TOKEN`. Picks up accounts whose
-// provisioning failed or never ran and resumes them.
+// provisioning failed or never ran and resumes them. Signups normally
+// provision immediately from the Stripe webhook; this is the safety net.
 export async function GET(request: Request) {
-  if (!authorized(request)) return new Response("Unauthorized", { status: 401 });
+  if (!jobAuthorized(request)) return new Response("Unauthorized", { status: 401 });
 
   const results: Record<string, string> = {};
   for (const id of await accountsNeedingProvisioning()) {

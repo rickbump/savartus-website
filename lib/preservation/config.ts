@@ -84,12 +84,7 @@ export function cloutilityConfig() {
   };
 }
 
-// Shared secret appended to the billing-data Post URL configured in Cloutility,
-// and the bearer token for the provisioning retry job.
+// Shared secret appended to the billing-data Post URL configured in Cloutility.
 export function billingWebhookToken() {
   return required("CLOUTILITY_BILLING_WEBHOOK_TOKEN");
-}
-
-export function jobToken() {
-  return required("PRESERVATION_JOB_TOKEN");
 }
