@@ -1,7 +1,7 @@
 import { after } from "next/server";
 import type Stripe from "stripe";
 import { markPaid, setStatusBySubscription } from "@/lib/preservation/accounts";
-import { stripeConfig } from "@/lib/preservation/config";
+import { stripeWebhookSecret } from "@/lib/preservation/config";
 import { provisionAccount } from "@/lib/preservation/provision";
 import { stripe } from "@/lib/preservation/stripe";
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     event = await stripe().webhooks.constructEventAsync(
       await request.text(),
       signature,
-      stripeConfig().webhookSecret,
+      stripeWebhookSecret(),
     );
   } catch {
     return new Response("Invalid signature", { status: 400 });

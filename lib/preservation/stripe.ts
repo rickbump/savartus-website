@@ -1,9 +1,9 @@
 import Stripe from "stripe";
-import { stripeConfig } from "./config";
+import { stripeSecretKey } from "./config";
 
 let client: Stripe | undefined;
 
 export function stripe() {
-  client ??= new Stripe(stripeConfig().secretKey);
+  client ??= new Stripe(stripeSecretKey());
   return client;
 }

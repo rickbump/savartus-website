@@ -30,11 +30,13 @@ export function siteUrl() {
   return required("SITE_URL").replace(/\/$/, "");
 }
 
-export function stripeConfig() {
-  return {
-    secretKey: required("STRIPE_SECRET_KEY"),
-    webhookSecret: required("STRIPE_WEBHOOK_SECRET"),
-  };
+// Read separately so price lookups and billing don't need the webhook secret.
+export function stripeSecretKey() {
+  return required("STRIPE_SECRET_KEY");
+}
+
+export function stripeWebhookSecret() {
+  return required("STRIPE_WEBHOOK_SECRET");
 }
 
 export function tierStripePrice(tier: Tier) {

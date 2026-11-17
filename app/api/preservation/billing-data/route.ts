@@ -227,14 +227,16 @@ export async function POST(request: Request) {
     return new Response("Expected JSON", { status: 400 });
   }
 
-  const { parentBunitId, storageProductCode } = cloutilityConfig();
   const trigger = (payload as { trigger?: unknown } | null)?.trigger;
+  // Cloutility's "Verify" button sends a test trigger: acknowledge only.
+  if (typeof trigger === "string" && /\btest\b/i.test(trigger)) {
+    return Response.json({ ok: true, test: true });
+  }
+  const { parentBunitId, storageProductCode } = cloutilityConfig();
 
   let lines: BillingDataLine[];
   let invoiceDate = "";
   if (typeof trigger === "string") {
-    // Cloutility's "Verify" button sends a test trigger: acknowledge only.
-    if (/\btest\b/i.test(trigger)) return Response.json({ ok: true, test: true });
     const latest = await latestBillingDate(parentBunitId);
     if (!latest) return Response.json({ results: {}, note: "no billing data generated yet" });
     invoiceDate = latest;
