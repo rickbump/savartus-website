@@ -5,7 +5,7 @@ import { provisionAccount } from "@/lib/preservation/provision";
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
-// Runs daily from vercel.json (Vercel Cron sends CRON_SECRET), or by hand with
+// Runs every 10 minutes from vercel.json (Vercel sends CRON_SECRET), or by hand with
 // `Authorization: Bearer $PRESERVATION_JOB_TOKEN`. Picks up accounts whose
 // provisioning failed or never ran and resumes them. Signups normally
 // provision immediately from the Stripe webhook; this is the safety net.

@@ -1,7 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "crons": [
-    { "path": "/api/preservation/billing-sync", "schedule": "0 14 * * *" },
-    { "path": "/api/preservation/provision-retry", "schedule": "30 14 * * *" }
-  ]
+  "schedules": {
+    "preservation-billing-sync": {
+      "schedule": "15 * * * *",
+      "timezone": "America/New_York",
+      "path": "/api/preservation/billing-sync",
+      "requestMethod": "GET",
+      "jitter": 5
+    },
+    "preservation-provision-retry": {
+      "schedule": "*/10 * * * *",
+      "timezone": "America/New_York",
+      "path": "/api/preservation/provision-retry",
+      "requestMethod": "GET",
+      "jitter": 2
+    }
+  }
 }

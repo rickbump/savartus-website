@@ -176,9 +176,13 @@ export type BillingRunResult = {
   note?: string;
 };
 
-export async function billLines(lines: BillingDataLine[], invoiceDate = ""): Promise<BillingRunResult> {
+export async function billLines(
+  lines: BillingDataLine[],
+  invoiceDate = "",
+  { alertStaff = true } = {},
+): Promise<BillingRunResult> {
   const { storageProductCode } = cloutilityConfig();
-  await staffAlertOnMismatch(lines, storageProductCode, invoiceDate);
+  if (alertStaff) await staffAlertOnMismatch(lines, storageProductCode, invoiceDate);
   const totals = storageTotals(lines, storageProductCode);
   const results: Record<string, string> = {};
   if (totals.size === 0) return { date: invoiceDate || undefined, results };
@@ -204,11 +208,13 @@ export async function billLines(lines: BillingDataLine[], invoiceDate = ""): Pro
 }
 
 // Reads the newest billing run Cloutility has generated and bills it.
-export async function billLatestRun(): Promise<BillingRunResult> {
+// alertStaff: whether a run with no preservation lines emails staff (the
+// hourly job only does so once a day).
+export async function billLatestRun({ alertStaff = true } = {}): Promise<BillingRunResult> {
   const { parentBunitId } = cloutilityConfig();
   const latest = await latestBillingDate(parentBunitId);
   if (!latest) return { results: {}, note: "no billing data generated yet" };
-  return billLines(billingDataLines(await getBillingData(parentBunitId, latest)), latest);
+  return billLines(billingDataLines(await getBillingData(parentBunitId, latest)), latest, { alertStaff });
 }
 
 // What billing for a date would charge, without charging. A future date
