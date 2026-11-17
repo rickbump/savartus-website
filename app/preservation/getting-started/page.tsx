@@ -82,6 +82,32 @@ export default function GettingStartedPage() {
             <dd>Path-style (turn off virtual-hosted-style buckets if your client offers the choice)</dd>
           </dl>
 
+          <h3>Cyberduck (easiest if you&apos;re new to S3)</h3>
+          <p>
+            <a href="https://cyberduck.io">Cyberduck</a> is a free drag-and-drop app for Windows and
+            Mac.
+          </p>
+          <ol>
+            <li>
+              Install and open Cyberduck, then click <strong>Open Connection</strong>.
+            </li>
+            <li>
+              In the drop-down at the top, choose <strong>Amazon S3</strong>.
+            </li>
+            <li>
+              <strong>Server:</strong> <code>{endpointText.replace(/^https?:\/\//, "").replace(/\/$/, "")}</code>,{" "}
+              <strong>Port:</strong> <code>443</code>
+            </li>
+            <li>
+              <strong>Access Key ID</strong> and <strong>Secret Access Key</strong>: the two values
+              from step 2.
+            </li>
+            <li>
+              Click <strong>Connect</strong>. Your bucket appears as a folder; open it and drag files
+              or folders in to upload them.
+            </li>
+          </ol>
+
           <h3>AWS CLI</h3>
           <pre>
             <code>{`aws configure --profile savartus
