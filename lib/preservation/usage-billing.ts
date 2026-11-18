@@ -175,7 +175,7 @@ function staffAlertOnMismatch(lines: BillingDataLine[], productCode: string, inv
   const seen = [...new Set(lines.map((line) => line.productCode || "(none)"))].join(", ");
   console.warn("Preservation billing: no storage lines matched", { productCode, seen });
   return sendStaffAlert(
-    { id: "billing-run", organization: "All preservation accounts", email: "-" },
+    { id: "billing-run", organization: "All preservation accounts", name: "Billing run", email: "-" },
     "Billing data had no optical preservation storage lines",
     [
       `Billing date: ${invoiceDate || "unknown"}`,

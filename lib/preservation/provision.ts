@@ -1,5 +1,6 @@
 import * as cloutility from "./cloutility";
 import {
+  accountName,
   claimForProvisioning,
   markActive,
   markFailed,
@@ -21,7 +22,7 @@ function shortId(account: Account) {
 }
 
 function businessUnitName(account: Account) {
-  return `${account.organization} (${shortId(account)})`;
+  return `${accountName(account)} (${shortId(account)})`;
 }
 
 // Written to the contract's ErpReference; Cloutility includes it on every
@@ -117,7 +118,7 @@ export async function provisionAccount(accountId: string) {
       const userName = s3Name(account);
       orainUserId =
         (await cloutility.findOrainUser(bunitId, userName)) ??
-        (await cloutility.createOrainUser(bunitId, { name: account.organization, userName, email: account.email }));
+        (await cloutility.createOrainUser(bunitId, { name: accountName(account), userName, email: account.email }));
       await saveStep(account.id, "cloutility_orain_user_id", orainUserId);
     }
 

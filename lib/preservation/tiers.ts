@@ -9,8 +9,8 @@
 export const PRESERVATION_PRODUCT_ID = "savartus_optical_preservation";
 
 // Stripe Tax classification: "Infrastructure as a service (IaaS) - business
-// use", which expressly covers storage provided over the internet. Signup
-// requires an organization, so every subscriber is a business customer.
+// use", which expressly covers storage provided over the internet. Applied
+// to every subscriber, including those who leave the organization blank.
 // Confirm with the tax adviser; scripts/stripe-setup.mjs sets it on the product.
 export const PRESERVATION_TAX_CODE = "txcd_10101000";
 

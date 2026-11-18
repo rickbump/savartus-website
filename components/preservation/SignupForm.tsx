@@ -118,8 +118,8 @@ export function SignupForm({ tiers, notice }: { tiers: TierOption[]; notice: str
           <input id="name" name="name" type="text" autoComplete="name" maxLength={150} required />
         </div>
         <div className="contact-field">
-          <label htmlFor="organization">Organization</label>
-          <input id="organization" name="organization" type="text" autoComplete="organization" maxLength={200} required />
+          <label htmlFor="organization">Organization{taxExempt ? "" : " (optional)"}</label>
+          <input id="organization" name="organization" type="text" autoComplete="organization" maxLength={200} required={taxExempt} />
         </div>
       </div>
 

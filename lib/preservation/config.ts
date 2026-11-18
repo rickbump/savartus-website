@@ -67,9 +67,10 @@ export function cloutilityConfig() {
     bucketPresetId: requiredInt("CLOUTILITY_ORAIN_BUCKET_PRESET_ID"),
     // Cloutility web-app URL customers sign in to (appUrl in activation emails).
     portalUrl: required("CLOUTILITY_PORTAL_URL").replace(/\/$/, ""),
-    // The portal's password-creation page; Cloutility appends a token to it in
-    // the activation email. Defaults to the portal URL.
-    welcomeUrl: (process.env.CLOUTILITY_WELCOME_URL?.trim() || required("CLOUTILITY_PORTAL_URL")).replace(/\/$/, ""),
+    // The portal's account activation (set password) page; Cloutility appends
+    // the token to it in the activation email. The portal's own /welcome page
+    // takes it; the bare portal URL only shows the sign-in screen.
+    welcomeUrl: (process.env.CLOUTILITY_WELCOME_URL?.trim() || `${required("CLOUTILITY_PORTAL_URL").replace(/\/$/, "")}/welcome`).replace(/\/$/, ""),
     // oRain server for S3 users and buckets. Leave unset when the parent
     // business unit (or the preset) already determines the server.
     orainServerId: process.env.CLOUTILITY_ORAIN_SERVER_ID

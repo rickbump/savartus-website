@@ -15,7 +15,7 @@
 //          card on file, and records it in Stripe Tax reports.
 
 import type Stripe from "stripe";
-import { accountById, decideTaxExemption, exemptionRequests } from "../lib/preservation/accounts";
+import { accountById, accountName, decideTaxExemption, exemptionRequests } from "../lib/preservation/accounts";
 import { stripe } from "../lib/preservation/stripe";
 import { exemptionLabel } from "../lib/preservation/tax-exemption";
 import { findTier, productFor } from "../lib/preservation/tiers";
@@ -41,7 +41,7 @@ if (command === "list") {
     console.log(
       [
         account.id,
-        `  ${account.organization}: ${account.name} <${account.email}>`,
+        `  ${accountName(account)}: ${account.name} <${account.email}>`,
         `  ${exemptionLabel(account.tax_exempt_type)}, ${account.tax_exempt_state}, number ${account.tax_exempt_number ?? "(none)"}`,
         `  plan ${findTier(account.tier)?.label ?? account.tier}, storing ${account.use_case}, paid ${account.paid_at ?? "?"}`,
         `  Stripe customer ${account.stripe_customer_id}, certificate file ${account.tax_certificate_file_id ?? "(none)"}`,
@@ -73,7 +73,7 @@ if (command === "approve") {
     },
   });
   await decideTaxExemption(account.id, "approved");
-  console.log(`Approved: ${account.organization} stays tax exempt${expires ? ` until ${expires}` : ""}.`);
+  console.log(`Approved: ${accountName(account)} stays tax exempt${expires ? ` until ${expires}` : ""}.`);
   process.exit(0);
 }
 
@@ -109,7 +109,7 @@ for (const invoice of invoices) {
 
 const currency = invoices[0]?.currency ?? "usd";
 const total = owed.reduce((sum, item) => sum + item.calculation.tax_amount_exclusive, 0);
-console.log(`${account.organization}: sales tax that would have been due (${customer.address.state ?? ""} ${customer.address.postal_code ?? ""})`);
+console.log(`${accountName(account)}: sales tax that would have been due (${customer.address.state ?? ""} ${customer.address.postal_code ?? ""})`);
 for (const { invoice, calculation } of owed) {
   console.log(`  ${invoice.number ?? invoice.id}  ${money(invoice.amount_paid, currency)} paid  →  tax ${money(calculation.tax_amount_exclusive, currency)}`);
 }

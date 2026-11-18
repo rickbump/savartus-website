@@ -16,7 +16,7 @@ export type Account = {
   tier: string;
   included_tb: number;
   name: string;
-  organization: string;
+  organization: string | null;
   email: string;
   phone: string | null;
   use_case: string | null;
@@ -39,6 +39,12 @@ export type Account = {
   last_error: string | null;
 };
 
+// The organization if one was given at signup, otherwise the person's name.
+// Used wherever the account needs a name: Cloutility, Stripe, emails.
+export function accountName(account: Pick<Account, "organization" | "name">) {
+  return account.organization?.trim() || account.name;
+}
+
 // After this many attempts the retry job stops and the account waits for
 // staff. Staff resume it by resetting provisioning_attempts to 0.
 export const MAX_PROVISIONING_ATTEMPTS = 8;
@@ -52,7 +58,7 @@ export async function insertPendingAccount(account: {
   tier: string;
   includedTb: number;
   name: string;
-  organization: string;
+  organization: string | null;
   email: string;
   phone: string | null;
   useCase: string;

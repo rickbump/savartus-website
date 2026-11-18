@@ -1,5 +1,5 @@
 import { ClientSecretCredential } from "@azure/identity";
-import type { Account } from "./accounts";
+import { accountName, type Account } from "./accounts";
 import { findTier } from "./tiers";
 
 // Emails for the self-service preservation service, sent through Microsoft
@@ -102,7 +102,7 @@ export function sendWelcomeEmail(account: Account, bucketName: string | undefine
     lines: [
       `Hello ${account.name},`,
       "",
-      `Thank you for choosing Savartus. Your optical preservation space for ${account.organization}`,
+      `Thank you for choosing Savartus. Your optical preservation space for ${accountName(account)}`,
       `is ready${tier ? ` on the ${tier.label} plan` : ""}.`,
       "",
       "Files you upload are written to write-once Blu-ray media in our optical library, where they",
@@ -178,7 +178,7 @@ export function sendUpgradeEmail(account: Account, fromTierId: string, toTierId:
     lines: [
       `Hello ${account.name},`,
       "",
-      `Last month ${account.organization} stored ${usedTb} TB, which reached the ${to} plan.`,
+      `Last month ${accountName(account)} stored ${usedTb} TB, which reached the ${to} plan.`,
       `Your account has moved from the ${from} plan to the ${to} plan, so all of your storage is now`,
       "billed at that plan's lower per-TB rate. Your next invoice shows the adjustment for last",
       "month, and the new plan applies from your next billing period.",
@@ -194,7 +194,7 @@ export function sendUpgradeEmail(account: Account, fromTierId: string, toTierId:
 
 // Staff alert for an account that needs attention. Never includes credentials.
 export function sendStaffAlert(
-  account: Pick<Account, "id" | "organization" | "email">,
+  account: Pick<Account, "id" | "organization" | "name" | "email">,
   subject: string,
   details: string[],
   attachments?: Attachment[],
@@ -206,10 +206,11 @@ export function sendStaffAlert(
   }
   return send({
     to: config.staff,
-    subject: `[Preservation] ${subject}: ${account.organization}`,
+    subject: `[Preservation] ${subject}: ${accountName(account)}`,
     lines: [
       `Account: ${account.id}`,
-      `Organization: ${account.organization}`,
+      `Organization: ${account.organization || "(none given)"}`,
+      `Name: ${account.name}`,
       `Customer email: ${account.email}`,
       "",
       ...details,

@@ -82,10 +82,12 @@ export async function POST(request: Request) {
     const email = readText(data, "email", "email address", 254)!.toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new FormError("Please enter a valid email address.");
 
+    const organization = readText(data, "organization", "organization", 200, true);
     let exemption: ExemptionRequest | null = null;
     if (data.taxExempt === true) {
       const check = checkExemption({ type: data.exemptionType, state: data.exemptionState, number: data.exemptionNumber });
       if (!check.ok) throw new FormError(check.error);
+      if (!organization) throw new FormError("Please enter the name of the tax-exempt organization.");
       exemption = check.request;
       if (!certificate) throw new FormError("Please upload a copy of your exemption certificate.");
       if (!certificateKind(certificate.bytes)) {
@@ -99,7 +101,7 @@ export async function POST(request: Request) {
       tier: tier.id,
       includedTb: tier.includedTb,
       name: readText(data, "name", "name", 150)!,
-      organization: readText(data, "organization", "organization", 200)!,
+      organization,
       email,
       phone: readText(data, "phone", "phone number", 40, true),
       useCase,

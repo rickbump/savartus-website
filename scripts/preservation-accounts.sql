@@ -69,3 +69,5 @@ ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_reviewed_a
 -- Stripe file ID of the exemption certificate uploaded at signup (also in the
 -- Stripe customer's metadata).
 ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_certificate_file_id text;
+-- Organization is optional at signup; accountName() falls back to the name.
+ALTER TABLE preservation_accounts ALTER COLUMN organization DROP NOT NULL;

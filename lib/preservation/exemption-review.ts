@@ -1,4 +1,4 @@
-import { accountById, attachExemptCustomer, type Account } from "./accounts";
+import { accountById, accountName, attachExemptCustomer, type Account } from "./accounts";
 import { stripeSecretKey } from "./config";
 import { sendStaffAlert } from "./notify";
 import { stripe } from "./stripe";
@@ -26,7 +26,7 @@ export async function createExemptCustomer(account: Account, certificate: { name
   const customer = await stripe().customers.create(
     {
       email: account.email,
-      name: account.organization,
+      name: accountName(account),
       phone: account.phone ?? undefined,
       tax_exempt: "exempt",
       metadata: {
