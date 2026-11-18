@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { formatBytes } from "@/lib/account/format";
-import { SpaceNotReady, usage } from "@/lib/account/s3";
+import { describeS3Error, s3ErrorMessage, SpaceNotReady, usage } from "@/lib/account/s3";
 import { requireSpace } from "@/lib/account/session";
 
 export const metadata: Metadata = { title: "Usage" };
@@ -17,7 +17,8 @@ export default async function UsagePage({ params }: { params: Promise<{ spaceId:
   try {
     totals = await usage(account);
   } catch (error) {
-    problem = error instanceof SpaceNotReady ? error.message : "The optical library didn't respond. Please try again shortly.";
+    if (!(error instanceof SpaceNotReady)) console.error("Account usage failed", describeS3Error(error));
+    problem = s3ErrorMessage(error);
   }
 
   const planBytes = account.included_tb * TB;

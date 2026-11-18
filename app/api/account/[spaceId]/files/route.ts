@@ -1,10 +1,12 @@
 import {
+  describeS3Error,
   downloadLink,
   fileExists,
   fileInfo,
   listFolder,
   MAX_UPLOAD_BYTES,
   restoreFile,
+  s3ErrorMessage,
   searchFiles,
   SpaceNotReady,
   uploadLink,
@@ -22,8 +24,8 @@ type Context = { params: Promise<{ spaceId: string }> };
 
 function failure(error: unknown, what: string) {
   if (error instanceof SpaceNotReady) return Response.json({ error: error.message }, { status: 409 });
-  console.error(`Account files: ${what} failed`, { type: error instanceof Error ? error.name : "Unknown" });
-  return Response.json({ error: "The optical library didn't respond. Please try again shortly." }, { status: 502 });
+  console.error(`Account files: ${what} failed`, describeS3Error(error));
+  return Response.json({ error: s3ErrorMessage(error) }, { status: 502 });
 }
 
 // GET ?prefix=folder/&token=…  lists one folder level

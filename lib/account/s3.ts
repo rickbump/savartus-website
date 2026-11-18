@@ -26,6 +26,29 @@ export const MAX_UPLOAD_BYTES = 5 * 1024 ** 3; // single signed PUT limit
 
 export class SpaceNotReady extends Error {}
 
+// Describes a failure reaching the library for logs and messages, without
+// secrets: missing server configuration, network, or an S3 error code.
+export function describeS3Error(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+  if (/PRESERVATION_ENCRYPTION_KEY|Unsupported state|unable to authenticate/i.test(message)) {
+    return { kind: "config" as const, detail: message.slice(0, 200) };
+  }
+  const name = error instanceof Error ? error.name : "Unknown";
+  const code = (error as { code?: string; cause?: { code?: string } }).code ?? (error as { cause?: { code?: string } }).cause?.code;
+  if (/fetch failed|ECONN|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|socket|TimeoutError/i.test(`${name} ${message} ${code ?? ""}`)) {
+    return { kind: "network" as const, detail: `${name}: ${code ?? message}`.slice(0, 200) };
+  }
+  return { kind: "s3" as const, detail: `${name}: ${message}`.slice(0, 200) };
+}
+
+export function s3ErrorMessage(error: unknown) {
+  if (error instanceof SpaceNotReady) return error.message;
+  const { kind } = describeS3Error(error);
+  if (kind === "config") return "File access isn't set up on the server yet (missing encryption key). Savartus has been notified; please try again later.";
+  if (kind === "network") return "The site couldn't connect to the optical library. Please try again shortly.";
+  return "The optical library returned an error. Please try again shortly.";
+}
+
 export function spaceS3(account: Account) {
   if (!account.bucket_name || !account.s3_access_key || !account.s3_secret_enc) {
     throw new SpaceNotReady("This space's storage keys aren't set up yet.");
