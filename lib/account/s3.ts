@@ -44,7 +44,7 @@ export function describeS3Error(error: unknown) {
 export function s3ErrorMessage(error: unknown) {
   if (error instanceof SpaceNotReady) return error.message;
   const { kind } = describeS3Error(error);
-  if (kind === "config") return "File access isn't set up on the server yet (missing encryption key). Savartus has been notified; please try again later.";
+  if (kind === "config") return "File access isn't set up on the server yet (missing encryption key). Please contact info@savartus.com.";
   if (kind === "network") return "The site couldn't connect to the optical library. Please try again shortly.";
   return "The optical library returned an error. Please try again shortly.";
 }
