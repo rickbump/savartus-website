@@ -39,12 +39,19 @@ export async function requestSignin(_state: FormState, form: FormData): Promise<
 
   // The same answer whether or not the address has an account, so the form
   // can't be used to find out who our customers are.
-  const user = await userByEmail(email);
-  if (!user || (await spacesForUser(user.id)).length === 0) return sent;
-  const token = await createSigninToken(user.id);
-  if (!token) return { error: "Too many sign-in links were requested. Please wait an hour, or use the latest email." };
-  await sendSigninEmail(user.email, token);
-  return sent;
+  try {
+    const user = await userByEmail(email);
+    if (!user || (await spacesForUser(user.id)).length === 0) return sent;
+    const token = await createSigninToken(user.id);
+    if (!token) return { error: "Too many sign-in links were requested. Please wait an hour, or use the latest email." };
+    if (!(await sendSigninEmail(user.email, token))) {
+      return { error: "We couldn't send the email just now. Please try again shortly, or contact info@savartus.com." };
+    }
+    return sent;
+  } catch (error) {
+    console.error("Account sign-in request failed", { message: error instanceof Error ? error.message : "Unknown" });
+    return { error: "Sign-in isn't available right now. Please try again shortly, or contact info@savartus.com." };
+  }
 }
 
 // The emailed link opens a page with a button that calls this. Email security

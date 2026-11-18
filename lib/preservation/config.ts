@@ -26,8 +26,9 @@ export function databaseUrl() {
   return required("DATABASE_URL");
 }
 
+// Public address of this site, for links in emails and Stripe redirects.
 export function siteUrl() {
-  return required("SITE_URL").replace(/\/$/, "");
+  return (process.env.SITE_URL?.trim() || "https://www.savartus.com").replace(/\/$/, "");
 }
 
 // Read separately so price lookups and billing don't need the webhook secret.
