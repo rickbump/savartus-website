@@ -238,6 +238,14 @@ export async function createContract(
 
 // --- Portal user --------------------------------------------------------------
 
+// GET v1/search/users?searchTerm= — whether any portal login the service
+// account can see already uses this email. Cloutility allows an email on only
+// one login system-wide, so signup checks this before payment.
+export async function emailHasLogin(email: string) {
+  const users = list(await call("GET", `search/users?searchTerm=${encodeURIComponent(email)}`));
+  return users.some((user) => String(field(user, "email") ?? "").toLowerCase() === email.toLowerCase());
+}
+
 // GET v1/bunits/{bunitId}/users
 export async function findUserByEmail(bunitId: number, email: string) {
   const users = list(await call("GET", `bunits/${bunitId}/users`));

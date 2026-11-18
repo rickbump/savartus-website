@@ -72,7 +72,7 @@ These are handled in `lib/preservation/cloutility.ts`. Keep them in mind when ch
 | Behaviour | Handling |
 |---|---|
 | `POST users` without `userIdentities` fails with 500 "The given key was not present in the dictionary" | Always send `userIdentities: []` |
-| Email addresses are unique across all of Cloutility; creating a user with an existing one returns 409 | The account is held for staff (section 5) |
+| Email addresses are unique across all of Cloutility; creating a user with an existing one returns 409 | Signup refuses an email that already has a paid account or a Cloutility login the service account can find (`search/users`), before payment, and offers a log-in link. A login elsewhere in Cloutility can still slip through; then the account is held for staff (section 5) |
 | `GET …/orainbucket` returns **409** "No ORain bucket was related…" (not 404) when there is none | Treated as "no bucket yet" |
 | A referenced preset's settings are not applied by the API ("Minimum burn capacity must be greater than 0") | The preset's values are copied into the bucket request |
 | A bucket without magazines, or with the S3 user given only as `{ id }`, fails with 500 "Object reference not set…" (`ORainBucketSvc.cs:line 563`) | Magazines and the S3 user are sent as the full objects read from the API |

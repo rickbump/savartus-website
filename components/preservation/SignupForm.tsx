@@ -20,12 +20,14 @@ export function SignupForm({ tiers, notice }: { tiers: TierOption[]; notice: str
   const [exemptionType, setExemptionType] = useState("");
   const [error, setError] = useState<string | null>(notice);
   const [submitting, setSubmitting] = useState(false);
+  const [loginUrl, setLoginUrl] = useState<string | null>(null);
 
   const numberOptional = exemptionTypes.find((option) => option.id === exemptionType)?.numberRequired === false;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setLoginUrl(null);
     setSubmitting(true);
     const form = new FormData(event.currentTarget);
     const certificate = form.get("certificate");
@@ -55,7 +57,14 @@ export function SignupForm({ tiers, notice }: { tiers: TierOption[]; notice: str
     );
     try {
       const response = await fetch("/api/preservation/checkout", { method: "POST", body: upload });
-      const data = (await response.json()) as { url?: string; error?: string };
+      const data = (await response.json()) as { url?: string; error?: string; code?: string; loginUrl?: string };
+      if (data.code === "email_exists") {
+        setLoginUrl(data.loginUrl ?? null);
+        setError(data.error ?? "An account already exists for this email address.");
+        setSubmitting(false);
+        document.getElementById("email")?.focus();
+        return;
+      }
       if (!response.ok || !data.url) throw new Error(data.error || "Checkout could not be started.");
       window.location.assign(data.url);
     } catch (caught) {
@@ -213,6 +222,12 @@ export function SignupForm({ tiers, notice }: { tiers: TierOption[]; notice: str
       {error && (
         <p className="preservation-error" role="alert">
           {error}
+          {loginUrl && (
+            <>
+              {" "}
+              <a href={loginUrl}>Log in</a>
+            </>
+          )}
         </p>
       )}
 

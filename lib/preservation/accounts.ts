@@ -90,6 +90,16 @@ export async function markPaid(id: string, sessionId: string, customerId: string
   return rows.length > 0;
 }
 
+// Whether a signup with this email has already paid (abandoned checkouts don't count).
+export async function emailHasAccount(email: string) {
+  const rows = await db()`
+    SELECT 1 FROM preservation_accounts
+    WHERE lower(email) = lower(${email}) AND status <> 'pending_payment'
+    LIMIT 1
+  `;
+  return rows.length > 0;
+}
+
 // An exempt signup's Stripe customer (created as tax exempt) and certificate.
 export async function attachExemptCustomer(id: string, customerId: string, certificateFileId: string) {
   await db()`
