@@ -26,6 +26,11 @@ export type Account = {
   tax_exempt_number: string | null;
   tax_certificate_file_id: string | null;
   stripe_checkout_session_id: string | null;
+  bucket_name: string | null;
+  s3_access_key: string | null;
+  s3_secret_enc: string | null;
+  s3_secret_renewed_at: string | null;
+  created_at: string;
   stripe_customer_id: string | null;
   stripe_subscription_id: string | null;
   cloutility_bunit_id: number | null;

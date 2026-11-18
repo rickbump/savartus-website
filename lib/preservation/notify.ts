@@ -28,7 +28,7 @@ let config: ReturnType<typeof mailConfig> | null = null;
 
 type Attachment = { name: string; contentType: string; bytes: Uint8Array };
 
-async function send(message: {
+export async function send(message: {
   to: string;
   subject: string;
   lines: string[];
@@ -82,19 +82,11 @@ function site() {
   return (process.env.SITE_URL ?? "https://www.savartus.com").replace(/\/$/, "");
 }
 
-function portal() {
-  return (process.env.CLOUTILITY_PORTAL_URL ?? "").replace(/\/$/, "");
-}
-
-// Sent when provisioning finishes. Cloutility separately sends the portal
-// activation (password creation) email. Written for someone who has never used
-// S3 storage before.
-export function sendWelcomeEmail(account: Account, bucketName: string | undefined) {
-  const endpoint = process.env.PRESERVATION_S3_ENDPOINT?.trim();
-  const region = process.env.PRESERVATION_S3_REGION?.trim() || "us-east-1";
+// Sent when provisioning finishes. Written for someone who has never used S3
+// storage before: the account space works in the browser, and S3 software is
+// optional.
+export function sendWelcomeEmail(account: Account) {
   const tier = findTier(account.tier);
-  const userAccount = `pres-${account.id.slice(0, 8)}`;
-  const server = endpoint ? endpoint.replace(/^https?:\/\//, "").replace(/\/$/, "") : undefined;
   return send({
     to: account.email,
     copyStaff: true,
@@ -108,59 +100,49 @@ export function sendWelcomeEmail(account: Account, bucketName: string | undefine
       "Files you upload are written to write-once Blu-ray media in our optical library, where they",
       "can't be altered, encrypted by ransomware, or erased.",
       "",
-      "Getting set up takes about 15 minutes and three steps. Keep this email handy until you're done.",
+      "1. SIGN IN",
+      `   Go to ${site()}/account and enter ${account.email}.`,
+      "   We'll email you a sign-in link; there's no password to remember. Check your spam or junk",
+      "   folder if it doesn't arrive within a few minutes.",
       "",
-      "YOUR DETAILS",
-      `   Portal:        ${portal() || "the Savartus portal"}`,
-      `   Login email:   ${account.email}`,
-      `   S3 account:    ${userAccount}`,
-      bucketName ? `   Bucket:        ${bucketName}` : "   Bucket:        shown under Consumption units in the portal",
-      endpoint ? `   Endpoint:      ${endpoint}` : "   Endpoint:      we will email you the address separately",
-      `   Region:        ${region}`,
+      "2. UPLOAD YOUR FIRST FILES",
+      "   Drag files or whole folders onto the Files page. You can make folders, search, download,",
+      "   and see whether each file is already on optical disc.",
       "",
-      "STEP 1. ACTIVATE YOUR PORTAL LOGIN (2 minutes)",
-      "   You'll receive a second email, from the Savartus portal, with a link to create your password.",
-      "   It usually arrives within a few minutes; check your spam or junk folder if you don't see it.",
-      "   Open the link, choose a password, and sign in. The portal is where you see how much you have",
-      "   stored and where you create the key your software uses to upload.",
+      "   IMPORTANT: FILES CAN'T BE MOVED OR RENAMED AFTER UPLOAD",
+      "   Preserved files are written once to optical disc, along with their folder path and name.",
+      "   That path is permanent. It's how you'll find each file later, tell files with the same name",
+      "   apart, and show where a file came from. A file uploaded to the wrong folder stays there;",
+      "   uploading it again stores (and bills) a second copy. So check the folder before uploading.",
       "",
-      "STEP 2. CREATE YOUR ACCESS KEY (3 minutes)",
-      "   Think of the access key and secret key as a username and password for upload software.",
-      "   1. In the portal, click the gear icon at the top right.",
-      "   2. Open S3 Optical, then User accounts.",
-      `   3. Click your account, ${userAccount}.`,
-      '   4. Click "Renew secret". Two values appear: the access key and the secret key.',
-      "   5. Copy both into a password manager now. The secret key is shown only once. If you lose it,",
-      '      click "Renew secret" again for a new one (the old one stops working).',
-      "   Never email the secret key to anyone, including us.",
+      "   WHICH PATH IS SAVED",
+      "   Browsers never tell a website where a file sits on your computer, so your drive letter and",
+      "   the folders above the one you drop are NOT saved. What is saved: the folder you're in on",
+      "   the Files page, plus the path from the dropped folder down. Example: dropping Projects",
+      "   saves Projects/2024/report.pdf, not C:\\Users\\Rick\\Projects\\2024\\report.pdf.",
+      "   To keep the full path, click New folder, type C/Users/Rick, then drop Projects into it.",
+      "   Agree on a folder scheme with your team before the first upload.",
       "",
-      "STEP 3. UPLOAD YOUR FIRST FILES (10 minutes)",
-      "   Your space works with any software that supports \"S3\" storage. If you're new to this, we",
-      "   suggest Cyberduck, a free drag-and-drop app for Windows and Mac (cyberduck.io):",
-      "   1. Install and open Cyberduck, then click \"Open Connection\".",
-      '   2. In the drop-down at the top, choose "Amazon S3".',
-      server ? `   3. Server: ${server}    Port: 443` : "   3. Server: the endpoint address from our separate email.    Port: 443",
-      "   4. Access Key ID: your access key from step 2. Secret Access Key: your secret key.",
-      '   5. Click "Connect". You\'ll see your bucket as a folder.',
-      "   6. Open the bucket and drag files or folders into the window to upload them.",
-      "   Backup and archiving software with an S3 option is set up with the same details. When it asks,",
-      `   use region ${region} and "path-style" addressing.`,
+      "3. INVITE YOUR TEAM (optional)",
+      "   As the administrator, you can invite colleagues under Members. Members can upload, browse",
+      "   and download; administrators also manage members, keys and billing.",
+      "",
+      "FOR BULK UPLOADS OR FILES OVER 5 GB",
+      "   Use S3 software such as Cyberduck, rclone, or backup software with an S3 option. Your",
+      "   endpoint, bucket and access keys are under S3 keys in your account.",
+      `   Instructions: ${site()}/preservation/getting-started`,
       "",
       "GOOD TO KNOW",
-      "   - Preserve finished material, not working files. Once written to optical media, data can't be",
-      "     changed. Deleting or replacing a file through S3 doesn't erase what was already written.",
-      "   - Use clear folder names (for example department/year/project) so files are easy to find later.",
-      "   - Check what you've stored in the portal: Consumption units > your unit > Bucket > Files.",
-      "   - Staying within your plan? Usage is measured daily. Each terabyte above your plan (partial",
-      "     terabytes round up) is added to your next monthly invoice at your plan's per-TB rate. If you",
-      "     grow into the next plan, your whole account moves to its lower rate and we let you know.",
-      "   - Cards and invoices are handled by Stripe. Your receipts link to the Stripe billing portal.",
+      "   - Preserve finished material, not working files. Once written, files can't be changed, and",
+      "     a file name can't be reused.",
+      "   - New uploads wait in the library's cache until they're written to disc. Files on disc are",
+      "     restored to the cache (usually within minutes) before you download them.",
+      "   - Usage is measured daily. Each terabyte above your plan is added to your next monthly invoice",
+      "     at your plan's per-TB rate. If you grow into the next plan, your whole space moves to its",
+      "     lower rate and we let you know.",
+      "   - Invoices and your payment method are under Billing in your account.",
       "",
-      "Full instructions, including setup for the AWS command line and rclone:",
-      `   ${site()}/preservation/getting-started`,
-      "",
-      "Questions or stuck on a step? Reply to this email or write to info@savartus.com and tell us",
-      "which step you're on. We're happy to walk you through it.",
+      "Questions? Reply to this email or write to info@savartus.com. We're happy to help.",
       "",
       "The Savartus team",
     ],

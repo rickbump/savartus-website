@@ -86,7 +86,7 @@ export default async function PreservationSignupPage({
           </h1>
           <p className="contact-hero-copy">
             Choose a starting capacity and pay online. Your S3 bucket on write-once optical media is
-            ready within minutes, and you&apos;ll get an email to activate your portal login.
+            ready within minutes, with your own account space to upload, browse and share files.
           </p>
         </div>
       </section>
@@ -98,7 +98,7 @@ export default async function PreservationSignupPage({
             <h2>S3 access to an optical library.</h2>
             <ul className="preservation-points">
               <li>An S3-compatible bucket backed by write-once optical media.</li>
-              <li>A portal login to see usage, reports, and your S3 keys.</li>
+              <li>An account space to upload, search and download in the browser, and invite your team.</li>
               <li>Capacity that grows in 1&nbsp;TB steps as your collection grows.</li>
               <li>Approved, auditable deletion, never accidental loss.</li>
             </ul>

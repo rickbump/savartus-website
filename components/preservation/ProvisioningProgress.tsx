@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 
 type Status = {
   state: "awaiting_payment" | "working" | "ready" | "delayed" | "canceled";
-  steps: { payment: boolean; account: boolean; login: boolean; s3User: boolean; bucket: boolean };
+  steps: { payment: boolean; account: boolean; s3User: boolean; bucket: boolean; space: boolean };
 };
 
 const STEPS: { key: keyof Status["steps"]; label: string }[] = [
   { key: "payment", label: "Payment confirmed" },
   { key: "account", label: "Account and contract created" },
-  { key: "login", label: "Portal login created (activation email sent)" },
   { key: "s3User", label: "S3 user created" },
   { key: "bucket", label: "Optical preservation bucket created" },
+  { key: "space", label: "Your account space and keys are ready" },
 ];
 
 // Polls provisioning progress for a few minutes after checkout.
@@ -77,12 +77,14 @@ export function ProvisioningProgress({ sessionId, email }: { sessionId: string; 
       {ready ? (
         <div className="preservation-progress-note">
           <p>
-            <strong>Your preservation space is ready.</strong> Check <strong>{email}</strong> for two
-            emails: the portal activation link, and a welcome email with your bucket name and
-            connection details.
+            <strong>Your preservation space is ready.</strong> Sign in with <strong>{email}</strong>;
+            we&apos;ll email you a sign-in link. A welcome email with tips is on its way too.
           </p>
           <p>
-            <Link className="button button-primary" href="/preservation/getting-started">
+            <Link className="button button-primary" href="/account/signin">
+              Sign in to your space
+            </Link>{" "}
+            <Link className="button button-secondary" href="/preservation/getting-started">
               Getting started guide
             </Link>
           </p>

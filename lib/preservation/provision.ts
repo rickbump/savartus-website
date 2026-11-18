@@ -1,5 +1,6 @@
 import * as cloutility from "./cloutility";
 import {
+  accountById,
   accountName,
   claimForProvisioning,
   markActive,
@@ -9,6 +10,7 @@ import {
   type Account,
 } from "./accounts";
 import { cloutilityConfig, tierCloutilitySubscription } from "./config";
+import { connectSpace } from "@/lib/account/setup";
 import { sendStaffAlert, sendWelcomeEmail } from "./notify";
 import { findTier } from "./tiers";
 
@@ -85,32 +87,8 @@ export async function provisionAccount(accountId: string) {
       await saveStep(account.id, "cloutility_contract_erp_reference", reference);
     }
 
-    // 3. Portal user; Cloutility emails the activation (password creation) link.
-    if (!account.cloutility_user_id) {
-      let userId = await cloutility.findUserByEmail(bunitId, account.email);
-      if (!userId) {
-        const me = await cloutility.getMe();
-        try {
-          userId = await cloutility.createUser(bunitId, {
-            name: account.name,
-            email: account.email,
-            phone: account.phone,
-            language: cloutility.field(me, "language"),
-          });
-        } catch (error) {
-          // Email addresses are unique across all of Cloutility. An existing
-          // login elsewhere (e.g. an enterprise customer) needs a person to
-          // decide whether to move it, or to use another address.
-          if (error instanceof cloutility.CloutilityError && error.status === 409) {
-            throw new HoldForStaff(
-              `The email address already has a Cloutility login in another business unit (${error.message})`,
-            );
-          }
-          throw error;
-        }
-      }
-      await saveStep(account.id, "cloutility_user_id", userId);
-    }
+    // 3. (No Cloutility portal login: customers sign in to the Savartus
+    //    account space instead; see step 7.)
 
     // 4. S3 Optical user (holds the S3 access key and secret).
     let orainUserId = account.cloutility_orain_user_id;
@@ -147,8 +125,12 @@ export async function provisionAccount(accountId: string) {
       await saveStep(account.id, "cloutility_bucket_created", true);
     }
 
+    // 7. Account space: record the bucket and S3 user, issue the S3 secret,
+    //    and make the subscriber the space's admin.
+    await connectSpace((await accountById(account.id))!);
+
     await markActive(account.id);
-    await sendWelcomeEmail(account, bucketName);
+    await sendWelcomeEmail(account);
     return "active" as const;
   } catch (error) {
     const hold = error instanceof HoldForStaff;

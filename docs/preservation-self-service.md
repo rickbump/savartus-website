@@ -3,11 +3,38 @@
 Customers sign up at `/preservation/signup`, choose a starting capacity, and pay through Stripe Checkout. Once payment succeeds, this site provisions their space in Cloutility:
 
 1. A business unit for the customer, under the self-service parent, created with a contract (tier subscription, payment terms, and an ERP reference `savartus-<account id>` that billing data is matched on).
-2. A portal user with the customer role. Cloutility emails the activation (password-creation) link.
-3. An S3 Optical (oRain) user, `pres-<first 8 of account id>`. The customer creates its access key and secret in the portal with **Renew secret**.
-4. A consumption unit (external reference = account id) and an oRain bucket built from the preservation preset, on the magazines enabled in the parent's magazine filter.
+2. An S3 Optical (oRain) user, `pres-<first 8 of account id>`.
+3. A consumption unit (external reference = account id) and an oRain bucket built from the preservation preset, on the magazines enabled in the parent's magazine filter.
+4. The **account space**: the site records the bucket and S3 user, issues an S3 secret through Cloutility (`renews3secret`) and stores it encrypted, and makes the subscriber the space's administrator.
 
-The confirmation page polls `/api/preservation/status` and shows each step. When provisioning finishes, the customer gets a welcome email with the bucket name and connection details, and a link to `/preservation/getting-started`.
+Customers get **no Cloutility portal login**. Cloutility and the oRain file manager are staff tools. The confirmation page polls `/api/preservation/status` and shows each step. When provisioning finishes, the customer gets a welcome email that sends them to `/account`.
+
+## Account space (`/account`)
+
+- **Sign-in:** by emailed link only, with no passwords.
+  - `/account/signin` emails a one-time link that is valid for 30 minutes, at most 5 per hour per person. The page gives the same answer for unknown addresses.
+  - The link opens `/account/verify`, which signs in only when the person clicks the button. Email security scanners that open links therefore can't use it up.
+  - Sessions last 30 days in a `savartus_session` cookie, and the database stores only hashes of tokens and session IDs.
+- **Roles:** one `preservation_accounts` row is one space. The subscriber is its first administrator.
+  - Administrators invite people by email as members or administrators, change roles, and remove people. A space always keeps at least one administrator. Removal takes effect on the next request.
+  - Everyone can use **Files** and **Usage**. Administrators also see **Members**, **S3 keys**, **Billing** (invoices, plus the Stripe portal for card and billing details) and **Activity**.
+- **Files:** browse folders, search names across the space, upload, download, and restore from disc.
+  - The site uses the space's own S3 user, which can only reach its own bucket, to list files and to sign 15-minute links. Upload and download links go straight from the browser to the public S3 gateway (`PRESERVATION_S3_ENDPOINT`, CORS already allows browser uploads), so file data never passes through Vercel.
+  - Uploading: a drop zone, **Choose files** and **choose a folder**. Folders keep their structure from the dropped or chosen folder down, so dropping `Projects` into `C/Users/Rick` stores `C/Users/Rick/Projects/2024/report.pdf`. Browsers never reveal the drive or the path above the dropped item. The Files page, the guide and the welcome email all warn that files can't be moved or renamed after upload (the path is permanent, and a re-upload stores and bills a second copy), and explain how to keep the full path. To keep that too, create the matching folder path first: **New folder** accepts a path such as `C/Users/Rick`, and `C:` becomes `C`. Uploads run three at a time.
+  - Browser uploads are limited to 5 GB per file (one signed PUT). Larger files go through S3 software.
+  - An upload to an existing name is refused (write-once).
+  - Status comes from the storage class: STANDARD = in the cache, waiting to be written to disc; GLACIER = on disc. A file on disc is restored for 7 days before it can be downloaded.
+  - Search and usage scan the bucket listing, capped at 100,000 objects.
+- **S3 keys:** endpoint, region, bucket and access key. **Create a new secret key** renews the secret in Cloutility, shows it once, and stores it encrypted for the site's own use.
+- **Not built yet:** deletion (Trash and hiding), disc reclaim, passkeys and two-factor, multipart uploads over 5 GB, and one email owning several spaces (signup still refuses an email that already has a paid space).
+
+| Piece | Path |
+|---|---|
+| Pages | `app/account/`, `components/account/` |
+| Sign-in, sessions, members | `app/account/actions.ts`, `lib/account/session.ts`, `lib/account/store.ts` |
+| File access | `lib/account/s3.ts`, `app/api/account/[spaceId]/files/route.ts` |
+| Space setup, secret renewal | `lib/account/setup.ts` |
+| Database | `scripts/account-space.sql` |
 
 Usage is billed from Cloutility's monthly billing data (`lib/preservation/usage-pricing.ts`):
 
@@ -189,8 +216,9 @@ CLOUTILITY_STORAGE_PRODUCT_CODE=
 CLOUTILITY_BILLING_WEBHOOK_TOKEN=       # long random string
 PRESERVATION_JOB_TOKEN=                 # long random string; for running the jobs by hand
 CRON_SECRET=                            # long random string; Vercel Cron sends it to the scheduled jobs
-PRESERVATION_S3_ENDPOINT=               # public S3 endpoint shown to customers, e.g. https://s3.savartus.com
-PRESERVATION_S3_REGION=                 # optional, defaults to us-east-1
+PRESERVATION_S3_ENDPOINT=               # public S3 endpoint (defaults to https://portal.savartus.com:9080)
+PRESERVATION_S3_REGION=                 # signing region (defaults to us-east-2)
+PRESERVATION_ENCRYPTION_KEY=            # 32 random bytes, base64; encrypts stored S3 secrets. SAME value locally and in Vercel (shared database)
 PRESERVATION_SENDER_EMAIL=              # mailbox emails are sent from (defaults to SPECIFICATION_SENDER_EMAIL)
 PRESERVATION_STAFF_EMAIL=               # receives staff alerts and a copy of customer emails
 PRESERVATION_SIGNUP_ENABLED=            # "true" shows the signup button and opens /preservation/signup; redeploy after changing
@@ -249,7 +277,8 @@ Engineering and operations:
 - [ ] **`CRON_SECRET` set in Vercel**, so the daily retry and billing jobs (section 5 and 6) can run.
 - [ ] **Mail settings** set in production and a welcome email received on a test signup.
 - [ ] **Stripe live mode** set up (section 3), webhook secret in production, Dashboard settings done.
-- [ ] **One live end-to-end signup** with a real card, then refunded: confirmation page progress, both emails, portal login, Renew secret, and an upload with an S3 client.
+- [ ] **`PRESERVATION_ENCRYPTION_KEY` set in Vercel**, the same value as in `.env.local`.
+- [ ] **One live end-to-end signup** with a real card, then refunded: confirmation page progress, welcome email, sign-in link, upload and download in the browser, an invitation, a new S3 secret, and an upload with an S3 client.
 - [ ] Tidy test data: the "gelos, llc" test unit, the Portal test user, and the unused API applications on Savartus_API.
 
 Business and legal:

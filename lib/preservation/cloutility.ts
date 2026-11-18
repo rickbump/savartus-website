@@ -238,14 +238,6 @@ export async function createContract(
 
 // --- Portal user --------------------------------------------------------------
 
-// GET v1/search/users?searchTerm= — whether any portal login the service
-// account can see already uses this email. Cloutility allows an email on only
-// one login system-wide, so signup checks this before payment.
-export async function emailHasLogin(email: string) {
-  const users = list(await call("GET", `search/users?searchTerm=${encodeURIComponent(email)}`));
-  return users.some((user) => String(field(user, "email") ?? "").toLowerCase() === email.toLowerCase());
-}
-
 // GET v1/bunits/{bunitId}/users
 export async function findUserByEmail(bunitId: number, email: string) {
   const users = list(await call("GET", `bunits/${bunitId}/users`));
@@ -312,6 +304,20 @@ export async function createConsumer(
 ) {
   const created = await call("POST", `bunits/${bunitId}/consumers`, consumer);
   return idOf(created);
+}
+
+// GET v1/bunits/{bunitId}/orainusers/{oRainUserId} — the S3 user's name,
+// which is its S3 access key.
+export async function orainUserName(bunitId: number, orainUserId: number) {
+  return field<string>(await call("GET", `bunits/${bunitId}/orainusers/${orainUserId}`), "userName");
+}
+
+// GET v1/bunits/{bunitId}/orainusers/{oRainUserId}/renews3secret — issues a
+// new S3 secret (the old one stops working) and returns it as a JSON string.
+export async function renewS3Secret(bunitId: number, orainUserId: number) {
+  const secret = await call<unknown>("GET", `bunits/${bunitId}/orainusers/${orainUserId}/renews3secret`);
+  if (typeof secret !== "string" || !secret) throw new CloutilityError("renews3secret returned no secret", 502);
+  return secret;
 }
 
 // GET v1/bunits/{bunitId}/consumers/{consumerId}/orainbucket — Cloutility

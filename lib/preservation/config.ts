@@ -89,3 +89,12 @@ export function cloutilityConfig() {
 export function billingWebhookToken() {
   return required("CLOUTILITY_BILLING_WEBHOOK_TOKEN");
 }
+
+// The public S3 endpoint of the optical library (MinIO in front of oRain) and
+// its signing region. Customers use the same values in their S3 software.
+export function s3Settings() {
+  return {
+    endpoint: (process.env.PRESERVATION_S3_ENDPOINT?.trim() || "https://portal.savartus.com:9080").replace(/\/$/, ""),
+    region: process.env.PRESERVATION_S3_REGION?.trim() || "us-east-2",
+  };
+}

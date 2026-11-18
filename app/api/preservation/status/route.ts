@@ -32,9 +32,9 @@ export async function GET(request: Request) {
       steps: {
         payment: account.status !== "pending_payment",
         account: account.cloutility_bunit_id !== null && account.cloutility_contract_erp_reference !== null,
-        login: account.cloutility_user_id !== null,
         s3User: account.cloutility_orain_user_id !== null,
         bucket: account.cloutility_bucket_created,
+        space: account.s3_secret_enc !== null,
       },
     },
     { headers: { "Cache-Control": "no-store" } },

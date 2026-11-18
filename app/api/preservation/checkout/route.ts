@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { accountById, emailHasAccount, insertPendingAccount } from "@/lib/preservation/accounts";
 import { startCheckout } from "@/lib/preservation/checkout";
-import { emailHasLogin } from "@/lib/preservation/cloutility";
 import { signupEnabled, tierStripePrice } from "@/lib/preservation/config";
 import { createExemptCustomer } from "@/lib/preservation/exemption-review";
 import {
@@ -113,23 +112,14 @@ export async function POST(request: Request) {
     return Response.json({ error: "Online signup is unavailable right now. Please contact info@savartus.com." }, { status: 503 });
   }
 
-  // One email per account: Cloutility allows an email on only one portal
-  // login. Checked before payment so nobody pays for an account that can't be
-  // set up. If Cloutility can't be reached, signup continues; provisioning
-  // still catches a clash and alerts staff.
-  let cloutilityLogin = false;
-  try {
-    cloutilityLogin = await emailHasLogin(account.email);
-  } catch (error) {
-    console.error("Preservation email check failed", { type: error instanceof Error ? error.message : "UnknownError" });
-  }
-  if (cloutilityLogin || (await emailHasAccount(account.email))) {
+  // One space per email for now: a returning customer signs in instead.
+  if (await emailHasAccount(account.email)) {
     return Response.json(
       {
         error:
           "An account already exists for this email address. Log in to manage it, or use a different email address to create a new account.",
         code: "email_exists",
-        loginUrl: process.env.CLOUTILITY_PORTAL_URL?.trim() || "https://portal.savartus.com",
+        loginUrl: "/account/signin",
       },
       { status: 409 },
     );
