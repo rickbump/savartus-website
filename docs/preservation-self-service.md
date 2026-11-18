@@ -11,9 +11,10 @@ Customers get **no Cloutility portal login**. Cloutility and the oRain file mana
 
 ## Account space (`/account`)
 
-- **Sign-in:** by emailed link only, with no passwords.
-  - `/account/signin` emails a one-time link that is valid for 30 minutes, at most 5 per hour per person. The page gives the same answer for unknown addresses.
-  - The link opens `/account/verify`, which signs in only when the person clicks the button. Email security scanners that open links therefore can't use it up.
+- **Sign-in:** email and password at `/account/signin`.
+  - Passwords are hashed with scrypt and must be at least 10 characters. Ten wrong passwords lock the account for 15 minutes.
+  - The password is set through a one-time emailed link to `/account/set-password`. The link comes from the welcome email or an invitation (valid 7 days), or from "Set or reset your password" at `/account/password` (valid 1 hour, at most 5 links per hour). That page gives the same answer for unknown addresses.
+  - Setting a password signs out the person's other browsers.
   - Sessions last 30 days in a `savartus_session` cookie, and the database stores only hashes of tokens and session IDs.
 - **Roles:** one `preservation_accounts` row is one space. The subscriber is its first administrator.
   - Administrators invite people by email as members or administrators, change roles, and remove people. A space always keeps at least one administrator. Removal takes effect on the next request.

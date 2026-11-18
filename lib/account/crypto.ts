@@ -1,4 +1,4 @@
-import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
+import { createCipheriv, createDecipheriv, createHash, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 
 // Secrets at rest (the space's S3 secret) are sealed with AES-256-GCM under
 // PRESERVATION_ENCRYPTION_KEY: 32 random bytes, base64. Local and Vercel must
@@ -32,4 +32,34 @@ export function newToken() {
 
 export function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");
+}
+
+// Passwords: scrypt with a random salt, stored as scrypt$N$r$p$salt$hash.
+const SCRYPT = { N: 16384, r: 8, p: 1, keylen: 64 };
+
+function scryptAsync(password: string, salt: Buffer, options: typeof SCRYPT) {
+  return new Promise<Buffer>((resolve, reject) =>
+    scrypt(password.normalize("NFKC"), salt, options.keylen, { N: options.N, r: options.r, p: options.p }, (error, key) =>
+      error ? reject(error) : resolve(key),
+    ),
+  );
+}
+
+export async function hashPassword(password: string) {
+  const salt = randomBytes(16);
+  const key = await scryptAsync(password, salt, SCRYPT);
+  return ["scrypt", SCRYPT.N, SCRYPT.r, SCRYPT.p, salt.toString("base64url"), key.toString("base64url")].join("$");
+}
+
+export async function verifyPassword(password: string, stored: string) {
+  const [scheme, N, r, p, salt, hash] = stored.split("$");
+  if (scheme !== "scrypt" || !salt || !hash) return false;
+  const expected = Buffer.from(hash, "base64url");
+  const key = await scryptAsync(password, Buffer.from(salt, "base64url"), {
+    N: Number(N),
+    r: Number(r),
+    p: Number(p),
+    keylen: expected.length,
+  });
+  return key.length === expected.length && timingSafeEqual(key, expected);
 }

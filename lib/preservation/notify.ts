@@ -85,7 +85,8 @@ function site() {
 // Sent when provisioning finishes. Written for someone who has never used S3
 // storage before: the account space works in the browser, and S3 software is
 // optional.
-export function sendWelcomeEmail(account: Account) {
+// `setPasswordLink` is set when the subscriber has no password yet.
+export function sendWelcomeEmail(account: Account, setPasswordLink?: string) {
   const tier = findTier(account.tier);
   return send({
     to: account.email,
@@ -100,10 +101,14 @@ export function sendWelcomeEmail(account: Account) {
       "Files you upload are written to write-once Blu-ray media in our optical library, where they",
       "can't be altered, encrypted by ransomware, or erased.",
       "",
-      "1. SIGN IN",
-      `   Go to ${site()}/account and enter ${account.email}.`,
-      "   We'll email you a sign-in link; there's no password to remember. Check your spam or junk",
-      "   folder if it doesn't arrive within a few minutes.",
+      "1. CHOOSE YOUR PASSWORD AND SIGN IN",
+      ...(setPasswordLink
+        ? [
+            "   Open this link to choose a password (it works once and expires in 7 days):",
+            `   ${setPasswordLink}`,
+            `   After that, sign in any time at ${site()}/account with ${account.email} and your password.`,
+          ]
+        : [`   Sign in at ${site()}/account with ${account.email} and your existing password.`]),
       "",
       "2. UPLOAD YOUR FIRST FILES",
       "   Drag files or whole folders onto the Files page. You can make folders, search, download,",

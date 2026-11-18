@@ -59,3 +59,9 @@ CREATE TABLE IF NOT EXISTS account_activity (
   created_at timestamptz NOT NULL DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS account_activity_account ON account_activity (account_id, created_at DESC);
+
+-- Password sign-in. The emailed one-time link (account_signin_tokens) is used
+-- only to set or reset a password. password_hash is scrypt (lib/account/crypto.ts).
+ALTER TABLE account_users ADD COLUMN IF NOT EXISTS password_hash text;
+ALTER TABLE account_users ADD COLUMN IF NOT EXISTS failed_signins integer NOT NULL DEFAULT 0;
+ALTER TABLE account_users ADD COLUMN IF NOT EXISTS locked_until timestamptz;

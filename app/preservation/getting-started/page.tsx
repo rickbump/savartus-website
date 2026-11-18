@@ -38,9 +38,10 @@ export default function GettingStartedPage() {
         <div className="site-container preservation-doc-inner">
           <h2>1. Sign in</h2>
           <p>
-            Go to <Link href="/account">www.savartus.com/account</Link> and enter the email address you
-            signed up or were invited with. We email you a sign-in link; there&apos;s no password.
-            Nothing arrived? Check your spam folder, then contact{" "}
+            Your welcome or invitation email has a link to choose your password. After that, sign in
+            at <Link href="/account">www.savartus.com/account</Link> with your email address and
+            password. Lost the email or forgot your password? Use{" "}
+            <Link href="/account/password">Set or reset your password</Link>. Still stuck? Contact{" "}
             <a href="mailto:info@savartus.com">info@savartus.com</a>.
           </p>
 

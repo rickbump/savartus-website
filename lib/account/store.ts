@@ -10,7 +10,12 @@ export type User = { id: string; email: string; name: string | null };
 export type Membership = { role: Role; account: Account };
 export type Member = User & { role: Role; created_at: string; last_signin_at: string | null };
 
-export const SIGNIN_LINK_MINUTES = 30;
+// Emailed links set or reset a password. Reset links are short-lived; links
+// in welcome and invitation emails last a week.
+export const SIGNIN_LINK_MINUTES = 60;
+export const WELCOME_LINK_MINUTES = 7 * 24 * 60;
+const MAX_FAILED_SIGNINS = 10;
+const LOCK_MINUTES = 15;
 export const SESSION_DAYS = 30;
 const MAX_LINKS_PER_HOUR = 5;
 
@@ -33,7 +38,7 @@ export async function ensureUser(email: string, name?: string | null) {
 
 // Returns a one-time token, or undefined when too many links were requested
 // for this person in the last hour.
-export async function createSigninToken(userId: string) {
+export async function createSigninToken(userId: string, minutes = SIGNIN_LINK_MINUTES) {
   const recent = await db()`
     SELECT count(*)::int AS n FROM account_signin_tokens
     WHERE user_id = ${userId} AND created_at > NOW() - INTERVAL '1 hour'
@@ -42,7 +47,7 @@ export async function createSigninToken(userId: string) {
   const token = newToken();
   await db()`
     INSERT INTO account_signin_tokens (token_hash, user_id, expires_at)
-    VALUES (${hashToken(token)}, ${userId}, NOW() + make_interval(mins => ${SIGNIN_LINK_MINUTES}))
+    VALUES (${hashToken(token)}, ${userId}, NOW() + make_interval(mins => ${minutes}))
   `;
   return token;
 }
@@ -68,6 +73,43 @@ export async function signinTokenIsUsable(token: string) {
     WHERE token_hash = ${hashToken(token)} AND used_at IS NULL AND expires_at > NOW()
   `;
   return rows.length > 0;
+}
+
+// --- Passwords ------------------------------------------------------------------
+
+export async function userForPasswordSignin(email: string) {
+  const rows = await db()`
+    SELECT id, email, name, password_hash, (locked_until IS NOT NULL AND locked_until > NOW()) AS locked
+    FROM account_users WHERE lower(email) = lower(${email})
+  `;
+  return rows[0] as (User & { password_hash: string | null; locked: boolean }) | undefined;
+}
+
+export async function hasPassword(userId: string) {
+  const rows = await db()`SELECT password_hash IS NOT NULL AS set FROM account_users WHERE id = ${userId}`;
+  return Boolean(rows[0]?.set);
+}
+
+export async function setPasswordHash(userId: string, hash: string) {
+  await db()`
+    UPDATE account_users SET password_hash = ${hash}, failed_signins = 0, locked_until = NULL WHERE id = ${userId}
+  `;
+  // A new password ends every other signed-in browser.
+  await db()`DELETE FROM account_sessions WHERE user_id = ${userId}`;
+}
+
+// Ten wrong passwords in a row lock the account for 15 minutes.
+export async function recordSignin(userId: string, ok: boolean) {
+  if (ok) {
+    await db()`UPDATE account_users SET failed_signins = 0, locked_until = NULL, last_signin_at = NOW() WHERE id = ${userId}`;
+  } else {
+    await db()`
+      UPDATE account_users SET failed_signins = failed_signins + 1,
+        locked_until = CASE WHEN failed_signins + 1 >= ${MAX_FAILED_SIGNINS}
+          THEN NOW() + make_interval(mins => ${LOCK_MINUTES}) ELSE locked_until END
+      WHERE id = ${userId}
+    `;
+  }
 }
 
 // --- Sessions -----------------------------------------------------------------

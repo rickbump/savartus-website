@@ -10,7 +10,9 @@ import {
   type Account,
 } from "./accounts";
 import { cloutilityConfig, tierCloutilitySubscription } from "./config";
+import { setPasswordUrl } from "@/lib/account/emails";
 import { connectSpace } from "@/lib/account/setup";
+import { createSigninToken, hasPassword, WELCOME_LINK_MINUTES } from "@/lib/account/store";
 import { sendStaffAlert, sendWelcomeEmail } from "./notify";
 import { findTier } from "./tiers";
 
@@ -127,10 +129,12 @@ export async function provisionAccount(accountId: string) {
 
     // 7. Account space: record the bucket and S3 user, issue the S3 secret,
     //    and make the subscriber the space's admin.
-    await connectSpace((await accountById(account.id))!);
+    const admin = await connectSpace((await accountById(account.id))!);
 
     await markActive(account.id);
-    await sendWelcomeEmail(account);
+    // New customers choose a password from the welcome email (link valid 7 days).
+    const token = (await hasPassword(admin.id)) ? undefined : await createSigninToken(admin.id, WELCOME_LINK_MINUTES);
+    await sendWelcomeEmail(account, token ? setPasswordUrl(token) : undefined);
     return "active" as const;
   } catch (error) {
     const hold = error instanceof HoldForStaff;

@@ -12,13 +12,9 @@ export default async function SigninPage({ searchParams }: { searchParams: Promi
     <section className="account-auth site-container">
       <p className="contact-eyebrow">SAVARTUS ACCOUNT</p>
       <h1>Sign in</h1>
-      <p className="account-muted">
-        Enter the email address you signed up or were invited with. We&apos;ll email you a link
-        to sign in; there&apos;s no password to remember.
-      </p>
       {expired && (
         <p className="preservation-error" role="alert">
-          That sign-in link has expired or was already used. Enter your email for a new one.
+          That link has expired or was already used. Use &ldquo;Set or reset your password&rdquo; for a new one.
         </p>
       )}
       <SigninForm />
