@@ -19,6 +19,13 @@ export type Account = {
   organization: string;
   email: string;
   phone: string | null;
+  use_case: string | null;
+  tax_exempt_status: "none" | "requested" | "approved" | "declined";
+  tax_exempt_type: string | null;
+  tax_exempt_state: string | null;
+  tax_exempt_number: string | null;
+  tax_certificate_file_id: string | null;
+  stripe_checkout_session_id: string | null;
   stripe_customer_id: string | null;
   stripe_subscription_id: string | null;
   cloutility_bunit_id: number | null;
@@ -48,13 +55,19 @@ export async function insertPendingAccount(account: {
   organization: string;
   email: string;
   phone: string | null;
+  useCase: string;
+  exemption: { type: string; state: string; number: string | null } | null;
 }) {
+  const exemption = account.exemption;
   await db()`
     INSERT INTO preservation_accounts
-      (id, status, tier, included_tb, name, organization, email, phone, terms_accepted_at)
+      (id, status, tier, included_tb, name, organization, email, phone, terms_accepted_at,
+       use_case, tax_exempt_status, tax_exempt_type, tax_exempt_state, tax_exempt_number)
     VALUES
       (${account.id}, 'pending_payment', ${account.tier}, ${account.includedTb}, ${account.name},
-       ${account.organization}, ${account.email}, ${account.phone}, NOW())
+       ${account.organization}, ${account.email}, ${account.phone}, NOW(),
+       ${account.useCase}, ${exemption ? "requested" : "none"}, ${exemption?.type ?? null},
+       ${exemption?.state ?? null}, ${exemption?.number ?? null})
   `;
 }
 
@@ -75,6 +88,37 @@ export async function markPaid(id: string, sessionId: string, customerId: string
     RETURNING id
   `;
   return rows.length > 0;
+}
+
+// An exempt signup's Stripe customer (created as tax exempt) and certificate.
+export async function attachExemptCustomer(id: string, customerId: string, certificateFileId: string) {
+  await db()`
+    UPDATE preservation_accounts
+    SET stripe_customer_id = ${customerId}, tax_certificate_file_id = ${certificateFileId}, updated_at = NOW()
+    WHERE id = ${id}
+  `;
+}
+
+// Staff decision after reviewing a paid exempt signup. "declined" means the
+// exemption was revoked and the customer is taxed from now on.
+export async function decideTaxExemption(id: string, decision: "approved" | "declined") {
+  const rows = await db()`
+    UPDATE preservation_accounts
+    SET tax_exempt_status = ${decision}, tax_exempt_reviewed_at = NOW(), updated_at = NOW()
+    WHERE id = ${id} AND tax_exempt_status IN ('requested', 'approved')
+    RETURNING *
+  `;
+  return rows[0] as Account | undefined;
+}
+
+// Paid signups whose exemption hasn't been reviewed yet.
+export async function exemptionRequests() {
+  const rows = await db()`
+    SELECT * FROM preservation_accounts
+    WHERE tax_exempt_status = 'requested' AND status <> 'pending_payment'
+    ORDER BY paid_at
+  `;
+  return rows as Account[];
 }
 
 // Takes the provisioning claim so only one run works on an account at a time.

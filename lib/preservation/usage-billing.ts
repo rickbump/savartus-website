@@ -9,7 +9,8 @@ import { billingDataLines, getBillingData, latestBillingDate, type BillingDataLi
 import { cloutilityConfig, tierStripePrice } from "./config";
 import { sendStaffAlert, sendUpgradeEmail } from "./notify";
 import { stripe } from "./stripe";
-import { findTier, PRESERVATION_PRODUCT_ID, tiers } from "./tiers";
+import { planLine } from "./checkout";
+import { findTier, PRESERVATION_TAX_BEHAVIOR, productFor, tiers } from "./tiers";
 import { priceMonthlyUsage, type PricedTier } from "./usage-pricing";
 
 // Monthly usage billing from Cloutility billing data. For each customer it
@@ -76,6 +77,8 @@ async function chargeAccount(
   if (!claimed) return "already charged" as const;
 
   try {
+    // Evidence accounts bill on the evidence product (SaaS tax code).
+    const product = productFor(account.use_case);
     // Pending invoice items on the subscription are added to its next invoice.
     // Idempotency keys make a retried run reuse items already created.
     for (const [index, line] of charge.lines.entries()) {
@@ -85,14 +88,28 @@ async function chargeAccount(
         description: `${line.description} (usage through ${invoiceDate})`,
         metadata: { preservationAccountId: account.id, usageIdentifier: identifier },
       };
+      // The subscription has automatic tax on, so its invoice taxes these
+      // items too: usage lines take the product's tax code; amount-only lines
+      // carry it explicitly.
       await stripe().invoiceItems.create(
         line.kind === "usage"
           ? {
               ...common,
               quantity: line.quantity,
-              price_data: { currency, product: PRESERVATION_PRODUCT_ID, unit_amount: line.unitCents },
+              price_data: {
+                currency,
+                product: product.id,
+                unit_amount: line.unitCents,
+                tax_behavior: PRESERVATION_TAX_BEHAVIOR,
+              },
             }
-          : { ...common, currency, amount: line.amountCents },
+          : {
+              ...common,
+              currency,
+              amount: line.amountCents,
+              tax_behavior: PRESERVATION_TAX_BEHAVIOR,
+              tax_code: product.taxCode,
+            },
         { idempotencyKey: `${identifier}-line-${index}` },
       );
     }
@@ -106,7 +123,7 @@ async function chargeAccount(
       await stripe().subscriptions.update(
         subscription.id,
         {
-          items: [{ id: planItem.id, price: tierStripePrice(tier) }],
+          items: [{ id: planItem.id, ...(await planLine(tier, account.use_case)) }],
           proration_behavior: "none",
           metadata: { preservationAccountId: account.id, tier: tier.id },
         },

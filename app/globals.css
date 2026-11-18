@@ -5494,6 +5494,7 @@ a {
 }
 
 .contact-field input,
+.contact-field select,
 .contact-field textarea {
   width: 100%;
   padding: 14px 15px;
@@ -5509,6 +5510,7 @@ a {
 }
 
 .contact-field input:focus,
+.contact-field select:focus,
 .contact-field textarea:focus {
   border-color: var(--savartus-blue);
   box-shadow: 0 0 0 3px rgba(18, 58, 99, 0.1);
@@ -5653,6 +5655,37 @@ a {
 .preservation-terms input {
   flex: none;
   margin-top: 3px;
+}
+
+.preservation-exempt {
+  margin: 0 0 24px;
+  padding: 18px 18px 0;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+}
+
+.preservation-exempt .preservation-terms {
+  margin-top: 0;
+}
+
+.preservation-exempt-hint {
+  margin: 0 0 18px;
+  color: var(--gray-700);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.preservation-review {
+  padding: 22px;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--gray-800);
+  line-height: 1.6;
+}
+
+.preservation-review h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
 }
 
 .preservation-error {

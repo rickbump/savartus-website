@@ -26,7 +26,15 @@ function mailConfig() {
 
 let config: ReturnType<typeof mailConfig> | null = null;
 
-async function send(message: { to: string; subject: string; lines: string[]; copyStaff?: boolean }) {
+type Attachment = { name: string; contentType: string; bytes: Uint8Array };
+
+async function send(message: {
+  to: string;
+  subject: string;
+  lines: string[];
+  copyStaff?: boolean;
+  attachments?: Attachment[];
+}) {
   config ??= mailConfig();
   if (!config) {
     console.warn("Preservation email not sent: mail settings are incomplete", { subject: message.subject });
@@ -48,6 +56,12 @@ async function send(message: { to: string; subject: string; lines: string[]; cop
               message.copyStaff && config.staff && config.staff !== message.to
                 ? [{ emailAddress: { address: config.staff } }]
                 : [],
+            attachments: (message.attachments ?? []).map((file) => ({
+              "@odata.type": "#microsoft.graph.fileAttachment",
+              name: file.name,
+              contentType: file.contentType,
+              contentBytes: Buffer.from(file.bytes).toString("base64"),
+            })),
           },
         }),
         signal: AbortSignal.timeout(15_000),
@@ -179,7 +193,12 @@ export function sendUpgradeEmail(account: Account, fromTierId: string, toTierId:
 }
 
 // Staff alert for an account that needs attention. Never includes credentials.
-export function sendStaffAlert(account: Pick<Account, "id" | "organization" | "email">, subject: string, details: string[]) {
+export function sendStaffAlert(
+  account: Pick<Account, "id" | "organization" | "email">,
+  subject: string,
+  details: string[],
+  attachments?: Attachment[],
+) {
   config ??= mailConfig();
   if (!config?.staff) {
     console.warn("Preservation staff alert not sent: PRESERVATION_STAFF_EMAIL is not set", { subject });
@@ -197,5 +216,6 @@ export function sendStaffAlert(account: Pick<Account, "id" | "organization" | "e
       "",
       "Runbook: docs/preservation-self-service.md",
     ],
+    attachments,
   });
 }

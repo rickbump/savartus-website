@@ -36,6 +36,13 @@ const mode = secretKey.startsWith("sk_live_") || secretKey.startsWith("rk_live_"
 console.log(`Stripe ${mode} mode — ${apply ? "APPLYING changes" : "dry run (pass --apply to make changes)"}\n`);
 
 const PRODUCT_ID = "savartus_optical_preservation";
+// Keep in step with PRESERVATION_TAX_CODE / PRESERVATION_TAX_BEHAVIOR in
+// lib/preservation/tiers.ts. IaaS, business use: storage over the internet.
+const TAX_CODE = pricing.taxCode || "txcd_10101000";
+const TAX_BEHAVIOR = "exclusive";
+// Keep in step with EVIDENCE_PRODUCT_ID / EVIDENCE_TAX_CODE (SaaS, business use).
+const EVIDENCE_PRODUCT_ID = "savartus_evidence_preservation";
+const EVIDENCE_TAX_CODE = pricing.evidenceTaxCode || "txcd_10103001";
 const WEBHOOK_URL = `${siteUrl}/api/preservation/stripe-webhook`;
 const WEBHOOK_EVENTS = [
   "checkout.session.completed",
@@ -60,26 +67,48 @@ async function step(description, action) {
   return apply ? action() : undefined;
 }
 
-// 1. Product
-try {
-  await stripe.products.retrieve(PRODUCT_ID);
-  console.log(`✓ product ${PRODUCT_ID} exists`);
-} catch (error) {
-  if (error?.statusCode !== 404) throw error;
-  await step(`create product ${PRODUCT_ID}`, () =>
-    stripe.products.create({
-      id: PRODUCT_ID,
-      name: "Optical Preservation",
-      description: "S3-accessible preservation on write-once optical media.",
-      metadata: { managedBy: "corp_web/scripts/stripe-setup.mjs" },
-    }));
+// 1. Products. Evidence storage is sold as the evidence-management service
+//    (SaaS tax code); checkout and billing put its lines on its own product at
+//    the same prices (lib/preservation/checkout.ts planLine).
+const products = [
+  { id: PRODUCT_ID, name: "Optical Preservation", description: "S3-accessible preservation on write-once optical media.", taxCode: TAX_CODE },
+  { id: EVIDENCE_PRODUCT_ID, name: "Evidence Preservation", description: "Evidence management on write-once optical media.", taxCode: EVIDENCE_TAX_CODE },
+];
+for (const wanted of products) {
+  try {
+    const product = await stripe.products.retrieve(wanted.id);
+    const taxCode = typeof product.tax_code === "string" ? product.tax_code : product.tax_code?.id;
+    if (taxCode === wanted.taxCode) {
+      console.log(`✓ product ${wanted.id} exists (tax code ${wanted.taxCode})`);
+    } else {
+      await step(`set product ${wanted.id} tax code ${taxCode ?? "(none)"} → ${wanted.taxCode}`, () =>
+        stripe.products.update(wanted.id, { tax_code: wanted.taxCode }));
+    }
+  } catch (error) {
+    if (error?.statusCode !== 404) throw error;
+    await step(`create product ${wanted.id} (tax code ${wanted.taxCode})`, () =>
+      stripe.products.create({
+        id: wanted.id,
+        name: wanted.name,
+        description: wanted.description,
+        tax_code: wanted.taxCode,
+        metadata: { managedBy: "corp_web/scripts/stripe-setup.mjs" },
+      }));
+  }
 }
 
 // Finds the active price for a lookup key; replaces it if the amount changed.
+// Tax behavior can be set once on a price that has none; otherwise it is fixed.
 async function ensurePrice(lookupKey, amount, params, label) {
   const [existing] = (await stripe.prices.list({ lookup_keys: [lookupKey] })).data;
-  if (existing && existing.active && existing.unit_amount === cents(amount) && existing.currency === currency) {
-    console.log(`✓ ${label} price ${existing.id} (${amount} ${currency})`);
+  const sameAmount = existing && existing.active && existing.unit_amount === cents(amount) && existing.currency === currency;
+  if (sameAmount && existing.tax_behavior === TAX_BEHAVIOR) {
+    console.log(`✓ ${label} price ${existing.id} (${amount} ${currency}, tax ${TAX_BEHAVIOR})`);
+    return existing.id;
+  }
+  if (sameAmount && (!existing.tax_behavior || existing.tax_behavior === "unspecified")) {
+    await step(`set ${label} price ${existing.id} tax behavior → ${TAX_BEHAVIOR}`, () =>
+      stripe.prices.update(existing.id, { tax_behavior: TAX_BEHAVIOR }));
     return existing.id;
   }
   const created = await step(
@@ -91,6 +120,7 @@ async function ensurePrice(lookupKey, amount, params, label) {
         unit_amount: cents(amount),
         lookup_key: lookupKey,
         transfer_lookup_key: Boolean(existing),
+        tax_behavior: TAX_BEHAVIOR,
         ...params,
       }),
   );
@@ -165,6 +195,21 @@ const portalConfig = portal
   ? await step(`update customer portal ${portal.id}`, () => stripe.billingPortal.configurations.update(portal.id, portalSettings))
   : await step("create customer portal configuration", () => stripe.billingPortal.configurations.create(portalSettings));
 const loginUrl = portalConfig?.login_page?.url ?? portal?.login_page?.url;
+
+// 5. Stripe Tax readiness (Dashboard → Tax). Checkout has automatic tax on,
+//    so signup fails until the origin address is set. Registrations decide
+//    where tax is actually collected: none means zero tax everywhere, which
+//    is not the same as being exempt.
+try {
+  const settings = await stripe.tax.settings.retrieve();
+  const registrations = await stripe.tax.registrations.list({ status: "active", limit: 100 });
+  const where = registrations.data.map((r) => [r.country, r.country_options?.[r.country.toLowerCase()]?.state].filter(Boolean).join("-"));
+  console.log(`\nStripe Tax: ${settings.status}${settings.head_office?.address?.country ? `, origin ${[settings.head_office.address.state, settings.head_office.address.country].filter(Boolean).join(", ")}` : ", no origin address"}`);
+  console.log(`Active registrations: ${where.length ? where.join(", ") : "none — tax will be 0 everywhere"}`);
+  if (settings.status !== "active") console.warn("! Finish Stripe Tax setup in the Dashboard (Tax → Settings) before taking signups.");
+} catch (error) {
+  console.warn(`! Couldn't read Stripe Tax settings: ${error?.message ?? error}`);
+}
 
 console.log("\nEnvironment variables:\n");
 for (const [key, value] of Object.entries(env)) console.log(`${key}=${value}`);

@@ -8,6 +8,43 @@
 // Stripe product created by scripts/stripe-setup.mjs; usage invoice items use it.
 export const PRESERVATION_PRODUCT_ID = "savartus_optical_preservation";
 
+// Stripe Tax classification: "Infrastructure as a service (IaaS) - business
+// use", which expressly covers storage provided over the internet. Signup
+// requires an organization, so every subscriber is a business customer.
+// Confirm with the tax adviser; scripts/stripe-setup.mjs sets it on the product.
+export const PRESERVATION_TAX_CODE = "txcd_10101000";
+
+// Evidence storage is sold as the evidence-management service, classed as
+// "Software as a service (SaaS) - business use". It has its own Stripe product
+// (same prices) so its invoice lines carry that code.
+export const EVIDENCE_PRODUCT_ID = "savartus_evidence_preservation";
+export const EVIDENCE_TAX_CODE = "txcd_10103001";
+
+export const useCases = [
+  { id: "evidence", label: "Evidence (law enforcement or legal)" },
+  { id: "records", label: "Records and archives" },
+  { id: "media", label: "Media and creative assets" },
+  { id: "research", label: "Research and scientific data" },
+  { id: "backup", label: "Backups and disaster recovery" },
+  { id: "other", label: "Something else" },
+] as const;
+
+export type UseCase = (typeof useCases)[number]["id"];
+
+export function findUseCase(id: unknown): UseCase | undefined {
+  return useCases.find((option) => option.id === id)?.id;
+}
+
+// Stripe product, and so tax code, for an account's storage use.
+export function productFor(useCase: string | null | undefined) {
+  return useCase === "evidence"
+    ? { id: EVIDENCE_PRODUCT_ID, taxCode: EVIDENCE_TAX_CODE }
+    : { id: PRESERVATION_PRODUCT_ID, taxCode: PRESERVATION_TAX_CODE };
+}
+
+// Prices exclude tax; Stripe Tax adds it on top where Savartus is registered.
+export const PRESERVATION_TAX_BEHAVIOR = "exclusive" as const;
+
 export type TierId = "tb1" | "tb5" | "tb10" | "tb25";
 
 export type Tier = {

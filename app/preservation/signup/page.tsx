@@ -62,6 +62,7 @@ export default async function PreservationSignupPage({
 }) {
   if (!signupEnabled()) notFound();
   const [{ canceled }, options] = await Promise.all([searchParams, tierOptions()]);
+  const notice = canceled === "1" ? "Checkout was canceled. Your card was not charged." : null;
   // The calculator needs every tier's price; it is hidden if Stripe is unavailable.
   const calculatorTiers: CalculatorTier[] = options.every((option) => option.monthlyCents !== null)
     ? options.map((option) => ({
@@ -105,7 +106,7 @@ export default async function PreservationSignupPage({
           </div>
           <SignupForm
             tiers={options.map(({ id, label, summary, price }) => ({ id, label, summary, price }))}
-            canceled={canceled === "1"}
+            notice={notice}
           />
         </div>
       </section>

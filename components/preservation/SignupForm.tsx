@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
+import { CERTIFICATE_ACCEPT, CERTIFICATE_MAX_BYTES, exemptionTypes, usStates } from "@/lib/preservation/tax-exemption";
+import { useCases } from "@/lib/preservation/tiers";
 
 export type TierOption = {
   id: string;
@@ -10,34 +12,49 @@ export type TierOption = {
   price: string | null;
 };
 
-export function SignupForm({ tiers, canceled }: { tiers: TierOption[]; canceled: boolean }) {
+export function SignupForm({ tiers, notice }: { tiers: TierOption[]; notice: string | null }) {
   const [tier, setTier] = useState(
     tiers.find((option) => option.id === "tb5")?.id ?? tiers[0]?.id ?? "",
   );
-  const [error, setError] = useState<string | null>(
-    canceled ? "Checkout was canceled. Your card was not charged." : null,
-  );
+  const [taxExempt, setTaxExempt] = useState(false);
+  const [exemptionType, setExemptionType] = useState("");
+  const [error, setError] = useState<string | null>(notice);
   const [submitting, setSubmitting] = useState(false);
+
+  const numberOptional = exemptionTypes.find((option) => option.id === exemptionType)?.numberRequired === false;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSubmitting(true);
     const form = new FormData(event.currentTarget);
-    try {
-      const response = await fetch("/api/preservation/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+    const certificate = form.get("certificate");
+    if (taxExempt && certificate instanceof File && certificate.size > CERTIFICATE_MAX_BYTES) {
+      setError("The certificate file is too large. Please upload a file under 4 MB.");
+      setSubmitting(false);
+      return;
+    }
+    const upload = new FormData();
+    if (taxExempt && certificate instanceof File && certificate.size > 0) upload.set("certificate", certificate);
+    upload.set(
+      "data",
+      JSON.stringify({
           tier,
+          useCase: form.get("useCase"),
           name: form.get("name"),
           organization: form.get("organization"),
           email: form.get("email"),
           phone: form.get("phone"),
+          taxExempt,
+          exemptionType: taxExempt ? form.get("exemptionType") : undefined,
+          exemptionState: taxExempt ? form.get("exemptionState") : undefined,
+          exemptionNumber: taxExempt ? form.get("exemptionNumber") : undefined,
           acceptTerms: form.get("acceptTerms") === "on",
           website: form.get("website"),
         }),
-      });
+    );
+    try {
+      const response = await fetch("/api/preservation/checkout", { method: "POST", body: upload });
       const data = (await response.json()) as { url?: string; error?: string };
       if (!response.ok || !data.url) throw new Error(data.error || "Checkout could not be started.");
       window.location.assign(data.url);
@@ -72,6 +89,20 @@ export function SignupForm({ tiers, canceled }: { tiers: TierOption[]; canceled:
         </div>
       </fieldset>
 
+      <div className="contact-field">
+        <label htmlFor="useCase">What will you mainly store?</label>
+        <select id="useCase" name="useCase" required defaultValue="">
+          <option value="" disabled>
+            Choose one
+          </option>
+          {useCases.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="contact-field-row">
         <div className="contact-field">
           <label htmlFor="name">Full name</label>
@@ -92,6 +123,73 @@ export function SignupForm({ tiers, canceled }: { tiers: TierOption[]; canceled:
           <label htmlFor="phone">Phone (optional)</label>
           <input id="phone" name="phone" type="tel" autoComplete="tel" maxLength={40} />
         </div>
+      </div>
+
+      <div className="preservation-exempt">
+        <label className="preservation-terms">
+          <input type="checkbox" checked={taxExempt} onChange={(event) => setTaxExempt(event.target.checked)} />
+          <span>My organization is exempt from US sales tax (for example a government agency or nonprofit).</span>
+        </label>
+
+        {taxExempt && (
+          <>
+            <p className="preservation-exempt-hint">
+              Checkout won&apos;t add sales tax. We review your certificate after signup; if we
+              can&apos;t confirm it, we&apos;ll contact you before any tax is charged.
+            </p>
+            <div className="contact-field">
+              <label htmlFor="exemptionType">Type of exemption</label>
+              <select
+                id="exemptionType"
+                name="exemptionType"
+                required
+                value={exemptionType}
+                onChange={(event) => setExemptionType(event.target.value)}
+              >
+                <option value="" disabled>
+                  Choose one
+                </option>
+                {exemptionTypes.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="contact-field-row">
+              <div className="contact-field">
+                <label htmlFor="exemptionState">Issuing state</label>
+                <select id="exemptionState" name="exemptionState" required defaultValue="">
+                  <option value="" disabled>
+                    Choose a state
+                  </option>
+                  {Object.entries(usStates).map(([code, name]) => (
+                    <option key={code} value={code}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="contact-field">
+                <label htmlFor="exemptionNumber">
+                  Exemption or certificate number{numberOptional ? " (if any)" : ""}
+                </label>
+                <input
+                  id="exemptionNumber"
+                  name="exemptionNumber"
+                  type="text"
+                  maxLength={40}
+                  autoComplete="off"
+                  required={!numberOptional}
+                />
+              </div>
+            </div>
+            <div className="contact-field">
+              <label htmlFor="certificate">Exemption certificate (PDF, JPEG or PNG, under 4 MB)</label>
+              <input id="certificate" name="certificate" type="file" accept={CERTIFICATE_ACCEPT} required />
+            </div>
+          </>
+        )}
       </div>
 
       <div className="preservation-honeypot" aria-hidden="true">
@@ -126,7 +224,8 @@ export function SignupForm({ tiers, canceled }: { tiers: TierOption[]; canceled:
         Payment is handled by Stripe. If you grow past your plan, each additional 1&nbsp;TB is
         billed at your plan&apos;s per-TB rate; for example, 6&nbsp;TB on the 5&nbsp;TB plan is $42/month.
         When you reach the next plan&apos;s size, your whole account moves to that plan&apos;s lower
-        rate.
+        rate. Prices exclude sales tax or VAT; any tax due is calculated from your billing
+        address and shown at checkout and on each invoice.
       </p>
     </form>
   );

@@ -2,6 +2,7 @@ import { after } from "next/server";
 import type Stripe from "stripe";
 import { markPaid, setStatusBySubscription } from "@/lib/preservation/accounts";
 import { stripeWebhookSecret } from "@/lib/preservation/config";
+import { sendExemptionReview } from "@/lib/preservation/exemption-review";
 import { provisionAccount } from "@/lib/preservation/provision";
 import { stripe } from "@/lib/preservation/stripe";
 
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
       if (await markPaid(accountId, session.id, customerId, subscriptionId)) {
         // Acknowledge Stripe now; provision after the response. Failures are
         // retried by /api/preservation/provision-retry.
-        after(() => provisionAccount(accountId));
+        after(() => Promise.all([provisionAccount(accountId), sendExemptionReview(accountId)]));
       }
       break;
     }

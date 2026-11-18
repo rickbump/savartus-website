@@ -55,3 +55,17 @@ CREATE TABLE IF NOT EXISTS preservation_usage_charges (
   amount_cents integer NOT NULL,
   recorded_at timestamptz NOT NULL DEFAULT NOW()
 );
+
+-- Storage use (decides the Stripe product and tax code) and US sales tax
+-- exemption requests. An account with tax_exempt_status = 'requested' stays
+-- in pending_payment, without a checkout session, until staff review it.
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS use_case text;
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_status text NOT NULL DEFAULT 'none'
+  CHECK (tax_exempt_status IN ('none', 'requested', 'approved', 'declined'));
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_type text;
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_state char(2);
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_number varchar(40);
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_exempt_reviewed_at timestamptz;
+-- Stripe file ID of the exemption certificate uploaded at signup (also in the
+-- Stripe customer's metadata).
+ALTER TABLE preservation_accounts ADD COLUMN IF NOT EXISTS tax_certificate_file_id text;

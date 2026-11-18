@@ -85,8 +85,9 @@ Everything in Stripe is created by `scripts/stripe-setup.mjs`. It is safe to re-
 1. Set each tier's monthly price in `scripts/preservation-pricing.json`, in whole currency units. Current pricing: 1 TB at $7.50; 5 TB at $35; 10 TB at $65; 25 TB at $150.
 2. Put `STRIPE_SECRET_KEY` (start with an `sk_test_` key) and `SITE_URL` in `.env.local`.
 3. Run `npm run stripe:setup` for a dry run, then `npm run stripe:setup -- --apply`. This creates or updates:
-   - the product `savartus_optical_preservation`
-   - a monthly price for each tier (lookup keys `preservation_tb*_monthly`)
+   - the product `savartus_optical_preservation`, with Stripe tax code `txcd_10101000` (IaaS, business use)
+   - the product `savartus_evidence_preservation`, with tax code `txcd_10103001` (SaaS, business use), for customers storing evidence
+   - a monthly price for each tier (lookup keys `preservation_tb*_monthly`), tax-exclusive
    - a webhook endpoint at `<SITE_URL>/api/preservation/stripe-webhook` for the five events the site handles
    - a customer billing portal (cards, billing details, invoices; cancellation and plan changes are off) with a login page
 4. Copy the printed `STRIPE_*` variables into the deployment environment. The webhook signing secret is printed only when the endpoint is first created.
@@ -95,7 +96,67 @@ Everything in Stripe is created by `scripts/stripe-setup.mjs`. It is safe to re-
 
 Changing an amount and re-running creates a new price, moves the lookup key to it and archives the old price. Existing subscribers stay on their old price until you move them in the Dashboard.
 
-Optional: register for Stripe Tax and enable automatic tax on the Checkout session in `app/api/preservation/checkout/route.ts`.
+### Sales tax and VAT (Stripe Tax)
+
+Checkout runs with automatic tax on, so **signup fails until Stripe Tax is set up** in each mode (sandbox and live). The setup script prints its status at the end.
+
+How tax is calculated:
+
+- Prices are tax-exclusive: tax is added on top.
+- Stripe Tax combines the product's tax code with the customer's billing address (required at checkout) and any tax ID they enter.
+  - Code `txcd_10101000`, IaaS business use, covers storage over the internet. Signup requires an organization, so every subscriber is a business.
+  - A valid EU, UK or similar business tax ID gets reverse charge automatically.
+- Automatic tax carries over from Checkout to the subscription, so the following are taxed the same way:
+  - renewals
+  - plan upgrades
+  - usage invoice items (`lib/preservation/usage-billing.ts` gives them the same tax code and behavior)
+- Customers can change their address and tax ID in the billing portal; later invoices follow.
+
+Dashboard → Tax, once per mode:
+
+1. **Origin address:** Savartus's head office.
+2. **Registrations:** add every jurisdiction where Savartus is registered to collect, which is at least its home state. Stripe collects only where a registration exists. **No registrations means $0 tax everywhere. That is not the same as being exempt.**
+3. **Monitoring:** Stripe tracks sales per jurisdiction against economic-nexus thresholds. Register (with the state, then in Stripe) when a threshold is reached.
+4. **Exempt customers:** handled at signup (see below). Use "Reverse charge" only on an adviser's instruction.
+5. **Filing:** Stripe calculates and collects, but it does not file returns or remit unless you add Stripe's filing partner. Export the Tax reports monthly for the accountant.
+
+**Evidence storage.** Signup asks "What will you mainly store?" A customer who answers evidence is billed on the evidence product, so their lines carry the SaaS code. That covers the plan, upgrades and usage. There is one set of prices: checkout and billing put the same amounts on the evidence product (`planLine` in `lib/preservation/checkout.ts`). The answer is saved in `use_case`. To reclassify an existing customer, change the product on their subscription in the Dashboard and update `use_case`.
+
+**Tax-exempt signups.** A customer who ticks "exempt from US sales tax" gives:
+- the exemption type
+- the issuing state
+- the number (optional for federal agencies)
+- a copy of the certificate (PDF, JPEG or PNG, under 4 MB)
+
+The site checks the number's format:
+- Illinois E-numbers must match the state's format.
+- Florida numbers that don't match the usual format are flagged.
+- Nonprofit EINs with prefixes the IRS doesn't assign are flagged.
+- Anything else must look like a real number.
+
+Before checkout, the site:
+- uploads the certificate to Stripe as a file
+- creates the Stripe customer marked **Exempt**, with the exemption details and the certificate's file ID in its metadata (`taxExemptCertificateFile`)
+- saves both IDs on the account
+
+Checkout and every later invoice therefore charge no tax. When payment succeeds, `PRESERVATION_STAFF_EMAIL` gets "Tax-exempt signup to review", with the details, any format warnings, the certificate attached and a link to the Stripe customer. Provisioning goes ahead as normal. Then:
+
+1. `npx tsx --env-file=.env.local scripts/preservation-tax-review.mts list` shows signups not yet reviewed.
+2. Check the certificate:
+   - it names the organization
+   - it matches the number and state
+   - it's signed and not expired
+   - it passes the state's verification tool where one exists, or the IRS Tax Exempt Organization Search for a nonprofit EIN
+3. **Valid:** `… approve <accountId> --expires YYYY-MM-DD`. The customer stays exempt, and the approval and expiry are written to its Stripe metadata.
+4. **Not valid:** talk to the customer, then run `… revoke <accountId>`. This is a dry run that lists each paid invoice and the sales tax that would have been due, using the invoice's date and the customer's billing address. `… revoke <accountId> --apply` then:
+   - marks the customer taxable for future invoices
+   - charges the back tax on a separate invoice to the card on file
+   - records that tax in Stripe Tax reports for filing
+5. Certificates expire. Check `taxExemptExpires` in the customer's metadata and ask for renewals.
+
+The certificate is a Stripe file (purpose `tax_document_user_upload`). To see it, open the file ID from the customer's metadata under Dashboard → Files.
+
+Have the tax adviser confirm the codes, the registrations and the review steps before going live. To change the code, set `taxCode` in `scripts/preservation-pricing.json` and `PRESERVATION_TAX_CODE` in `lib/preservation/tiers.ts`, then re-run the script.
 
 ## 4. Environment variables
 
@@ -195,5 +256,5 @@ Business and legal:
 
 - [ ] **Service terms** (`/preservation/terms`) and **privacy notice** (`/privacy`) reviewed by counsel. Fill every highlighted placeholder, then remove `robots` (noindex) from both pages.
 - [ ] **Retention after cancellation** decided and written into the terms. Customers currently cancel by email, and staff handle data through Cloutility's deletion approvals.
-- [ ] **Stripe Tax** decision.
+- [ ] **Stripe Tax** (section 3): tax adviser confirms code `txcd_10101000` and where Savartus must register; origin address and registrations entered in live mode; filing approach decided (accountant or Stripe's filing partner).
 - [ ] **Overage cap** decision. Today usage is uncapped; consider a per-account limit with a staff review above it.
