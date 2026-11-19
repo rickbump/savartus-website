@@ -4265,12 +4265,16 @@ a {
 
 .orain-storage-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 
 .orain-tier-optical {
   background: var(--savartus-blue-light);
+}
+
+.orain-tier-nearline {
+  background: #e6ecf1;
 }
 
 .orain-tier-offline {
@@ -8958,4 +8962,3 @@ a {
     grid-template-columns: 1fr;
   }
 }
-
