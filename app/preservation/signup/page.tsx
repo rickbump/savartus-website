@@ -96,12 +96,36 @@ export default async function PreservationSignupPage({
         <div className="site-container contact-main-grid">
           <div className="contact-info">
             <p className="contact-eyebrow">WHAT YOU GET</p>
-            <h2>S3 access to an optical library.</h2>
+            <h2>Immutable storage on optical media.</h2>
             <ul className="preservation-points">
-              <li>An S3-compatible bucket backed by write-once optical media.</li>
-              <li>An account space to upload, search and download in the browser, and invite your team.</li>
-              <li>Capacity that grows in 1&nbsp;TB steps as your collection grows.</li>
-              <li>Approved, auditable deletion, never accidental loss.</li>
+              <li>
+                <strong>Immutable by design.</strong> Your files are written to write-once (WORM) optical discs that
+                physically can&rsquo;t be overwritten, altered or encrypted. Once a file is on disc, no software,
+                ransomware or mistyped command can change it.
+              </li>
+              <li>
+                <strong>Write-once from the first upload.</strong> A file name can be used only once, so a preserved
+                file is never silently replaced by a newer copy.
+              </li>
+              <li>
+                <strong>Built to last decades.</strong> Optical media doesn&rsquo;t need the refresh and migration
+                cycles of disk and tape, so your record stays intact without constant upkeep.
+              </li>
+              <li>
+                <strong>Standard S3 access.</strong> Works with the tools you already use, such as Cyberduck, rclone,
+                backup software and your own applications.
+              </li>
+              <li>
+                <strong>Your own account space.</strong> Upload, search and download in the browser, restore files
+                from disc on request, and invite your team with admin and member roles.
+              </li>
+              <li>
+                <strong>Deletion only by approval.</strong> Nothing is lost by accident: removing preserved data takes
+                an approved request, and every upload, download and restore in your account space is logged.
+              </li>
+              <li>
+                <strong>Grows with you.</strong> Capacity expands in 1&nbsp;TB steps as your collection grows.
+              </li>
             </ul>
             <UsageCalculator tiers={calculatorTiers} currency={currency} />
           </div>
