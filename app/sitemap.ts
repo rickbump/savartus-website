@@ -6,6 +6,7 @@ const SITE_URL = "https://www.savartus.com";
 
 const routeConfig = [
   { path: "/", priority: 1 },
+  { path: "/online-storage", priority: 0.98 },
 
   { path: "/active-archive", priority: 0.95 },
   { path: "/preservation", priority: 0.95 },

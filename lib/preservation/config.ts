@@ -22,6 +22,14 @@ export function signupEnabled() {
   return process.env.PRESERVATION_SIGNUP_ENABLED?.trim().toLowerCase() === "true";
 }
 
+// Where "start online" buttons go: the signup form once it is open, otherwise
+// a conversation with Savartus.
+export function onlineStart() {
+  return signupEnabled()
+    ? { href: "/preservation/signup", label: "Start Now" }
+    : { href: "/contact", label: "Request Access" };
+}
+
 export function databaseUrl() {
   return required("DATABASE_URL");
 }

@@ -11,11 +11,14 @@ export function Footer() {
         </div>
 
         <div className="footer-links">
+          <Link href="/online-storage">Online Storage</Link>
+          <Link href="/products/els">On-Premises Systems</Link>
           <Link href="/active-archive">Active Archive</Link>
           <Link href="/preservation">Preservation</Link>
           <Link href="/data-lifecycle-management">Data Lifecycle Management</Link>
           <Link href="/products">Products</Link>
           <Link href="/resources">Resources</Link>
+          <Link href="/account/signin">Sign in</Link>
         </div>
 
         <div className="footer-meta">

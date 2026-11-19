@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { PreservationFaq } from "@/components/preservation/PreservationFaq";
-import { SignupForm, type TierOption } from "@/components/preservation/SignupForm";
+import { SignupForm } from "@/components/preservation/SignupForm";
 import { UsageCalculator, type CalculatorTier } from "@/components/preservation/UsageCalculator";
 import { notFound } from "next/navigation";
-import { tierStripePrice } from "@/lib/preservation/config";
 import { signupOpen } from "@/lib/preservation/signup-access";
-import { stripe } from "@/lib/preservation/stripe";
+import { tierOptions } from "@/lib/preservation/pricing";
 import { tiers } from "@/lib/preservation/tiers";
 import { socialImages } from "@/lib/social-images";
 
@@ -24,37 +23,6 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 3600;
-
-type TierPricing = TierOption & { monthlyCents: number | null; currency: string | null };
-
-async function tierOptions(): Promise<TierPricing[]> {
-  return Promise.all(
-    tiers.map(async (tier) => {
-      let price: string | null = null;
-      let monthlyCents: number | null = null;
-      let currency: string | null = null;
-      try {
-        const stripePrice = await stripe().prices.retrieve(tierStripePrice(tier));
-        if (stripePrice.unit_amount !== null) {
-          monthlyCents = stripePrice.unit_amount;
-          currency = stripePrice.currency;
-          const format = (cents: number) =>
-            new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: stripePrice.currency,
-              minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
-            }).format(cents / 100);
-          const monthly = format(stripePrice.unit_amount);
-          const perTb = format(Math.round(stripePrice.unit_amount / tier.includedTb));
-          price = tier.includedTb === 1 ? `${monthly}/TB/month` : `${monthly}/month · ${perTb}/TB`;
-        }
-      } catch {
-        // Pricing is shown at checkout if Stripe is unreachable or not configured.
-      }
-      return { id: tier.id, label: tier.label, summary: tier.summary, price, monthlyCents, currency };
-    }),
-  );
-}
 
 export default async function PreservationSignupPage({
   searchParams,
