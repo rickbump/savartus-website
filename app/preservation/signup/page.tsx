@@ -3,7 +3,8 @@ import { PreservationFaq } from "@/components/preservation/PreservationFaq";
 import { SignupForm, type TierOption } from "@/components/preservation/SignupForm";
 import { UsageCalculator, type CalculatorTier } from "@/components/preservation/UsageCalculator";
 import { notFound } from "next/navigation";
-import { signupEnabled, tierStripePrice } from "@/lib/preservation/config";
+import { tierStripePrice } from "@/lib/preservation/config";
+import { signupOpen } from "@/lib/preservation/signup-access";
 import { stripe } from "@/lib/preservation/stripe";
 import { tiers } from "@/lib/preservation/tiers";
 import { socialImages } from "@/lib/social-images";
@@ -60,7 +61,7 @@ export default async function PreservationSignupPage({
 }: {
   searchParams: Promise<{ canceled?: string }>;
 }) {
-  if (!signupEnabled()) notFound();
+  if (!(await signupOpen())) notFound();
   const [{ canceled }, options] = await Promise.all([searchParams, tierOptions()]);
   const notice = canceled === "1" ? "Checkout was canceled. Your card was not charged." : null;
   // The calculator needs every tier's price; it is hidden if Stripe is unavailable.

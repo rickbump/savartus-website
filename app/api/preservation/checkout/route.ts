@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { accountById, emailHasAccount, insertPendingAccount } from "@/lib/preservation/accounts";
 import { startCheckout } from "@/lib/preservation/checkout";
-import { signupEnabled, tierStripePrice } from "@/lib/preservation/config";
+import { tierStripePrice } from "@/lib/preservation/config";
+import { signupOpen } from "@/lib/preservation/signup-access";
 import { createExemptCustomer } from "@/lib/preservation/exemption-review";
 import {
   CERTIFICATE_MAX_BYTES,
@@ -33,7 +34,7 @@ function readText(data: Record<string, unknown>, key: string, label: string, lim
 }
 
 export async function POST(request: Request) {
-  if (!signupEnabled()) return Response.json({ error: "Signup is not open yet." }, { status: 404 });
+  if (!(await signupOpen())) return Response.json({ error: "Signup is not open yet." }, { status: 404 });
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) {
     return Response.json({ error: "This request must come from this website." }, { status: 403 });

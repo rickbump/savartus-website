@@ -223,6 +223,7 @@ PRESERVATION_ENCRYPTION_KEY=            # 32 random bytes, base64; encrypts stor
 PRESERVATION_SENDER_EMAIL=              # mailbox emails are sent from (defaults to SPECIFICATION_SENDER_EMAIL)
 PRESERVATION_STAFF_EMAIL=               # receives staff alerts and a copy of customer emails
 PRESERVATION_SIGNUP_ENABLED=            # "true" shows the signup button and opens /preservation/signup; redeploy after changing
+PRESERVATION_SIGNUP_PREVIEW_CODE=       # optional, 16+ chars: while signup is closed, /preservation/review?code=<this> opens signup for that browser (30-day cookie) so a reviewer can test it
 AZURE_TENANT_ID=                        # Microsoft Graph app with Mail.Send (shared with the specification emails)
 AZURE_CLIENT_ID=
 AZURE_CLIENT_SECRET=
